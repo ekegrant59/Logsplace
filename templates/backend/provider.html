@@ -1,0 +1,455 @@
+{% extends 'partials/backend.html' %} {% load static %} {% load humanize %} {% block content %}
+
+<main class="app-content">
+  <div class="page-title m-b-20">
+    <div class="row justify-content-between">
+      <div class="col-md-6">
+        <h1 class="page-title">
+          <span class="fe fe-git-pull-request"></span> Providers
+        </h1>
+      </div>
+      <div class="col-md-6">
+        <!--<div class="d-flex">-->
+        <!--  <a-->
+        <!--    href="/admin/provider/new"-->
+        <!--    class="ml-auto btn btn-outline-primary ajaxModal"-->
+        <!--  >-->
+        <!--    <span class="fe fe-plus"></span>-->
+        <!--    Add new-->
+        <!--  </a>-->
+        <!--</div>-->
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">Filter</h3>
+          <div class="card-options">
+            <a
+              href="#"
+              class="card-options-collapse"
+              data-toggle="card-collapse"
+              ><i class="fe fe-chevron-up"></i
+            ></a>
+            <a href="#" class="card-options-remove" data-toggle="card-remove"
+              ><i class="fe fe-x"></i
+            ></a>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <!--<div class="col-md-8">-->
+            <!--  <div class="btn-group w-30 m-b-10">-->
+            <!--    <a href="/admin/provider?status=3" class="btn"-->
+            <!--      >All <span class="badge badge-pill bg-azure">{{ pro.count }}</span></a-->
+            <!--    ><a href="/admin/provider?status=1" class="btn"-->
+            <!--      >Active <span class="badge badge-pill bg-indigo">{{ active.count }}</span></a-->
+            <!--    ><a href="/admin/provider?status=0" class="btn"-->
+            <!--      >Deactive <span class="badge badge-pill bg-orange">{{ inactive.count}}</span></a-->
+            <!--    >-->
+            <!--  </div>-->
+            <!--</div>-->
+            <div class="col-md-4 search-area">
+              <div class="form-group">
+                <div class="input-group">
+                  <input
+                    type="text"
+                    name="query"
+                    class="form-control"
+                    placeholder="Search for…"
+                    value=""
+                  />
+                  <select name="field" class="form-control" id="">
+                    <option value="name">Name</option>
+                  </select>
+                  <button
+                    class="btn btn-primary btn-square btn-search"
+                    type="button"
+                  >
+                    <span class="fe fe-search"></span>
+                  </button>
+                  <button
+                    class="btn btn-outline-danger btn-square btn-clear d-none"
+                    data-toggle="tooltip"
+                    data-placement="bottom"
+                    title=""
+                    data-original-title="Clear"
+                    type="button"
+                  >
+                    <span class="fe fe-x"></span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12 col-xl-12">
+      <div class="card">
+        <!-- Card headers -->
+        <div class="card-header">
+          <h3 class="card-title">Lists</h3>
+          <!--<div class="card-options">-->
+          <!--  <a-->
+          <!--    href="/admin/provider/auto_sync_setting"-->
+          <!--    class="btn btn-outline-primary m-r-10 ajaxModal"-->
+          <!--    >Auto Sync Settings</a-->
+          <!--  >-->
+          <!--  <div class="item-action dropdown action-options">-->
+          <!--    <button-->
+          <!--      type="button"-->
+          <!--      class="btn btn-outline-primary dropdown-toggle"-->
+          <!--      data-toggle="dropdown"-->
+          <!--    >-->
+          <!--      Actions <span class="fe fe-chevrons-down"></span>-->
+          <!--    </button>-->
+          <!--    <div class="dropdown-menu dropdown-menu-right">-->
+          <!--      <a-->
+          <!--        href="/admin/provider/bulk_action/active"-->
+          <!--        data-type="active"-->
+          <!--        class="dropdown-item ajaxActionOptions"-->
+          <!--        ><i class="dropdown-icon fe fe-check-square"></i> Active</a-->
+          <!--      ><a-->
+          <!--        href="/admin/provider/bulk_action/deactive"-->
+          <!--        data-type="deactive"-->
+          <!--        class="dropdown-item ajaxActionOptions"-->
+          <!--        ><i class="dropdown-icon fe fe-x-square"></i> Deactive All</a-->
+          <!--      ><a-->
+          <!--        href="/admin/provider/bulk_action/delete"-->
+          <!--        data-type="delete"-->
+          <!--        class="dropdown-item ajaxActionOptions"-->
+          <!--        ><i class="dropdown-icon fe fe-trash-2"></i> Delete</a-->
+          <!--      >-->
+          <!--    </div>-->
+          <!--  </div>-->
+          <!--</div>-->
+        </div>
+        <div class="table-responsive">
+          <table
+            class="table table-hover table-bordered table-vcenter card-table"
+          >
+            <thead>
+              <tr>
+                <th class="text-center w-1">
+                  <div class="custom-controls-stacked">
+                    <label class="form-check"
+                      ><input
+                        type="checkbox"
+                        class="form-check-input check-items check-all"
+                        data-name="check_1"
+                      /><span class="custom-control-label"></span>
+                    </label>
+                  </div>
+                </th>
+                <th class="text-center w-1">No.</th>
+                <th class="">Name</th>
+                <th class="text-center">Balance</th>
+                <!--<th class="text-center">Description</th>-->
+                <!--<th class="text-center">Status</th>-->
+                <th class="text-center">action</th>
+              </tr>
+            </thead>
+            <tbody>
+                {% for p in pro %}
+              <tr class="tr_6c08835fc25dd0add2f1f6be7c828578">
+                <th class="text-center w-1">
+                  <div class="custom-controls-stacked">
+                    <label class="form-check"
+                      ><input
+                        type="checkbox"
+                        class="form-check-input check-item check_1"
+                        name="ids[]"
+                        value="1"
+                      /><span class="custom-control-label"></span>
+                    </label>
+                  </div>
+                </th>
+                <td class="text-center text-muted">1</td>
+                <td>
+                  <a href="{{ p.api_url }}" target="_blank"
+                    >Shopviaclone22</a
+                  >
+                </td>
+                <td class="text-center w-10p">{{ p.balance }}</td>
+                <!--<td class="text-center w-15p">-->
+                <!--  {{ p.description }}-->
+                <!--</td>-->
+                <!--<td class="text-center w-10p">-->
+                <!--    {% if p.status == True %}-->
+                <!--  <label class="custom-switch">-->
+                <!--    <input-->
+                <!--      checked-->
+                <!--      type="checkbox"-->
+                <!--      name="item_status"-->
+                <!--      data-id="{{ p.id }}"-->
+                <!--      data-status="0"-->
+                <!--      data-action="/admin/provider/change_status/"-->
+                <!--      class="custom-switch-input ajaxToggleItemStatus"-->
+                <!--    />-->
+                <!--    <span class="custom-switch-indicator"></span>-->
+                <!--  </label>-->
+                <!--  {% else %}-->
+                <!--  <label class="custom-switch">-->
+                <!--    <input-->
+                <!--      type="checkbox"-->
+                <!--      name="item_status"-->
+                <!--      data-id="{{ p.id }}"-->
+                <!--      data-status="0"-->
+                <!--      data-action="/admin/provider/change_status/"-->
+                <!--      class="custom-switch-input ajaxToggleItemStatus"-->
+                <!--    />-->
+                <!--    <span class="custom-switch-indicator"></span>-->
+                <!--  </label>-->
+                <!--  {% endif %}-->
+                <!--</td>-->
+                <td class="text-center w-20p">
+                  <div class="btn-group">
+                    <a
+                      href="/admin/provider/update/"
+                      class="btn btn-icon btn-outline-info ajaxModal"
+                      data-confirm_ms=""
+                      data-toggle="tooltip"
+                      data-placement="bottom"
+                      title=""
+                      data-original-title="Edit"
+                    >
+                      <i class="fe fe-edit"></i> </a
+                    ><a
+                      href="/admin/provider/balance/{{ p.id }}"
+                      class="btn btn-icon btn-outline-info ajaxUpdateApiProvider"
+                      data-confirm_ms=""
+                      data-toggle="tooltip"
+                      data-placement="bottom"
+                      title=""
+                      data-original-title="Update balance"
+                    >
+                      <i class="fe fe-dollar-sign"></i> </a
+                    ><a
+                      href="/admin/provider/api-list/"
+                      class="btn btn-icon btn-outline-info ajaxUpdateApiProvider"
+                      data-confirm_ms=""
+                      data-toggle="tooltip"
+                      data-placement="bottom"
+                      title=""
+                      data-original-title="Update services"
+                    >
+                      <i class="fe fe-refresh-cw"></i> </a
+                    >
+                    <!--<a href="/admin/provider/services/{{ p.id }}" class="btn btn-icon btn-outline-info " data-confirm_ms="" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Services Lists">-->
+                    <!--        <i class="fe fe-list"></i>-->
+                    <!--</a>-->
+                  </div>
+                </td>
+              </tr>             
+              {% endfor %}
+              
+              {% for p in p %}
+              <tr class="tr_6c08835fc25dd0add2f1f6be7c828578">
+                <th class="text-center w-1">
+                  <div class="custom-controls-stacked">
+                    <label class="form-check"
+                      ><input
+                        type="checkbox"
+                        class="form-check-input check-item check_1"
+                        name="ids[]"
+                        value="1"
+                      /><span class="custom-control-label"></span>
+                    </label>
+                  </div>
+                </th>
+                <td class="text-center text-muted">2</td>
+                <td>
+                  <a href="{{ p.api_url }}" target="_blank"
+                    >Clonevn</a
+                  >
+                </td>
+                <td class="text-center w-10p">{{ p.balance }}</td>
+                <!--<td class="text-center w-15p">-->
+                <!--  {{ p.description }}-->
+                <!--</td>-->
+                <!--<td class="text-center w-10p">-->
+                <!--    {% if p.status == True %}-->
+                <!--  <label class="custom-switch">-->
+                <!--    <input-->
+                <!--      checked-->
+                <!--      type="checkbox"-->
+                <!--      name="item_status"-->
+                <!--      data-id="{{ p.id }}"-->
+                <!--      data-status="0"-->
+                <!--      data-action="/admin/provider/change_status/"-->
+                <!--      class="custom-switch-input ajaxToggleItemStatus"-->
+                <!--    />-->
+                <!--    <span class="custom-switch-indicator"></span>-->
+                <!--  </label>-->
+                <!--  {% else %}-->
+                <!--  <label class="custom-switch">-->
+                <!--    <input-->
+                <!--      type="checkbox"-->
+                <!--      name="item_status"-->
+                <!--      data-id="{{ p.id }}"-->
+                <!--      data-status="0"-->
+                <!--      data-action="/admin/provider/change_status/"-->
+                <!--      class="custom-switch-input ajaxToggleItemStatus"-->
+                <!--    />-->
+                <!--    <span class="custom-switch-indicator"></span>-->
+                <!--  </label>-->
+                <!--  {% endif %}-->
+                <!--</td>-->
+                <td class="text-center w-20p">
+                  <div class="btn-group">
+                    <a
+                      href="/admin/clone-shop-provider/update/"
+                      class="btn btn-icon btn-outline-info ajaxModal"
+                      data-confirm_ms=""
+                      data-toggle="tooltip"
+                      data-placement="bottom"
+                      title=""
+                      data-original-title="Edit"
+                    >
+                      <i class="fe fe-edit"></i> </a
+                    ><a
+                      href="/admin/clone-shop-provider/balance/1"
+                      class="btn btn-icon btn-outline-info ajaxUpdateApiProvider"
+                      data-confirm_ms=""
+                      data-toggle="tooltip"
+                      data-placement="bottom"
+                      title=""
+                      data-original-title="Update balance"
+                    >
+                      <i class="fe fe-dollar-sign"></i> </a
+                    ><a
+                      href="/admin/clone-shop-provider/api-list/"
+                      class="btn btn-icon btn-outline-info ajaxUpdateApiProvider"
+                      data-confirm_ms=""
+                      data-toggle="tooltip"
+                      data-placement="bottom"
+                      title=""
+                      data-original-title="Update services"
+                    >
+                      <i class="fe fe-refresh-cw"></i> </a
+                    >
+                    <!--<a href="/admin/provider/services/{{ p.id }}" class="btn btn-icon btn-outline-info " data-confirm_ms="" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Services Lists">-->
+                    <!--        <i class="fe fe-list"></i>-->
+                    <!--</a>-->
+                  </div>
+                </td>
+              </tr>             
+              {% endfor %}
+              
+              {% for p in s %}
+              <tr class="tr_6c08835fc25dd0add2f1f6be7c828578">
+                <th class="text-center w-1">
+                  <div class="custom-controls-stacked">
+                    <label class="form-check"
+                      ><input
+                        type="checkbox"
+                        class="form-check-input check-item check_1"
+                        name="ids[]"
+                        value="1"
+                      /><span class="custom-control-label"></span>
+                    </label>
+                  </div>
+                </th>
+                <td class="text-center text-muted">3</td>
+                <td>
+                  <a href="{{ p.api_url }}" target="_blank"
+                    >{{ p.name }}</a
+                  >
+                </td>
+                <td class="text-center w-10p">{{ p.balance }}</td>
+                <td class="text-center w-20p">
+                  <div class="btn-group">
+                    <a
+                      href="/admin/balance/us/"
+                      class="btn btn-icon btn-outline-info ajaxUpdateApiProvider"
+                      data-confirm_ms=""
+                      data-toggle="tooltip"
+                      data-placement="bottom"
+                      title=""
+                      data-original-title="Update balance"
+                    >
+                      <i class="fe fe-dollar-sign"></i> </a
+                    >
+                    <a
+                      href="/admin/sync_services/us/"
+                      class="btn btn-icon btn-outline-info ajaxModal"
+                      data-confirm_ms=""
+                      data-toggle="tooltip"
+                      data-placement="bottom"
+                      title=""
+                      data-original-title="Sync services">
+                      <i class="fe fe-refresh-cw"></i> </a>
+                    <!--<a href="/admin/provider/services/{{ p.id }}" class="btn btn-icon btn-outline-info " data-confirm_ms="" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Services Lists">-->
+                    <!--        <i class="fe fe-list"></i>-->
+                    <!--</a>-->
+                  </div>
+                </td>
+              </tr>             
+              {% endfor %} 
+              {% for p in a %}
+              <tr class="tr_6c08835fc25dd0add2f1f6be7c828578">
+                <th class="text-center w-1">
+                  <div class="custom-controls-stacked">
+                    <label class="form-check"
+                      ><input
+                        type="checkbox"
+                        class="form-check-input check-item check_1"
+                        name="ids[]"
+                        value="1"
+                      /><span class="custom-control-label"></span>
+                    </label>
+                  </div>
+                </th>
+                <td class="text-center text-muted">4</td>
+                <td>
+                  <a href="{{ p.api_url }}" target="_blank"
+                    >{{ p.name }}</a
+                  >
+                </td>
+                <td class="text-center w-10p">{{ p.balance }}</td>
+                <td class="text-center w-20p">
+                  <div class="btn-group">
+                    <a
+                      href="/admin/balance/all/"
+                      class="btn btn-icon btn-outline-info ajaxUpdateApiProvider"
+                      data-confirm_ms=""
+                      data-toggle="tooltip"
+                      data-placement="bottom"
+                      title=""
+                      data-original-title="Update balance"
+                    >
+                      <i class="fe fe-dollar-sign"></i> </a
+                    >
+                    <a
+                      href="/admin/sync-all/"
+                      class="btn btn-icon btn-outline-info ajaxModal"
+                      data-confirm_ms=""
+                      data-toggle="tooltip"
+                      data-placement="bottom"
+                      title=""
+                      data-original-title="Sync services">
+                      <i class="fe fe-refresh-cw"></i> </a>
+                    <!--<a href="/admin/provider/services/{{ kp.id }}" class="btn btn-icon btn-outline-info " data-confirm_ms="" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Services Lists">-->
+                    <!--        <i class="fe fe-list"></i>-->
+                    <!--</a>-->
+                  </div>
+                </td>
+              </tr>             
+              {% endfor %} 
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row" id="result_notification"></div>
+  
+</main>
+
+{% endblock content %}

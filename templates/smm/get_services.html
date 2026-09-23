@@ -1,0 +1,6 @@
+<select id="orderform-service" required name="service_id" class="form-control selecthem square">   
+    <option value="0" selected disabled>Select Service</option> 
+    {% for s in ser %}
+    <option value="{{ s.id }}" data-min="{{ s.min }}" data-max="{{ s.max }}" data-price="{{ s.rate }}">{{ s.name }}</option>
+    {% endfor %}
+</select>

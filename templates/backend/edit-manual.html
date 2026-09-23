@@ -1,0 +1,74 @@
+{% extends 'partials/bbase.html' %}
+{% load static %}
+{% load humanize %}
+{% block content %}
+<div class="container-fluid">
+
+    <!-- ========== Page Title Start ========== -->
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box">
+                <h4 class="mb-0">Edit Manual Payment</h4>
+                <ol class="breadcrumb mb-0">
+                    <li class="breadcrumb-item"><a href="/backend/manual/">Manual Payment</a></li>
+                    <li class="breadcrumb-item active">Edit Manual Payment</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+    <!-- ========== Page Title End ========== -->
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title">
+                Editing @{{ u.user.username }}'s Manual Order 
+            </h5>
+            <p class="card-subtitle">Careful and do not add comma to new balance in order to avoid error.</p>
+        </div>
+
+        <div class="card-body">
+
+            <div class="mb-3">
+                <form class="row g-3" method="POST">
+                    {% csrf_token %}
+                    <div class="col-md-4">
+                        <label for="validationDefault01" class="form-label">Username</label>
+                        <input type="text" class="form-control" id="validationDefault01" value="{{ u.user.username }}" readonly required="">
+                    </div>
+                    <div class="col-md-4">
+                        <label for="validationDefault02" class="form-label">Email Address</label>
+                        <input type="text" class="form-control" id="validationDefault02" value="{{ u.user.email }}" readonly required="">
+                    </div>
+                    
+                    <div class="col-md-4">
+                        <label for="validationDefault02" class="form-label">Old Status</label>
+                        <input type="text" class="form-control" id="validationDefault02" value="{{ u.status }}" readonly required="">
+                    </div>
+                    
+                    <div class="col-md-4">
+                        <label for="validationDefault02" class="form-label">New Status (Add amount to wallet if Status is changed to Approved)</label>
+                        <input type="text" class="form-control" id="validationDefault02" value="" name="status" required="">
+                    </div>
+                    <!--<div class="col-md-4">-->
+                    <!--    <label for="validationDefaultUsername" class="form-label">Old Balance</label>-->
+                    <!--    <div class="input-group">-->
+                    <!--        <span class="input-group-text" id="inputGroupPrepend2">₦</span>-->
+                    <!--        <input type="number" readonly class="form-control" value="{{ u.balance|floatformat:2|intcomma }}" id="validationDefaultUsername" aria-describedby="inputGroupPrepend2" required="">-->
+                    <!--    </div>-->
+                    <!--</div> -->
+                    <div class="col-md-4">
+                        <label for="validationDefaultUsername" class="form-label">Amount</label>
+                        <div class="input-group">
+                            <span class="input-group-text" id="inputGroupPrepend2">₦</span>
+                            <input type="number" class="form-control" id="validationDefaultUsername" name="new_balance" value="{{ u.amount|floatformat:2 }}" aria-describedby="inputGroupPrepend2" required="">
+                        </div>
+                    </div>                    
+                    <div class="col-12">
+                        <button class="btn btn-primary" type="submit">Submit form</button>
+                        <a href="/backend/delete-manual/{{ u.id }}" class="btn btn-primary">Delete</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>    
+</div>
+{% endblock content %}

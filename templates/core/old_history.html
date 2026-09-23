@@ -1,0 +1,290 @@
+{% load humanize %}
+
+<body class="color-light ">
+    <div id="loading">
+        <div id="loading-center">
+        </div>
+    </div>
+    <div class="wrapper">
+        {% include 'partials/base.html' %}
+<script>
+function changeLanguage(id) {
+    $.ajax({
+        url: "https://logsplace.com/ajaxs/client/changeLanguage.php",
+        method: "POST",
+        dataType: "JSON",
+        data: {
+            id: id
+        },
+        success: function(respone) {
+            if (respone.status == 'success') {
+                cuteToast({
+                    type: "success",
+                    message: respone.msg,
+                    timer: 5000
+                });
+                location.reload();
+            } else {
+                cuteAlert({
+                    type: "error",
+                    title: "Error",
+                    message: respone.msg,
+                    buttonText: "Okay"
+                });
+            }
+        },
+        error: function() {
+            alert(html(response));
+            history.back();
+        }
+    });
+}
+</script>
+<script>
+function changeCurrency(id) {
+    $.ajax({
+        url: "https://logsplace.com/ajaxs/client/changeCurrency.php",
+        method: "POST",
+        dataType: "JSON",
+        data: {
+            id: id
+        },
+        success: function(respone) {
+            if (respone.status == 'success') {
+                cuteToast({
+                    type: "success",
+                    message: respone.msg,
+                    timer: 5000
+                });
+                location.reload();
+            } else {
+                cuteAlert({
+                    type: "error",
+                    title: "Error",
+                    message: respone.msg,
+                    buttonText: "Okay"
+                });
+            }
+        },
+        error: function() {
+            alert(html(response));
+            history.back();
+        }
+    });
+}
+</script>
+
+<div style="padding-top:90px">
+<!-- Modal -->
+<div class="modal fade bd-example-modal-xl" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Order details #{{ logs.id }}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <textarea id="copyALL" rows="10" class="form-control" readonly="">{{ logs.log }}
+</textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" onclick="copy()" data-clipboard-target="#copyALL" class="btn btn-primary copy">Copy</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="content-page">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-6 text-left">
+                <div class="mb-3">
+                    <a href="https://logsplace.com/order" type="button" class="btn btn-danger btn-sm"><i class="fas fa-arrow-left mr-1"></i>Back</a>
+                </div>
+            </div>
+            <div class="col-lg-6 text-right">
+                <div class="mb-3">
+                    
+                                    </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between">
+                        <div class="header-title">
+                            <h4 class="card-title">Transaction History</h4>
+                        </div>
+                    </div>
+                                        <div class="card-body p-0">
+                                            <script>
+                                            $(document).ready(function () {
+                                                $("#DataTables_Table_ddd").DataTable({
+                                                    order: [[0, 'desc']]
+                                                });
+                                            });
+                                        </script>
+                        <div class="table-responsive">
+                            <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer"><div class="row"><div class="col-sm-12 col-md-6"><div class="dataTables_length" id="DataTables_Table_0_length"><label>Show <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" class="custom-select custom-select-sm form-control form-control-sm"><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select> entries</label></div></div><div class="col-sm-12 col-md-6"><div id="DataTables_Table_0_filter" class="dataTables_filter"><label>Search:<input type="search" class="form-control form-control-sm" placeholder="" aria-controls="DataTables_Table_0"></label></div></div></div><div class="row"><div class="col-sm-12">
+                                <table class="table data-table table-hover mb-0 dataTable no-footer" id="DataTables_Table_ddd" role="grid" aria-describedby="DataTables_Table_0_info">
+                                <thead class="table-color-heading">
+                                    <tr role="row"><th width="5%" class="sorting sorting_asc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-sort="ascending" aria-label="#: activate to sort column descending" style="width: 9.53125px;">#</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Resource Information: activate to sort column ascending" style="width: 461.672px;">Amount</th>
+                                    <th width="20%" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Action: activate to sort column ascending" style="width: 90.7969px;">Status</th></tr>
+                                </thead>
+                                <tbody>
+                                    {% for l in trans %}
+                                        <tr class="odd">
+                                        <td class="sorting_1">{{ l.id }}</td>
+                                        <td><textarea rows="1" class="form-control" id="logs-{{ l.id }}" readonly="">₦{{ l.amount|floatformat:2|intcomma }}</textarea></td>
+                                        <td>
+                                        <button type="button" class="copyButton btn btn-danger btn-sm copy" disabled data-id="{{ l.id }}"><i class="fas fa-copy mr-1"></i>{{ l.status }}</button>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                    </tbody>
+                            </table></div></div>
+                            </div>
+                        </div>
+                    </div>
+                                    </div>
+            </div>
+                    </div>
+    </div>
+</div>
+</div>
+
+</div>
+
+
+
+<!-- Wrapper End-->
+<footer class="iq-footer">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-6">
+                <ul class="list-inline mb-0">
+                    <li class="list-inline-item"><a href="https://logsplace.com/client/privacy-policy">Privacy Policy</a></li>
+                    <li class="list-inline-item"><a href="https://logsplace.com/rules">Terms of Use</a></li>
+                </ul>
+            </div>
+            <div class="col-lg-6 text-right">
+                <span class="mr-1">
+                    <!-- Copyright                    <script>
+                    document.write(new Date().getFullYear())
+                    </script>© <a href="#" class="">/shopviaclone22.com</a>
+                    All Rights Reserved |  -->
+                    Version <b style="color: red;">
+                        7.1.4                    </b> |
+                    USA <a target="_blank" href="https://t.me/Logsplace">Telegram</a>                </span>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<div class="switch">
+    <div class="circle"></div>
+</div>
+
+
+    <script src="cdn.jsdelivr.net/mojs/latest/mo.min.js"></script>
+    <script type="text/javascript">
+        const OPTS = {
+            fill: 'none',
+            radius: 25,
+            strokeWidth: {
+                50: 0
+            },
+            scale: {
+                0: 1
+            },
+            angle: {
+                'rand(-35, -70)': 0
+            },
+            duration: 500,
+            left: 0,
+            top: 0,
+            easing: 'cubic.out'
+        };
+
+        const circle1 = new mojs.Shape({
+            ...OPTS,
+            stroke: 'cyan',
+        });
+
+        const circle2 = new mojs.Shape({
+            ...OPTS,
+            radius: {
+                0: 15
+            },
+            strokeWidth: {
+                30: 0
+            },
+            stroke: 'magenta',
+            delay: 'rand(75, 150)'
+        });
+
+        document.addEventListener('click', function (e) {
+
+            circle1
+                .tune({
+                    x: e.pageX,
+                    y: e.pageY
+                })
+                .replay();
+
+            circle2
+                .tune({
+                    x: e.pageX,
+                    y: e.pageY
+                })
+                .replay();
+
+        });
+    </script>
+
+    <!-- <div id="showSpin" style="display: block; position: fixed; bottom: 40px; right: 25px; z-index: 1000; cursor: pointer; width: 8%;">
+        <div onclick="$('#showSpin').hide()" class="" style="
+    left: 100%;
+    position: absolute;
+">
+            <p style="font-size:20px;color:red;"><i class="fas fa-window-close"></i></p>
+        </div>
+        <a href="https://logsplace.com/client/spin">
+            <center><img class="animate__animated animate__heartBeat animate__infinite infinite" src="i.imgur.com/ZlYSYHD.gif" width="100%" style="">
+            </center>
+            <center class="solid" style="border-top-right-radius: 30px;
+    border-top-left-radius: 30px;
+    border-radius: 30px;
+    background: aquamarine;">
+            </center>
+        </a>
+    </div> -->
+<!-- Backend Bundle JavaScript -->
+<script src="/shopviaclone22.com/public/datum/assets/js/backend-bundle.min.js"></script>
+<!-- Chart Custom JavaScript -->
+<script src="/shopviaclone22.com/public/datum/assets/js/customizer.js"></script>
+<script src="/shopviaclone22.com/public/datum/assets/js/sidebar.js"></script>
+<!-- Flextree Javascript-->
+<script src="/shopviaclone22.com/public/datum/assets/js/flex-tree.min.js"></script>
+<script src="/shopviaclone22.com/public/datum/assets/js/tree.js"></script>
+<!-- Table Treeview JavaScript -->
+<script src="/shopviaclone22.com/public/datum/assets/js/table-treeview.js"></script>
+<!-- SweetAlert JavaScript -->
+<script src="/shopviaclone22.com/public/datum/assets/js/sweetalert.js"></script>
+<!-- Vectoe Map JavaScript -->
+<script src="/shopviaclone22.com/public/datum/assets/js/vector-map-custom.js"></script>
+<!-- Chart Custom JavaScript -->
+<script src="/shopviaclone22.com/public/datum/assets/js/chart-custom.js"></script>
+<script src="/shopviaclone22.com/public/datum/assets/js/charts/01.js"></script>
+<script src="/shopviaclone22.com/public/datum/assets/js/charts/02.js"></script>
+<!-- slider JavaScript -->
+<script src="/shopviaclone22.com/public/datum/assets/js/slider.js"></script>
+<!-- Emoji picker -->
+<script src="/shopviaclone22.com/public/datum/assets/vendor/emoji-picker-element/index.js" type="module"></script>
+<!-- app JavaScript -->
+<script src="/shopviaclone22.com/public/datum/assets/js/app.js"></script>
+<!-- Dev By CMSNT.CO | FB.COM/CMSNT.CO | ZALO.ME/0947838128 | MMO Solution -->
+<!-- Script Footer -->
+
+
+</body></html>

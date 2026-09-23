@@ -1,0 +1,263 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+{% block content %}
+
+<script>
+    function showToast() {
+        Toastify({
+            text: "This is a bottom popup message!",
+            duration: 2500, // Duration in milliseconds (2.5 seconds)
+            gravity: "bottom", // Position: 'top' or 'bottom'
+            position: "center", // Horizontal position: 'left', 'center', or 'right'
+            style: {
+                background: "linear-gradient(to right, #4CAF50, #81C784)", // Customize your background
+                color: "#fff"
+            }
+        }).showToast();
+    }
+</script>
+
+<!-- <button onclick="showToast()">Show Toast</button> -->
+
+
+<div class="my-3 my-md-5">
+    <div class="container">
+      <div class="d-md-none">
+                    </div>
+
+      
+<section class="add-funds m-t-30">   
+<div class="container-fluid">
+<div class="row justify-content-md-center" id="result_ajaxSearch">
+<div class="col-md-8">
+  <div class="card">
+    <div class="card-header d-flex align-items-center">
+      <div class="tabs-list">
+        <ul class="nav nav-tabs">
+                          <li class="m-t-10">
+            <a class="active show" data-toggle="tab" href="#flutterwave"><i class="fa fa-credit-card"></i> Automatic Transfer (Payment Point)</a>
+          </li>
+                        </ul>
+      </div>
+    </div>
+    {% if bank %}
+    <div class="card-body">
+      <div class="tab-content">
+                        <div id="flutterwave" class="tab-pane fade  in active show">
+            <div class="add-funds-form-content">
+<form id="theform" action="https://checkout.flutterwave.com/v3/hosted/pay" method="POST">
+    {% csrf_token %}
+    <input type="hidden" name="public_key" value="FLWPUBK-446b14baec26ddf2b1b7f1cf493853ff-X">
+    <input type="hidden" name="customer[email]" value="{{ user.email }}">
+    <input type="hidden" name="customer[name]" value="{{ user.username }}">
+    <input type="hidden" name="tx_ref" value="{{ ref }}">
+    <!-- <input type="hidden" name="tx_re" id="djkho_this" value="{{ check }}"> -->
+    <input type="hidden" name="redirect_url" value="https://honeysocialboost.com/payment/">
+    <input type="hidden" name="currency" value="NGN">
+    <input type="hidden" name="meta[source]" value="Honeysocialboost">
+<div class="row">
+<div class="col-md-12">
+
+  <div class="for-group text-center">
+    <img src="https://chokesms.com/img/bank-transfer.png" alt="2checkout icon">
+    <p class="p-t-10"><small>You can now make a bank transfer to your basedboost account number and your wallet will be funded automatically.</small></p>
+  </div>
+  {% for b in bank %}
+  <div class="form-group">
+    <label>Account Name</label>
+    <input class="form-control square" value="{{ b.account_name }}" id="thephone" type="text" name="amount" placeholder="" readonly>
+  </div> 
+
+  <div class="form-group">
+    <label>Account Number</label>
+    <input class="form-control square" value="{{ b.account_number }}" id="thephone" type="number" name="amount" placeholder="" readonly>
+  </div> 
+  
+  <div class="form-group">
+    <label>Bank Name</label>
+    <input class="form-control square" id="thephone" value="{{ b.bank_name }}" type="text" name="amount" placeholder="" readonly>
+  </div> 
+  {% endfor %}
+
+</div>  
+</div>
+</form>
+</div>
+          </div>  
+                    </div>
+    </div>
+    {% else %}
+    <div class="card-body">
+      <div class="tab-content">
+                        <div id="flutterwave" class="tab-pane fade  in active show">
+            <div class="add-funds-form-content">
+<form id="theform" action="https://checkout.flutterwave.com/v3/hosted/pay" method="POST">
+    {% csrf_token %}
+    <input type="hidden" name="public_key" value="FLWPUBK-446b14baec26ddf2b1b7f1cf493853ff-X">
+    <input type="hidden" name="customer[email]" value="{{ user.email }}">
+    <input type="hidden" name="customer[name]" value="{{ user.username }}">
+    <input type="hidden" name="tx_ref" value="{{ ref }}">
+    <!-- <input type="hidden" name="tx_re" id="do_this" value="{{ check }}"> -->
+    <input type="hidden" name="redirect_url" value="https://honeysocialboost.com/payment/">
+    <input type="hidden" name="currency" value="NGN">
+    <input type="hidden" name="meta[source]" value="Honeysocialboost">
+<div class="row">
+<div class="col-md-12">
+
+  <div class="for-group text-center">
+    <img src="https://chokesms.com/img/bank-transfer.png" alt="2checkout icon">
+    <p class="p-t-10"><small>You can now make a bank transfer to your basedboost account number and your wallet will be funded automatically.</small></p>
+  </div>
+
+  <div class="form-group">
+    <label>ENTER PHONE NUMBER HERE</label>
+    <input class="form-control square" id="thephone" type="number" name="amount" placeholder="ENTER PHONE NUMBER HERE">
+  </div> 
+  
+  <div class="form-actions left">
+    <input type="hidden" name="payment_id" value="190">
+    <input type="hidden" name="payment_method" value="flutterwave">
+    <button type="button" id="createacc" class="btn round btn-primary btn-min-width mr-1 mb-1">
+      Submit Request          </button>
+  </div>
+  
+  <script>
+    $(document).ready(function() {
+        $(document).on("click", "#createacc", function(){
+            let number = $("#thephone").val().trim(); // Get the latest value
+
+            // Validate phone number
+            if (!number || isNaN(number) || number.length < 11) {
+                alert('Please enter a valid phone number');
+                return;
+            }
+
+            // Corrected AJAX request
+            $.ajax({
+                url: "/paypoint/",
+                data: { "number": number },
+                success: function(response) {
+                    alert("Success!"); // Handle success
+                    window.location.reload();
+                },
+                error: function(xhr, status, error) {
+                    alert("Error: " + error); // Handle error
+                }
+            });
+        });
+    });
+</script>
+
+</div>  
+</div>
+</form>
+
+<script>
+    // if ($("#myCheckbox").prop("checked")) {
+    $(document).ready(function () {
+    $(document).on("click", "#makethepayment", function () {
+        let amount = $("#theamount").val()
+        if (amount < 500){
+            Toastify({
+                text: "The minimum amount is 500!",
+                duration: 2500, // Duration in milliseconds (2.5 seconds)
+                gravity: "bottom", // Position: 'top' or 'bottom'
+                position: "center", // Horizontal position: 'left', 'center', or 'right'
+                style: {
+                    background: "linear-gradient(to right, #4CAF50, #81C784)", // Customize your background
+                    color: "#fff"
+                }
+            }).showToast();
+        }
+        
+        if (amount >= 500 && !$("#thecheck").prop("checked")) {
+            Toastify({
+                text: "You must confirm to the conditions before paying!",
+                duration: 2500, // Duration in milliseconds (2.5 seconds)
+                gravity: "bottom", // Position: 'top' or 'bottom'
+                position: "center", // Horizontal position: 'left', 'center', or 'right'
+                style: {
+                    background: "linear-gradient(to right, #4CAF50, #81C784)", // Customize your background
+                    color: "#fff"
+                }
+            }).showToast();
+        }
+
+        if (amount >= 500 && $("#thecheck").prop("checked")) {
+            Toastify({
+                text: "Redirecting to Payment Page!",
+                duration: 2500, // Duration in milliseconds (2.5 seconds)
+                gravity: "bottom", // Position: 'top' or 'bottom'
+                position: "center", // Horizontal position: 'left', 'center', or 'right'
+                style: {
+                    background: "linear-gradient(to right, #4CAF50, #81C784)", // Customize your background
+                    color: "#fff"
+                }
+            }).showToast();
+            
+            $("#page-overlay").addClass("active");
+
+            setTimeout(function() {
+                console.log("3 seconds passed!");
+                $("#theform").submit()
+            }, 3000);
+        }
+        });
+    });
+</script>
+</div>
+          </div>  
+                    </div>
+    </div>
+    {% endif %}
+  </div>
+</div>
+</div>
+</div>
+</section>
+
+<style>
+.page-title h1{
+margin-bottom: 5px; }
+.page-title .border-line {
+height: 5px;
+width: 270px;
+background: #eca28d;
+background: -webkit-linear-gradient(45deg, #eca28d, #f98c6b) !important;
+background: -moz- oldlinear-gradient(45deg, #eca28d, #f98c6b) !important;
+background: -o-linear-gradient(45deg, #eca28d, #f98c6b) !important;
+background: linear-gradient(45deg, #eca28d, #f98c6b) !important;
+position: relative;
+border-radius: 30px; }
+.page-title .border-line::before {
+content: '';
+position: absolute;
+left: 0;
+top: -2.7px;
+height: 10px;
+width: 10px;
+border-radius: 50%;
+background: #ad2300;
+-webkit-animation-duration: 6s;
+animation-duration: 6s;
+-webkit-animation-timing-function: linear;
+animation-timing-function: linear;
+-webkit-animation-iteration-count: infinite;
+animation-iteration-count: infinite;
+-webkit-animation-name: moveIcon;
+animation-name: moveIcon; }
+
+@-webkit-keyframes moveIcon {
+from {
+-webkit-transform: translateX(0);
+}
+to { 
+-webkit-transform: translateX(215px);
+}
+}
+</style>
+
+
+    </div>
+  </div>
+{% endblock content %}

@@ -1,0 +1,54 @@
+{% load static %}
+
+<div id="main-modal-content">
+  <div class="modal-dialog modal-md" role="document">
+    <div class="modal-content">
+        <div class="modal-header bg-pantone">
+          <h4 class="modal-title"><i class="fa fa-edit"></i>Edit Log</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form action="/admin/log/update/{{ cat.id }}/" class="form actionForm" data-redirect="/admin/log" method="POST" accept-charset="utf-8">
+<input type="hidden" name="id" value="" />
+<input type="hidden" name="token" value="8bedbdd9cd9e51e20d379c5503ea337e" />
+        <div class="modal-body">
+          <div class="row justify-content-md-center">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+            </div>
+            <div class="col-md-6 col-sm-12 col-xs-12">
+              <div class="form-group">
+                <label>Qty</label>
+                <input
+                  type="number"
+                  name="qty"
+                  value="{{ cat.qty }}"
+                  class="form-control"
+                />
+              </div>
+            </div>
+            <div class="col-md-6 col-sm-12 col-xs-12">
+              <div class="form-group">
+                <label>Price</label>
+                <input
+                  type="number"
+                  name="price"
+                  value="{{ cat.price }}"
+                  class="form-control"
+                />
+              </div>
+            </div>
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea name="des" required class="form-control">{{ cat.description }}</textarea>
+
+                    </div>
+                </div> 
+                           </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary btn-min-width mr-1 mb-1">Save</button>
+          <button type="button" class="btn btn-dark" data-dismiss="modal">Close</button>
+        </div>
+        </form>    </div>
+  </div>
+</div>

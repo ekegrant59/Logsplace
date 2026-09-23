@@ -1,0 +1,117 @@
+{% load static %}
+<!DOCTYPE html><html><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta http-equiv="Content-Language" content="en">
+    <meta name="description" content="SmartPanel - #1 SMM Reseller Panel - Best SMM Panel for Resellers. Also well known for TOP SMM Panel and Cheap SMM Panel for all kind of Social Media Marketing Services. SMM Panel for Facebook, Instagram, YouTube and more services!">
+    <meta name="keywords" content="smm panel, SmartPanel, smm reseller panel, smm provider panel, reseller panel, instagram panel, resellerpanel, social media reseller panel, smmpanel, panelsmm, smm, panel, socialmedia, instagram reseller panel">
+    <title>SmartPanel - SMM Panel Reseller Tool</title>
+
+    <link rel="shortcut icon" type="image/x-icon" href="images/favicon.png">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <link rel="stylesheet" href="{% static 'backend/css/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i,500,500i,600,600i,700,700i&subset=latin-ext">
+    <!-- Dashboard Core -->
+    <link href="{% static 'backend/css/core.css' %}" rel="stylesheet">
+    <!-- toast -->
+    <link rel="stylesheet" type="text/css" href="{% static 'backend/css/jquery.toast.css' %}">
+    <link rel="stylesheet" href="{% static 'backend/css/colors.css' %}" id="theme-stylesheet">
+    <link href="{% static 'backend/css/util.css' %}" rel="stylesheet">
+    <link href="{% static 'backend/css/layout.css' %}" rel="stylesheet">
+    <script type="text/javascript">
+      var token = '17a1d3c034a4992aadc0eca4264cd121',
+          PATH  = '/',
+          BASE  = '/';
+      var    deleteItem = 'Are you sure you want to delete this item?';
+      var    deleteItems = 'Are you sure you want to delete all items?';
+    </script>
+  </head>
+  <body>
+
+    <div id="page-overlay" class="visible incoming">
+      <div class="loader-wrapper-outer">
+        <div class="loader-wrapper-inner">
+          <div class="lds-double-ring">
+            <div></div>
+            <div></div>
+            <div>
+              <div></div>
+            </div>
+            <div>
+              <div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="login-bg-image"></div>
+    <div class="page auth-login-form">
+      <div class="container h-100">
+          
+<div class="row h-100 align-items-center auth-form">
+  <div class="col-md-6 col-login mx-auto ">
+    <form class="card" data-redirect="/admin/users" method="POST">
+        {% csrf_token %}
+      <div class="card-body ">
+        <div class="card-title text-center">
+          <div class="site-logo mb-2">
+            <a href="/">
+              <img src="{% static 'backend/images/logo.png' %}" alt="website-logo" style="max-height: 50px;">
+            </a>
+          </div>
+          <h5>Login to your account</h5>
+        </div>
+        <div class="form-group">
+          <div class="input-icon mb-5">
+            <span class="input-icon-addon">
+              <i class="fe fe-mail"></i>
+            </span>
+            <input type="email" class="form-control" name="email" placeholder="E-mail" value="">
+          </div>    
+                
+          <div class="input-icon mb-5">
+            <span class="input-icon-addon">
+              <i class="fa fa-key"></i>
+            </span>
+            <input type="password" class="form-control" name="password" placeholder="Password" value="">
+          </div>  
+        </div>
+
+        
+        <div class="form-footer">
+          <input type="hidden" name="token" value="17a1d3c034a4992aadc0eca4264cd121">
+          <button type="submit" class="btn btn-primary btn-block">Login</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+      </div>
+    </div>
+
+    <script src="{% static 'backend/js/jquery-3.2.1.min.js' %}"></script>
+    <script src="{% static 'backend/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'backend/js/jquery.sparkline.min.js' %}"></script>
+    <script src="{% static 'backend/js/selectize.min.js' %}"></script>
+    <script src="{% static 'backend/js/jquery.tablesorter.min.js' %}"></script>
+    <script src="{% static 'backend/js/jquery-jvectormap-2.0.3.min.js' %}"></script>
+    <script src="{% static 'backend/js/jquery-jvectormap-de-merc.js' %}"></script>
+    <script src="{% static 'backend/js/jquery-jvectormap-world-mill.js' %}"></script>
+    <script src="{% static 'backend/js/circle-progress.min.js' %}"></script>
+    <script src="{% static 'backend/js/core.js' %}"></script>
+    <!-- toast -->
+    <script type="text/javascript" src="{% static 'backend/js/jquery.toast.js' %}"></script>
+    <!-- general JS -->
+    <script src="{% static 'backend/js/api.js' %}" async="" defer=""></script>
+    <script src="{% static 'backend/js/process.js' %}"></script>
+    <script src="{% static 'backend/js/general.js' %}"></script>
+  
+
+
+</body></html>

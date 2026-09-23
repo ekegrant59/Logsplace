@@ -1,0 +1,107 @@
+{% extends 'partials/backend.html' %}
+{% block content %}
+
+
+<main class="app-content">
+          
+<div class="page-title m-b-20">
+                <div class="row justify-content-between">
+                    <div class="col-md-6">
+                        <h1 class="page-title">
+                            <span class="fe fe-settings"></span> Settings
+                        </h1>
+                    </div>
+                    <div class="col-md-6">
+                        
+                    </div>
+                </div>
+            </div><div class="row settings justify-content-center">
+  <div class="col-md-12 col-lg-12">
+    <div class="row">
+      <div class="col-md-2 col-lg-2">
+        <div class="sidebar o-auto">
+        <div class="list-group list-group-transparent mb-0 mt-5">
+          <h5><span class="icon mr-3"><i class="fe fe-disc"></i></span>General setting</h5>
+        </div><div class="list-group list-group-transparent mb-0"><a href="/admin/settings/website_setting" class="list-group-item list-group-item-action "><span class="icon mr-3"><i class="fe fe-globe"></i></span>Website setting</a><a href="/admin/settings/website_logo" class="list-group-item list-group-item-action active"><span class="icon mr-3"><i class="fe fe-image"></i></span>Website logo</a><a href="/admin/settings/default" class="list-group-item list-group-item-action "><span class="icon mr-3"><i class="fe fe-box"></i></span>Default setting</a><a href="/admin/settings/template" class="list-group-item list-group-item-action "><span class="icon mr-3"><i class="fe fe-layout"></i></span>Template</a><a href="/admin/settings/cookie_policy" class="list-group-item list-group-item-action "><span class="icon mr-3"><i class="fe fe-bookmark"></i></span>Cookie policy</a><a href="/admin/settings/terms_policy" class="list-group-item list-group-item-action "><span class="icon mr-3"><i class="fe fe-award"></i></span>Terms policy</a><a href="/admin/settings/currency" class="list-group-item list-group-item-action "><span class="icon mr-3"><i class="fe fe-dollar-sign"></i></span>Currency</a><a href="/admin/settings/other" class="list-group-item list-group-item-action "><span class="icon mr-3"><i class="fe fe-command"></i></span>Other</a></div>
+        <div class="list-group list-group-transparent mb-0 mt-5">
+          <h5><span class="icon mr-3"><i class="fe fe-disc"></i></span>Email</h5>
+        </div><div class="list-group list-group-transparent mb-0"><a href="/admin/settings/email_setting" class="list-group-item list-group-item-action "><span class="icon mr-3"><i class="fe fe-mail"></i></span>Email setting</a><a href="/admin/settings/email_template" class="list-group-item list-group-item-action "><span class="icon mr-3"><i class="fe fe-file-text"></i></span>Email template</a></div>
+        <div class="list-group list-group-transparent mb-0 mt-5">
+          <h5><span class="icon mr-3"><i class="fe fe-disc"></i></span>Integrations</h5>
+        </div><div class="list-group list-group-transparent mb-0"><a href="/admin/settings/payment" class="list-group-item list-group-item-action "><span class="icon mr-3"><i class="fe fe-file-text"></i></span>Manual payments</a></div></div>      </div>
+      <div class="col-md-10 col-lg-10">
+        <div class="card content">
+  <div class="card-header">
+    <h3 class="card-title"><i class="fe fe-life-buoy"></i> Website Logo</h3>
+  </div>
+  <form action="" class="form" data-redirect="/admin/settings/website_logo" method="POST" accept-charset="utf-8" enctype="multipart/form-data">
+                                                                                            <input type="hidden" name="token" value="c676cee0a3250778e41d52227c4bdcb1">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-12 col-lg-12">
+          <div class="form-group">
+            <label class="form-label">Website favicon</label>
+            <div class="input-group">
+              <input type="text" name="website_favicon" readonly class="form-control" value="{{ web.favicon }}">
+              <span class="input-group-append">
+                <button class="btn btn-info" type="button">
+                  <i class="fe fe-image">
+                    <input class="settings_fileupload" type="file" name="website_favicon_image" multiple="">
+                  </i>
+                </button>
+              </span>
+            </div>
+          </div>  
+          <div class="form-group">
+            <label class="form-label">Website Logo</label>
+            <div class="input-group">
+              <input type="text" name="website_logo" readonly class="form-control" value="{{ web.logo }}">
+              <span class="input-group-append">
+                <button class="btn btn-info" type="button">
+                  <i class="fe fe-image">
+                    <input class="settings_fileupload" type="file" name="website_logo_image" multiple="">
+                  </i>
+                </button>
+              </span>
+            </div>
+          </div> 
+          <div class="form-group">
+            <label class="form-label">Website mark logo</label>
+            <div class="input-group">
+              <input type="text" name="website_logo_mark" readonly class="form-control" value="{{ web.mark_logo }}">
+              <span class="input-group-append">
+                <button class="btn btn-info" type="button">
+                  <i class="fe fe-image">
+                    <input class="settings_fileupload" type="file" name="website_logo_mark_image" multiple="">
+                  </i>
+                </button>
+              </span>
+            </div>
+          </div> 
+          <div class="form-group">
+            <label class="form-label">Website logo (white)</label>
+            <div class="input-group">
+              <input type="text" name="website_logo_white" readonly class="form-control" value="{{ web.logo_white }}">
+              <span class="input-group-append">
+                <button class="btn btn-info" type="button">
+                  <i class="fe fe-image">
+                    <input class="settings_fileupload" type="file" name="website_logo_white_image" multiple="">
+                  </i>
+                </button>
+              </span>
+            </div>
+          </div> 
+        </div>
+      </div>
+    </div>
+    <div class="card-footer text-end">
+      <button class="btn btn-primary btn-min-width text-uppercase">Save</button>
+    </div>
+  </form></div>
+      </div>
+    </div>
+  </div>
+</div>
+        </main>
+        
+{% endblock content %}

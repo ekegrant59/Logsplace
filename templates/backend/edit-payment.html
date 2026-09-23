@@ -1,0 +1,123 @@
+{% load static %}
+<div id="main-modal-content" class="payment-method-update-form">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-pantone">
+        <h4 class="modal-title"><i class="fa fa-edit"></i> Edit {{ pay.name }}</h4>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <form
+        action="/admin/payments/save/{{ pay.id }}"
+        class="form actionForm"
+        data-redirect="/admin/payments/save/{{ pay.id }}"
+        method="POST"
+        accept-charset="utf-8"
+      >
+        <input type="hidden" name="id" value="14" />
+        <input type="hidden" name="type" value="stripe" />
+        <input type="hidden" name="payment_params[type]" value="stripe" />
+        <input
+          type="hidden"
+          name="token"
+          value="94a0d658ce4f93ae357ca812154bbd8f"
+        />
+        <div class="modal-body">
+          <div class="row justify-content-md-center">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+              <div class="form-group">
+                <label>Method name</label>
+                <input
+                  type="text"
+                  name="name"
+                  value="{{ pay.name }}"
+                  class="form-control"
+                />
+              </div>
+            </div>
+            <div class="col-md-12 col-sm-12 col-xs-12">
+              <div class="form-group">
+                <label>Sort</label>
+                <input
+                  type="number"
+                  name="sort"
+                  value=""
+                  class="form-control"
+                />
+              </div>
+            </div>
+            <div class="col-md-6 col-sm-12 col-xs-12">
+              <div class="form-group">
+                <label>Minimum payment</label>
+                <input
+                  type="text"
+                  name="min"
+                  value="{{ pay.min }}"
+                  class="form-control"
+                />
+              </div>
+            </div>
+            <div class="col-md-6 col-sm-12 col-xs-12">
+              <div class="form-group">
+                <label>Maximum payment</label>
+                <input
+                  type="text"
+                  name="max"
+                  value="{{ pay.max }}"
+                  class="form-control"
+                />
+              </div>
+            </div>                                    
+          </div>
+          <fieldset class="form-fieldset row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+              <div class="form-group">
+                <label>Evironment</label>
+                <select
+                  name="payment_params[option][environment]"
+                  class="form-control"
+                >
+                  <option value="live">Live (Product)</option>                  
+                </select>
+              </div>
+            </div>
+            <!-- <div class="col-md-12 col-sm-12 col-xs-12">
+              <div class="form-group">
+                <label>Public key</label>
+                <input
+                  type="text"
+                  name="payment_params[option][public_key]"
+                  value=""
+                  class="form-control"
+                />
+              </div>
+            </div> -->
+            <div class="col-md-12 col-sm-12 col-xs-12">
+              <div class="form-group">
+                <label>Secret key</label>
+                <input
+                  type="text"
+                  name="key"
+                  value="{{ pay.key }}"
+                  class="form-control"
+                />
+              </div>
+            </div>
+          </fieldset>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary btn-min-width mr-1 mb-1">
+            Save
+          </button>
+          <button type="button" class="btn btn-dark" data-dismiss="modal">
+            Close
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

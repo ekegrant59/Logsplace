@@ -1,0 +1,33 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+
+# Django local state
+db.sqlite3
+*.sqlite3
+*.sqlite3.*
+*.bak
+
+# Logs
+*.log
+
+# Collected static (regenerate with collectstatic)
+staticfiles/
+
+# Redundant archives (the extracted directories are committed)
+static/*.zip
+static/sms-styles/*.zip
+
+# Orphaned git dir kept locally, never published
+.git.orphaned/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+
+# Local scratch
+tmp/

@@ -1,0 +1,30 @@
+<style type="text/css">
+    .body {
+        background: white;
+    }
+    .click_s {
+        width: 100%;
+        background: blue;
+        color: white;
+        text-decoration: none;
+    }
+    .click_s a {
+        color: white;
+        text-decoration: none;
+    }
+</style>
+
+
+<p>Hello {{ name }}</p>
+
+<p>We received a request to reset the password for your account with Logsplace!</p>
+
+<p>Before we begin we need to make sure that it is you. Please click on the link below to reset your password.</p>
+
+<!--<p>Click <a href="https://thesuftverify.com/user/reset-password/{{ unique }}/">here </a> to reset password</p>-->
+
+<div class="click_s" style="text-align: center;"><a href="https://logsplace.com/user/reset-password/{{ token }}/">Reset your password</a></div>
+
+<a href="https://logsplace.com/user/reset-password/{{ token }}/">https://logsplace.com/user/reset-password/{{ token }}/</a>
+
+<p>Developed by Teniteno1</p>

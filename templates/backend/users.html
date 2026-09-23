@@ -1,0 +1,394 @@
+{% extends 'partials/backend.html' %} {% load static %} {% load humanize %} 
+{% block content %}
+<main class="app-content">
+  <div class="page-title m-b-20">
+    <div class="row justify-content-between">
+      <div class="col-md-6">
+        <h1 class="page-title"><span class="fa fa-users"></span> Users</h1>
+      </div>
+      <!--<div class="col-md-6">-->
+      <!--  <div class="d-flex">-->
+      <!--    <a-->
+      <!--      href="/admin/users/update"-->
+      <!--      class="ml-auto btn btn-outline-primary ajaxModal"-->
+      <!--    >-->
+      <!--      <span class="fa fa-plus"></span>-->
+      <!--      Add new-->
+      <!--    </a>-->
+      <!--  </div>-->
+      <!--</div>-->
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">Filter</h3>
+          <div class="card-options">
+            <a
+              href="#"
+              class="card-options-collapse"
+              data-toggle="card-collapse"
+              ><i class="fa fa-chevron-up"></i
+            ></a>
+            <a href="#" class="card-options-remove" data-toggle="card-remove"
+              ><i class="fa fa-x"></i
+            ></a>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-8">
+              <div class="btn-group w-30 m-b-10">
+                <a href="/admin/users?status=3" class="btn"
+                  >All <span class="badge badge-pill bg-azure">{{ users.count }}</span></a
+                ><a href="/admin/users?status=1" class="btn"
+                  >Active <span class="badge badge-pill bg-indigo">{{ users.count }}</span></a
+                >
+              </div>
+            </div>
+            <div class="col-md-4 search-area">
+              <div class="form-group">
+                <div class="input-group">
+                  <input
+                    type="text"
+                    name="query"
+                    class="form-control"
+                    placeholder="Search for…"
+                    value=""
+                  />
+                  <select name="field" class="form-control" id="">
+                    <option value="email">Email</option>
+                    <!--<option value="first_name">First name</option>-->
+                    <!--<option value="last_name">Last name</option>-->
+                    <!--<option value="history_ip">History ip</option>-->
+                  </select>
+                  <button
+                    class="btn btn-primary btn-square btn-search"
+                    type="button"
+                  >
+                    <span class="fa fa-search"></span>
+                  </button>
+                  <button
+                    class="btn btn-outline-danger btn-square btn-clear d-none"
+                    data-toggle="tooltip"
+                    data-placement="bottom"
+                    title=""
+                    data-original-title="Clear"
+                    type="button"
+                  >
+                    <span class="fa fa-x"></span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12 col-xl-12">
+      <div class="card">
+        <!-- Card headers -->
+        <div class="card-header massAction">
+          <h3 class="card-title">Lists</h3>
+          <div
+            class="btnActions d-none btn-group"
+            role="group"
+            aria-label="Basic example"
+          >
+            <span class="btn btn-primary m-r-2 number-items-selected">
+              00 items selected</span
+            >
+            <div class="item-action dropdown action-options">
+              <button
+                type="button"
+                class="btn btn-outline-primary dropdown-toggle"
+                data-toggle="dropdown"
+              >
+                Actions <span class="fa fa-chevrons-down"></span>
+              </button>
+              <div class="dropdown-menu dropdown-menu-right">
+                <a
+                  href="/admin/users/bulk_action/delete"
+                  data-type="delete"
+                  class="dropdown-item ajaxActionOptions"
+                  ><i class="dropdown-icon fe fe-trash-2"></i> Delete</a
+                >
+              </div>
+            </div>
+          </div>
+          <div class="card-options">
+            <a
+              href="#"
+              class="card-options-collapse"
+              data-toggle="card-collapse"
+              ><i class="fa fa-chevron-up"></i
+            ></a>
+            <a href="#" class="card-options-remove" data-toggle="card-remove"
+              ><i class="fa fa-x"></i
+            ></a>
+          </div>
+        </div>
+        <div class="table-responsive">
+          <table
+            class="table table-hover table-bordered table-vcenter card-table"
+          >
+            <thead>
+              <tr>
+                <th class="text-center w-1">
+                  <div class="custom-controls-stacked">
+                    <label class="form-check"
+                      ><input
+                        type="checkbox"
+                        class="form-check-input check-items check-all"
+                        data-name="check_1"
+                      /><span class="custom-control-label"></span>
+                    </label>
+                  </div>
+                </th>
+                <th class="text-center w-1">No.</th>
+                <th class="">User Profile</th>
+                <th class="text-center">Balance</th>
+                <!--<th class="text-center">Custom rate</th>-->
+                <th class="text-center">Created</th>
+                <th class="text-center">Status</th>
+                <th class="text-center">action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for u in users %}
+              <tr class="tr_{{ u.user.id }}">
+                <th class="text-center w-1">
+                  <div class="custom-controls-stacked">
+                    <label class="form-check"
+                      ><input
+                        type="checkbox"
+                        class="form-check-input check-item check_1"
+                        name="ids[]"
+                        value="{{ u.user.id }}"
+                      /><span class="custom-control-label"></span>
+                    </label>
+                  </div>
+                </th>
+                <td class="text-center text-muted">{{ u.id }}</td>
+                <td>
+                  <div class="title"><h6>{{ u.user.username }}</h6></div>
+                  <div class="sub text-muted">
+                    {{ u.user.email }}
+                  </div>
+                </td>
+                <td class="text-center w-10p">{{ u.balance|floatformat:2|intcomma }}</td>
+                <!--<td class="text-center w-10p">-->
+                <!--  <button-->
+                <!--    type="button"-->
+                <!--    class="btn btn-square btn-outline-info btn-sm btnEditCustomRate"-->
+                <!--    data-action="/admin/users/custom_rate/{{ u.user.id }}"-->
+                <!--  >-->
+                <!--    <i class="fa fa-plus mr-2"></i>Custom Rate-->
+                <!--  </button>-->
+                <!--</td>-->
+                <td class="text-center w-15p">{{ u.user.date_joined }}</td>
+                <td class="text-center w-5p">
+                  <label class="custom-switch">
+                    <input
+                      type="checkbox"
+                      name="item_status"
+                      data-id="{{ u.user.id }}"
+                      data-status="1"
+                      data-action="/admin/users/change_status/"
+                      class="custom-switch-input ajaxToggleItemStatus"
+                      checked=""
+                    />
+                    <span class="custom-switch-indicator"></span>
+                  </label>
+                </td>
+                <td class="text-center w-5p">
+                  <div class="item-action dropdown">
+                    <a
+                      href="javascript:void(0)"
+                      data-toggle="dropdown"
+                      class="icon"
+                      ><i class="fe fe-more-vertical"></i
+                    ></a>
+                    <div class="dropdown-menu">
+                      <a
+                        href="/admin/users/add_funds/{{ u.id }}"
+                        class="dropdown-item ajaxModal"
+                        data-confirm_ms=""
+                        ><i class="dropdown-icon fa fa-dollar-sign"></i> Add
+                        Funds</a
+                      ><a
+                        href="/admin/users/delete/{{ u.user.id }}"
+                        class="dropdown-item ajaxDeleteItem"
+                        data-confirm_ms="Are you sure you want to delete this item"
+                        ><i class="dropdown-icon fe fe-trash-2"></i> Delete</a
+                      >
+                    </div>
+                  </div>
+                </td>
+              </tr>             
+              {% endfor %} 
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-12">
+      <div class="float-right">
+        <nav class="page-navigation" aria-label="navigation">
+          <ul class="pagination">
+  {# Previous Page Link #}
+  {% if page_obj.has_previous %}
+    <li class="page-item">
+      <a class="page-link" href="?{% if status %}status={{ status }}&amp;{% endif %}{% if query %}query={{ query }}&amp;field={{ field }}&amp;{% endif %}page=1">
+        <i class="fe fe-chevrons-left"></i>
+      </a>
+    </li>
+    <li class="page-item">
+      <a class="page-link" href="?{% if status %}status={{ status }}&amp;{% endif %}{% if query %}query={{ query }}&amp;field={{ field }}&amp;{% endif %}page={{ page_obj.previous_page_number }}">
+        <i class="fe fe-chevron-left"></i>
+      </a>
+    </li>
+  {% endif %}
+
+  {# Page Numbers #}
+  {% for num in page_obj.paginator.page_range %}
+    {% if num >= page_obj.number|add:'-2' and num <= page_obj.number|add:'2' %}
+      <li class="page-item {% if page_obj.number == num %}active{% endif %}">
+        <a class="page-link" href="?{% if status %}status={{ status }}&amp;{% endif %}{% if query %}query={{ query }}&amp;field={{ field }}&amp;{% endif %}page={{ num }}">
+          {{ num }}
+        </a>
+      </li>
+    {% endif %}
+  {% endfor %}
+
+  {# Next Page Link #}
+  {% if page_obj.has_next %}
+    <li class="page-item">
+      <a class="page-link" href="?{% if status %}status={{ status }}&amp;{% endif %}{% if query %}query={{ query }}&amp;field={{ field }}&amp;{% endif %}page={{ page_obj.next_page_number }}">
+        <i class="fe fe-chevron-right"></i>
+      </a>
+    </li>
+    <li class="page-item">
+      <a class="page-link" href="?{% if status %}status={{ status }}&amp;{% endif %}{% if query %}query={{ query }}&amp;field={{ field }}&amp;{% endif %}page={{ page_obj.paginator.num_pages }}">
+        <i class="fe fe-chevrons-right"></i>
+      </a>
+    </li>
+  {% endif %}
+</ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+
+  <div id="customRate" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Edit custom rates (ID: 1)</h4>
+          <button type="button" class="close" data-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <select name="service-id" class="select-service-item">
+                  <option
+                    value='{"service_id": "1189", "rate": "0.53", "name": "Instagram Likes [100 - 3K] [Instant] [Exclusive]"}'
+                    data-rate="1"
+                    data-data='{"rate": "0.53", "name": "Instagram Likes [100 - 3K] [Instant] [Exclusive]"}'
+                  >
+                    128 - Instagram Likes [100 - 3K] [Instant] [Exclusive]
+                    [$0.18]
+                  </option>
+                  <option
+                    value='{"service_id": "123", "rate": "0.78", "name": "Instagram Likes [100 - 3K] [Instant] [Exclusive]"}'
+                    data-rate="1"
+                    data-data='{"rate": "0.53", "name": "Instagram Likes [100 - 3K] [Instant] [Exclusive]"}'
+                  >
+                    123 - Instagram Likes [100 - 3K] [Instant] [Exclusive]
+                    [$0.18]
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="o-auto" style="height: 20rem">
+            <ul class="list-unstyled list-separated services-group-items">
+              <div class="s-items">
+                <li class="list-separated-item s-item">
+                  <div class="row align-items-center">
+                    <div class="col">111</div>
+                    <div class="col-md-7">
+                      Facebook [Real Relevant Comments - Custom Comments]
+                    </div>
+                    <div class="col-md-1">0.53</div>
+                    <div class="col-md-2">
+                      <input
+                        type="hidden"
+                        class="form-control"
+                        value="customRates[1123][price]"
+                      />
+                      <input type="text" class="form-control" />
+                    </div>
+                    <div class="col-md-1">
+                      <button
+                        class="btn btn-secondary btn-remove-item"
+                        type="button"
+                      >
+                        <i class="fa fa-trash-2"></i>
+                      </button>
+                    </div>
+                  </div>
+                </li>
+              </div>
+
+              <div class="s-item-more d-none">
+                <li class="list-separated-item s-item" id="item__serviceID__">
+                  <div class="row align-items-center">
+                    <div class="col">__serviceID__</div>
+                    <div class="col-md-7">__serviceName__</div>
+                    <div class="col-md-1">__serviceRate__</div>
+                    <div class="col-md-2">
+                      <input
+                        type="hidden"
+                        class="form-control"
+                        value="customRates[__serviceID__][rate_id]"
+                      />
+                      <input
+                        type="number"
+                        class="form-control"
+                        value="customRates[__serviceID__][price]"
+                      />
+                    </div>
+                    <div class="col-md-1">
+                      <button
+                        class="btn btn-secondary btn-remove-item"
+                        type="button"
+                      >
+                        <i class="fa fa-trash-2"></i>
+                      </button>
+                    </div>
+                  </div>
+                </li>
+              </div>
+            </ul>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+
+<div class="row" id="result_notification"></div>
+{% endblock content %}

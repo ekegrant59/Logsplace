@@ -1,0 +1,742 @@
+{% extends 'partials/smm-base.html' %}
+{% load static %}
+{% load humanize %}
+{% block content %}
+
+<style>
+    .select2-selection {
+        height: 45px !important;
+    }
+    .select2-results__option--highlighted {
+        background: purple !important;
+    }
+    .select2-search__field {
+      color: purple !important;
+    }
+    .auth input {
+      color: purple !important;
+    }
+</style>
+
+<!-- jQuery -->
+<!-- jQuery (Load First) -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Select2 CSS -->
+<link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+
+<!-- Select2 JS -->
+<script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.full.min.js"></script>
+
+<section id="statistic_wrap">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 col-md-6 col-12 mb-4 mb-md-4 mb-lg-0">
+          <div class="statistic_dt_card first_card h-100">
+            <div class="card_dt_body h-100">
+             <div class="left_content">
+              <div class="welcome_title">
+                <h3>Welcome to Logsplace</h3>
+                <p>
+                  Grow Bigger, They Follow Quicker!
+                </p>
+              </div>
+  
+              <div class="statistics">
+                <div class="sta_item">
+                  <div class="icon">
+                    <iconify-icon icon="solar:cart-bold-duotone"></iconify-icon>
+                  </div>
+                  <div class="sta_text">
+                    <h4>{{ total }}</h4>
+                    <p>Total Orders</p>
+                  </div>
+                </div>
+                <div class="devider">
+                  <div class="devider_line"></div>
+                </div>
+                <div class="sta_item">
+                  <div class="icon">
+                    <iconify-icon icon="heroicons-outline:currency-dollar"></iconify-icon>
+                  </div>
+                  <div class="sta_text">
+                    <h4>₦{{ spent|floatformat:2|intcomma }}</h4>
+                    <p>Total Spend</p>
+                  </div>
+                </div>
+              </div>
+             </div>
+              <div class="image_right">
+                <img src="https://storage.perfectcdn.com/770smr/b4u28ygmrl81cx8z.png" class="img-avatars" alt="">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-3 col-12 mb-4 mb-md-4 mb-lg-0">
+          <div class="statistic_dt_card  h-100">
+            <div class="card_dt_body  h-100">
+              <div class="user_infos_st">
+                <div class="user_avatar">
+                  <img src="https://storage.perfectcdn.com/770smr/3huo9rec5amxbk77.png" class="img-fluid" alt="">
+                </div>
+                <div class="user_infos">
+                  <p>Good Afternoon</p>
+                  <h4 class="text-primary">{{ request.user.username }} </h4>
+                </div>
+              </div>
+              <div class="divider_st"></div>
+              <div class="account_dd">
+                <div class="account_dd_info mb-2">
+                  <div class="account_dd_item ">
+                    <span>Balance</span>
+                    <span>₦{{ balance|floatformat:2|intcomma }}</span>
+                  </div>
+                  <a href="/wallet" class="dd_btn">
+                    <iconify-icon icon="ic:baseline-plus"></iconify-icon>
+                  </a>
+                </div>
+                <div class="account_dd_info">
+                  <div class="account_dd_item">
+                    <span>Points</span>
+                    <span> <span id="data_points">0.00</span> ≈ $<span id="data_balance">0.00</span></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-3 col-12 mb-4 mb-md-4 mb-lg-0">
+          <div class="statistic_dt_card third_card h-100">
+            <div class="card_dt_body h-100">
+              <div class="user_infos_st">
+                <div class="user_avatar">
+                  <iconify-icon icon="material-symbols:crown"></iconify-icon>
+                </div>
+                <div class="user_infos">
+                  <p>Account Status</p>
+                  <h4>New Reseller </h4>
+                </div>
+              </div>
+              <div class="divider_st"></div>
+              <div class="account_dd">
+                <p class="mb-2">
+                  The user level comes with 
+                  exclusive benefits.
+                </p>
+                <h4>
+                  Discount 0%
+                </h4>
+              </div>
+              <div class="crow_btm_card">
+                <!-- <img src="https://storage.perfectcdn.com/770smr/fjbyea2pmr2il6mf.png" alt=""> -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  
+  
+  <!-- social bar start -->
+  <section class="social-bar">
+    <div class="container">
+      <div class="row">
+        <div class="col-12 m-0 p-0">
+          <div id="socialMediaFilter">
+            <button type="button" class="btn_service_filter" data-bs-toggle="tooltip" data-bs-placement="top"
+                    data-bs-title="instagram" onclick="filterStarted('instagram')">
+              <span class="icon">
+                <iconify-icon icon="mdi:instagram"></iconify-icon>
+              </span>
+            </button>
+            <button type="button" class="btn_service_filter" data-bs-toggle="tooltip" data-bs-placement="top"
+                    data-bs-title="Facebook" onclick="filterStarted('facebook')">
+              <span class="icon">
+                <iconify-icon icon="ic:baseline-facebook"></iconify-icon>
+              </span>
+            </button>
+            <button type="button" class="btn_service_filter" data-bs-toggle="tooltip" data-bs-placement="top"
+                    data-bs-title="YouTube" onclick="filterStarted('youtube')">
+              <span class="icon">
+                <iconify-icon icon="mdi:youtube"></iconify-icon>
+              </span>
+            </button>
+  
+            <button type="button" class="btn_service_filter" data-bs-toggle="tooltip" data-bs-placement="top"
+                    data-bs-title="TikTok" onclick="filterStarted('tiktok')">
+              <span class="icon">
+                <iconify-icon icon="ic:baseline-tiktok"></iconify-icon>
+              </span>
+            </button>
+  
+            <button type="button" class="btn_service_filter" data-bs-toggle="tooltip" data-bs-placement="top"
+                    data-bs-title="Telegram" onclick="filterStarted('telegram')">
+              <span class="icon">
+                <iconify-icon icon="basil:telegram-outline"></iconify-icon>
+              </span>
+            </button>
+  
+            <button type="button" class="btn_service_filter" data-bs-toggle="tooltip" data-bs-placement="top"
+                    data-bs-title="X/Twitter" onclick="filterStarted('twitter')">
+              <span class="icon">
+                <iconify-icon icon="pajamas:twitter"></iconify-icon>
+              </span>
+            </button>
+            <button type="button" class="btn_service_filter" data-bs-toggle="tooltip" data-bs-placement="top"
+                    data-bs-title="Spotify" onclick="filterStarted('spotify')">
+              <span class="icon">
+                <iconify-icon icon="mdi:spotify"></iconify-icon>
+              </span>
+            </button>
+  
+            <button type="button" class="btn_service_filter" data-bs-toggle="tooltip" data-bs-placement="top"
+                    data-bs-title="soundcloud" onclick="filterStarted('soundcloud')">
+              <span class="icon">
+                <iconify-icon icon="mdi:soundcloud"></iconify-icon>
+              </span>
+            </button>
+            <button type="button" class="btn_service_filter" data-bs-toggle="tooltip" data-bs-placement="top"
+                    data-bs-title="Website" onclick="filterStarted('website')">
+              <span class="icon">
+                <iconify-icon icon="lets-icons:globe"></iconify-icon>
+              </span>
+            </button>
+  
+            <button type="button" class="btn_service_filter" data-bs-toggle="tooltip" data-bs-placement="top"
+                    data-bs-title="Rating" onclick="filterOthers()">
+              <span class="icon">
+                <iconify-icon icon="icon-park-outline:star-one"></iconify-icon>
+              </span>
+            </button>
+            <button type="button" class="btn_service_filter" data-bs-toggle="tooltip" data-bs-placement="top"
+                    data-bs-title="All Services" onclick="filterStarted('everything')">
+              <span class="icon">
+                <iconify-icon icon="mingcute:star-2-fill"></iconify-icon>
+              </span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- social bar end -->
+  
+  <!-- order-section start -->
+  <section class="order-section">
+    <div class="container">
+      <div id="order-section">
+        <div class="row">
+          <div class="col-lg-6 col-md-12 col-12" id="order_sec_left">
+            <div class="card mb-3 card_type_1">
+              <div class="card-header">
+                <ul class="nav nav-pills nav_menu_card" id="pills-tab" role="tablist">
+                  <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="pills-order-tab" data-bs-toggle="pill"
+                            data-bs-target="#pills-order" type="button" role="tab" aria-controls="pills-order"
+                            aria-selected="true">
+                      <div class="icon">
+                        <iconify-icon icon="mdi:cart"></iconify-icon>
+                      </div>
+                      <div class="text">
+                        New order
+                      </div>
+                    </button>
+                  </li>
+                  <!--<li class="nav-item" role="presentation">-->
+                  <!--  <button class="nav-link" id="pills-massorder-tab" data-bs-toggle="pill"-->
+                  <!--          data-bs-target="#pills-massorder" type="button" role="tab" aria-controls="pills-massorder"-->
+                  <!--          aria-selected="false" onclick="window.location.href='/massorder'">-->
+                  <!--    <div class="icon">-->
+                  <!--      <iconify-icon icon="fluent:box-checkmark-24-filled"></iconify-icon>-->
+                  <!--    </div>-->
+                  <!--    <div class="text">-->
+                  <!--      Mass Order-->
+                  <!--    </div>-->
+                  <!--  </button>-->
+                  <!--</li>-->
+                </ul>
+              </div>
+              <div class="card-body">
+                <div class="tab-content" id="pills-tabContent">
+                  <div class="tab-pane fade show active" id="pills-order" role="tabpanel"
+                       aria-labelledby="pills-order-tab" tabindex="0">
+                    <!-- New Order Form -->
+                    <form  action="/smm-place-order/" method="post"
+                          id="order-form">
+                          {% if messages %}
+                          {% for m in messages %}
+                          <div class="alert alert-dismissible alert-danger ">
+                            <!-- <button type="button" class="close" data-dismiss="alert">×</button> -->
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            {{ m }}
+                          </div>
+                          {% endfor %}
+                          {% endif %}
+                          {% csrf_token %}
+                          
+                          
+                          <div class="form-group">
+                        <label for="orderform-category" class="control-label">Platform</label>
+                        <select class="form-control selecthem" required id="orderform-platform">
+                          <option value="0" selected disabled>Select Platform</option>
+                           <option data-icon="fab fa-instagram"
+value="INSTAGRAM">INSTAGRAM</option>
+
+<option data-icon="fab fa-tiktok"
+value="TIKTOK">TIKTOK</option>
+
+<option data-icon="fab fa-twitter"
+value="TWITTER">TWITTER</option>
+
+<option data-icon="fab fa-facebook-square"
+value="FACEBOOK">FACEBOOK</option>
+
+<option data-icon="fab fa-telegram-plane"
+value="TELEGRAM">TELEGRAM</option>
+
+<option data-icon="fab fa-youtube"
+value="YOUTUBE">YOUTUBE</option>
+
+<option data-icon="https://i.imgur.com/CtTumct.png"
+value="TWITCH">TWITCH</option>
+
+<option data-icon="https://i.imgur.com/XKSG9dY.png"
+value="KICK">KICK</option>
+
+<option data-icon="https://i.imgur.com/WaKFWJr.png"
+value="REDDIT">REDDIT</option>
+
+<option data-icon="fab fa-whatsapp-square"
+value="WHATSAPP">WHATSAPP</option>
+
+<option data-icon="https://i.imgur.com/ZfiDqHZ.png"
+value="SNAPCHAT">SNAPCHAT</option>
+
+<option data-icon="fa fa-music"
+value="AUDIOMACK">AUDIOMACK</option>
+
+<option data-icon="fab fa-deezer"
+value="DEEZER">DEEZER</option>
+
+<option data-icon="https://i.imgur.com/hHWlwF9.png"
+value="BOOMPLAY">BOOMPLAY</option>
+
+<option data-icon="fab fa-soundcloud"
+value="SOUNDCLOUD">SOUNDCLOUD</option>
+
+<option data-icon="fab fa-spotify"
+value="SPOTIFY">SPOTIFY</option>
+
+<option data-icon="fas fa-globe"
+value="WEBSITE">WEBSITE</option>
+
+<option data-icon="fab fa-linkedin"
+value="LINKEDIN">LINKEDIN</option>
+
+<option data-icon="fas fa-list-alt"
+value="OTHERS">OTHERS</option>
+                                                </select>
+                      </div>
+                      
+                      
+                        <div class="form-group">
+                        <label for="orderform-category" class="control-label">Category</label>
+                        <select class="form-control selecthem" required id="orderform-category">
+                          <option value="0" selected disabled>Select Platform</option>
+                      <!--      {% for c in c %}-->
+                      <!--<option value="{{ c.id }}"  data-icon="">{{ c.name }}</option>-->
+                      <!--{% endfor %}-->
+                                                </select>
+                      </div>
+                                          <div class="form-group">
+                        <label for="service" class="control-label">Service</label>
+                        <select required name="service_id" class="form-control selecthem" id="orderform-service"></select>
+                      </div>
+  
+  
+                      <div id="fields"></div>
+
+                      <div class="form-group">
+                        <label for="charge" class="control-label">Link</label>
+                        <input type="text" name="singleUrl" class="form-control" id="" required value="" >
+                      </div>
+
+                      <div class="form-group">
+                        <label for="charge" class="control-label">Quantity</label>
+                        <input type="number" name="singleQuantity" class="form-control" readonly required id="qty" oninput="calculatePrice()" value="" >
+                        <small class="help-block min-max">Min: <small id="themin"></small> - Max: <small id="themax"></small></small>
+                      </div>
+  
+                      <div class="form-group">
+                        <label for="charge" class="control-label">Charge</label>
+                        <input type="text" class="form-control" id="charge" value="" readonly>
+                      </div>
+  
+                      
+                      
+                      <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+
+
+                    <script>
+                        $(document).ready(function() {
+                            $('.selecthem').select2({
+                                placeholder: "Select an Option",
+                            });
+                        });
+                    </script>
+                    
+                    <script>
+                       $('#orderform-platform').on('change', function() { 
+                           var selectedValue = $(this).val();  // Get the selected value
+                           console.log('Selected value: ' + selectedValue);  // Log the selected value
+                           
+                           $.ajax({
+                             url: `/services/get-service/`,
+                             data: {
+                                "platformProviders": selectedValue,
+                             },         
+                             success: function(res){
+                                $("#orderform-category").empty()
+                                $("#orderform-category").append(res)
+                                // $("#spinner").hide()
+                                console.log("Done");
+                                // tnext = $("#service_category_list").val()
+                                // var firstOptionValue = $("#service_category_list option").eq(0).val();
+                                // console.log(firstOptionValue);            
+                             },
+                           })
+                       });   
+                    </script>
+
+                    <script>
+                      $(document).ready(function (){
+                        $(document).on("change", "#orderform-category", function() {
+                          // id = $(this).val()
+                          id = $(this).find(':selected')
+                          real = id.val()
+                          console.log("This is the ID:", real);
+
+                          $.ajax({
+                            type: "GET",
+                            url: "/get-services/" + real,                    
+                            success: function(res){
+                              console.log("Done");
+                              // console.log(res);
+                              
+                              $("#orderform-service").empty()
+                              $("#orderform-service").html(res)
+                            }
+                          })
+                        })
+
+                        $(document).on("change", "#orderform-service", function() {
+                          // id = $(this).val()
+                          id = $(this).find(':selected')
+                          real = id.val()
+                          name = id.text()
+                          min = id.attr("data-min")
+                          max = id.attr("data-max")
+                          rate = id.attr("data-price")
+                          price = rate * 1000
+                          console.log("This is the ID:", real);
+                          console.log(min);
+                          console.log(rate);
+                          console.log(max);      
+                          $("#qty").removeAttr("readonly");
+                          $("#qty").attr("min", min).val(min)
+                          $("#qty").attr("max", max).val(max)
+                          $("#qty").val(0)
+
+                          $("#themin").text(min)
+                          $("#themax").text(max)
+                          $("#dmin").text(min)
+                          $("#dmax").text(max)
+                          $("#theprice").text(rate)
+                          $("#service_name").text(name)
+                          $("#takeforid").val(real)
+                        })
+                      })
+                    </script>
+                    
+
+                  <!--  <script>-->
+                  <!--    function calculatePrice() {-->
+                  <!--        let quantity = document.getElementById("qty").value;-->
+                  <!--        let price = document.getElementById("theprice").innerText;-->
+                  <!--        let min = document.getElementById("dmin").innerText;-->
+                  <!--        let pricePer1000 = price;-->
+                  <!--        if (min === 1){-->
+                  <!--            let pricePerPiece = pricePer1000;-->
+                  <!--        } else {-->
+                  <!--            let pricePerPiece = pricePer1000 / 1000;-->
+                  <!--        }-->
+                  <!--        let totalPrice = quantity * pricePerPiece;-->
+                  <!--        document.getElementById("charge").value = totalPrice || 0;-->
+                  <!--    }-->
+                  <!--</script>-->
+                  
+                  <script>
+                    function calculatePrice() {
+                        let quantity = document.getElementById("qty").value;
+                        let price = parseFloat(document.getElementById("theprice").innerText);
+                        let min = parseInt(document.getElementById("dmin").innerText);
+                        let pricePer1000 = price;
+                        let pricePerPiece;
+                        
+                        if (min === 1) {
+                            pricePerPiece = pricePer1000;  // For minimum quantity = 1
+                        } else {
+                            pricePerPiece = pricePer1000 / 1000;  // For other cases, price per piece
+                        }
+                        
+                        let totalPrice = quantity * pricePerPiece;
+                        document.getElementById("charge").value = totalPrice || 0;
+                    }
+                </script>
+
+                  
+                  
+                                        
+  
+                    <!-- ##### New Order Form -->
+                  </div>
+                  <div class="tab-pane fade" id="pills-massorder" role="tabpanel" aria-labelledby="pills-massorder-tab"
+                       tabindex="0">
+                    <div class="alert alert-danger">
+                      Redirecting to Mass Order Page, Please wait...
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+  
+          <div class="col-lg-6 col-md-12 col-12" id="order_sec_right">
+            <div class="card mb-3 card_type_1">
+              <div class="card-header">
+                <ul class="nav nav-pills nav_menu_card" id="pills-tab" role="tablist">
+                  <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="pills-details-tab" data-bs-toggle="pill"
+                            data-bs-target="#pills-details" type="button" role="tab" aria-controls="pills-details"
+                            aria-selected="true">
+                      <div class="icon">
+                        <iconify-icon icon="tabler:settings"></iconify-icon>
+                      </div>
+                      <div class="text">
+                        Service details
+                      </div>
+                    </button>
+                  </li>
+                  <!--<li class="nav-item" role="presentation">-->
+                  <!--  <button class="nav-link" id="pills-update-tab" data-bs-toggle="pill" data-bs-target="#pills-update"-->
+                  <!--          type="button" role="tab" aria-controls="pills-update" aria-selected="false">-->
+                  <!--    <div class="icon">-->
+                  <!--      <iconify-icon icon="ic:twotone-cloud"></iconify-icon>-->
+                  <!--    </div>-->
+                  <!--    <div class="text">-->
+                  <!--      Updates-->
+                  <!--    </div>-->
+                  <!--  </button>-->
+                  <!--</li>-->
+  
+                  <!--<li class="nav-item" role="presentation">-->
+                  <!--  <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact"-->
+                  <!--          type="button" role="tab" aria-controls="pills-contact" aria-selected="false">-->
+                  <!--    <div class="icon">-->
+                  <!--      <iconify-icon icon="f7:envelope-fill"></iconify-icon>-->
+                  <!--    </div>-->
+                  <!--    <div class="text">-->
+                  <!--      Contact Us-->
+                  <!--    </div>-->
+                  <!--  </button>-->
+                  <!--</li>-->
+                </ul>
+              </div>
+              <div class="card-body">
+                <div class="tab-content" id="pills-tabContent">
+                  <div class="tab-pane fade show active" id="pills-details" role="tabpanel"
+                       aria-labelledby="pills-details-tab" tabindex="0">
+  
+                    <div id="service_card">
+                      <div class="service_name">
+                        <h2>Service name</h2>
+                        <p><span id="service_name">-</span></p>
+                      </div>
+                      <div class="service_link">
+                        <h2>Price per 1000</h2>
+                        <p>
+                          <span class="text" id="theprice">-</span>
+                        </p>
+                      </div>
+                      <div class="service_meter">
+                        <div class="service_meter_box">
+                          <h2>Type</h2>
+                          <p><span id="thetype" class="text">-</span></p>
+                        </div>
+                        <div class="service_meter_box">
+                          <h2>Refill</h2>
+                          <p><span id="thefill" class="text">-</span></p>
+                        </div>
+                      </div>
+  
+                      <div class="service_meter">
+                        <div class="service_meter_box">
+                          <h2>MIN</h2>
+                          <p><span id="dmin" class="text">-</span></p>
+                        </div>
+                        <div class="service_meter_box">
+                          <h2>MAX</h2>
+                          <p><span class="text" id="dmax">-</span></p>
+                        </div>
+                      </div>
+  
+                      <div class="service_description">
+                        <h2>Description</h2>
+  
+                        <div id="service_descriptions" data-key="Rest of the description">
+                        </div>
+  
+                        <div class="form-group hidden fields" id="service_description" style="display: none;">
+                          <label for="service_description" class="control-label"></label>
+  
+                          <div class="panel-body border-solid border-rounded">
+                            
+                          </div>
+                        </div>
+                      </div>
+  
+                    </div>
+  
+                  </div>
+                  <!--<div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab"-->
+                  <!--     tabindex="0">-->
+                  <!--    <div id="service_card">-->
+                  <!--      <div class="service_name mb-3">-->
+                  <!--        <p class="text-white">-->
+                  <!--          👉 Need Help? We are always ready to help you in any of your needs! Choose the best way to get in touch and we'll contact you ASAP!-->
+                  <!--        </p>-->
+                  <!--      </div>-->
+                  <!--      <div class="row">-->
+                  <!--        <div class="col-lg-6 col-12 mb-1">-->
+                  <!--          <div class="new_contact_item">-->
+                  <!--            <div class="contact_top">-->
+                  <!--              <div class="icon">-->
+                  <!--                <i class="far fa-comments"></i>-->
+                  <!--              </div>-->
+                  <!--              <div class="text">Live Chat</div>-->
+                  <!--            </div>-->
+                  <!--            <div class="contact_text">-->
+                  <!--              <p>Response Time 05-30 Minutes</p>-->
+                  <!--              <a href="javascript:void(0)" id="open-chat" class="link chat_link">Chat Now</a>-->
+                  <!--            </div>-->
+                  <!--          </div>-->
+                  <!--        </div>-->
+                  <!--        <div class="col-lg-6 col-12 mb-1">-->
+                  <!--          <div class="new_contact_item">-->
+                  <!--            <div class="contact_top">-->
+                  <!--              <div class="icon">-->
+                  <!--                <i class="fas fa-headset"></i>-->
+                  <!--              </div>-->
+                  <!--              <div class="text">Support Ticket</div>-->
+                  <!--            </div>-->
+                  <!--            <div class="contact_text">-->
+                  <!--              <p>Response Time 15-60 Minutes</p>-->
+                  <!--              <a href="https://wa.me/2348068098800" class="link chat_link">Chat Now</a>-->
+                  <!--            </div>-->
+                  <!--          </div>-->
+                  <!--        </div>-->
+                  <!--        <div class="col-lg-6 col-12 mb-1">-->
+                  <!--          <div class="new_contact_item">-->
+                  <!--            <div class="contact_top">-->
+                  <!--              <div class="icon">-->
+                  <!--                <i class="fab fa-whatsapp"></i>-->
+                  <!--              </div>-->
+                  <!--              <div class="text">WhatsApp Payment Support</div>-->
+                  <!--            </div>-->
+                  <!--            <div class="contact_text">-->
+                  <!--              <p>Response Time 1-3 Hours</p>-->
+                  <!--              <a href="https://wa.me/2348068098800" target="_blank" class="link chat_link">Chat Now</a>-->
+                  <!--            </div>-->
+                  <!--          </div>-->
+                  <!--        </div>-->
+                  <!--        <div class="col-lg-6 col-12 mb-1">-->
+                  <!--          <div class="new_contact_item">-->
+                  <!--            <div class="contact_top">-->
+                  <!--              <div class="icon">-->
+                  <!--                <i class="fas fa-user-shield"></i>-->
+                  <!--              </div>-->
+                  <!--              <div class="text">Admin Support on Telegram</div>-->
+                  <!--            </div>-->
+                  <!--            <div class="contact_text">-->
+                  <!--              <p>Response Time 6-24 Hours</p>-->
+                  <!--              <a href="https://t.me/basedasfuck247" target="_blank" class="link chat_link">Chat Now</a>-->
+                  <!--            </div>-->
+                  <!--          </div>-->
+                  <!--        </div>-->
+                  <!--      </div>-->
+                  <!--      <div class="service_description" style="height: auto;min-height: auto;">-->
+                  <!--        <h2>WhatsApp Group Support</h2>-->
+                  <!--        <p>-->
+                  <!--          If you spent 500+ dollars, you can have direct access to our support staff. -->
+                  <!--        </p>-->
+                  <!--        <p>Please contact us : </p>-->
+                  <!--        <a href="https://wa.me/2348068098800" target="_blank" class="link chat_link">@Logsplace_admin</a>-->
+                  <!--      </div>-->
+                  <!--    </div>-->
+                  <!--</div>-->
+  
+                  <!--<div class="tab-pane fade" id="pills-update" role="tabpanel" aria-labelledby="pills-update-tab"-->
+                  <!--     tabindex="0">-->
+                  <!--    <div id="service_card">-->
+                  <!--      <div class="service_name mb-3">-->
+                  <!--        <p class="text-white">-->
+                  <!--          👉 Join our community on Telegram and WhatsApp to stay updated with our latest services and website updates! Connect, discuss, and get exclusive insights.-->
+                  <!--        </p>-->
+                  <!--      </div>-->
+                  <!--      <div class="row">-->
+                  <!--        <div class="col-lg-6 col-12 mb-1">-->
+                  <!--          <div class="new_contact_item">-->
+                  <!--            <div class="contact_top">-->
+                  <!--              <div class="icon">-->
+                  <!--                <i class="fab fa-telegram"></i>-->
+                  <!--              </div>-->
+                  <!--              <div class="text">Telegram</div>-->
+                  <!--            </div>-->
+                  <!--            <div class="contact_text">-->
+                  <!--              <p>Join to our telegram community</p>-->
+                  <!--              <a href="https://t.me/basedasfuck247" target="_blank" class="link chat_link">Join Now</a>-->
+                  <!--            </div>-->
+                  <!--          </div>-->
+                  <!--        </div>-->
+                  <!--        <div class="col-lg-6 col-12 mb-1">-->
+                  <!--          <div class="new_contact_item">-->
+                  <!--            <div class="contact_top">-->
+                  <!--              <div class="icon">-->
+                  <!--                <i class="fab fa-whatsapp"></i>-->
+                  <!--              </div>-->
+                  <!--              <div class="text">Whatsapp</div>-->
+                  <!--            </div>-->
+                  <!--            <div class="contact_text">-->
+                  <!--              <p>Join to our Whatsapp community</p>-->
+                  <!--              <a href="https://chat.whatsapp.com/FwGwWME2FeMFEtALfrBKlN" target="_blank" class="link chat_link">Join Now</a>-->
+                  <!--            </div>-->
+                  <!--          </div>-->
+                  <!--        </div>-->
+                  <!--      </div>-->
+                  <!--    </div>-->
+                  <!--</div>-->
+                  
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- order-section end -->
+
+{% endblock content %}

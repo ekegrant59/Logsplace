@@ -1,0 +1,426 @@
+{% extends 'partials/backend.html' %}
+{% load static %}
+{% load humanize %}
+{% block content %}
+
+    <main class="app-content">
+      
+<div class="row justify-content-center row-card statistics">
+<!-- header Statistic -->
+  <div class="col-sm-12">
+  <div class="row">
+              <div class="col-sm-6 col-lg-3 item">
+        <div class="card p-3">
+          <div class="d-flex align-items-center">
+            <span class="stamp stamp-md bg-success-gradient text-white mr-3">
+              <i class="fa fa-users"></i>
+            </span>
+            <div class="d-flex order-lg-2 ml-auto">
+              <div class="ml-2 d-lg-block text-right">
+                <h4 class="m-0 text-right number">{{ user.count }}</h4>
+                <small class="text-muted ">Total Users</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+              <div class="col-sm-6 col-lg-3 item">
+        <div class="card p-3">
+          <div class="d-flex align-items-center">
+            <span class="stamp stamp-md bg-info-gradient text-white mr-3">
+              <i class="fa fa-usd"></i>
+            </span>
+            <div class="d-flex order-lg-2 ml-auto">
+              <div class="ml-2 d-lg-block text-right">
+                <h4 class="m-0 text-right number">₦{{ spent|floatformat:2|intcomma }}</h4>
+                <small class="text-muted ">Total amount received</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+              <div class="col-sm-6 col-lg-3 item">
+        <div class="card p-3">
+          <div class="d-flex align-items-center">
+            <span class="stamp stamp-md bg-warning-gradient text-white mr-3">
+              <i class="fa fa-shopping-cart"></i>
+            </span>
+            <div class="d-flex order-lg-2 ml-auto">
+              <div class="ml-2 d-lg-block text-right">
+                <h4 class="m-0 text-right number">{{ order.count }}</h4>
+                <small class="text-muted ">Total  Orders</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+              <div class="col-sm-6 col-lg-3 item">
+        <div class="card p-3">
+          <div class="d-flex align-items-center">
+            <span class="stamp stamp-md bg-danger-gradient text-white mr-3">
+              <i class="fa fa-ticket"></i>
+            </span>
+            <div class="d-flex order-lg-2 ml-auto">
+              <div class="ml-2 d-lg-block text-right">
+                <h4 class="m-0 text-right number">3</h4>
+                <small class="text-muted ">Total  tickets</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+              <div class="col-sm-6 col-lg-3 item">
+        <div class="card p-3">
+          <div class="d-flex align-items-center">
+            <span class="stamp stamp-md bg-success-gradient text-white mr-3">
+              <i class="icon-fa fa fa-money"></i>
+            </span>
+            <div class="d-flex order-lg-2 ml-auto">
+              <div class="ml-2 d-lg-block text-right">
+                <h4 class="m-0 text-right number">₦{{ wall|floatformat:2|intcomma }}</h4>
+                <small class="text-muted ">Total  Users' Balance</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--        <div class="col-sm-6 col-lg-3 item">-->
+      <!--  <div class="card p-3">-->
+      <!--    <div class="d-flex align-items-center">-->
+      <!--      <span class="stamp stamp-md bg-info-gradient text-white mr-3">-->
+      <!--        <i class="icon-fa fa fa-balance-scale"></i>-->
+      <!--      </span>-->
+      <!--      <div class="d-flex order-lg-2 ml-auto">-->
+      <!--        <div class="ml-2 d-lg-block text-right">-->
+      <!--          <h4 class="m-0 text-right number">${{ api|floatformat:2|intcomma }}</h4>-->
+      <!--          <small class="text-muted ">Total  Providers'  balance</small>-->
+      <!--        </div>-->
+      <!--      </div>-->
+      <!--    </div>-->
+      <!--  </div>-->
+      <!--</div>-->
+      <!--        <div class="col-sm-6 col-lg-3 item">-->
+      <!--  <div class="card p-3">-->
+      <!--    <div class="d-flex align-items-center">-->
+      <!--      <span class="stamp stamp-md bg-warning-gradient text-white mr-3">-->
+      <!--        <i class="icon-fa fa fa-calculator"></i>-->
+      <!--      </span>-->
+      <!--      <div class="d-flex order-lg-2 ml-auto">-->
+      <!--        <div class="ml-2 d-lg-block text-right">-->
+      <!--          <h4 class="m-0 text-right number">₦{{ daily_profit|floatformat:2|intcomma }}</h4>-->
+      <!--          <small class="text-muted ">Total  Profit  Today</small>-->
+      <!--        </div>-->
+      <!--      </div>-->
+      <!--    </div>-->
+      <!--  </div>-->
+      <!--</div>-->
+      <!--        <div class="col-sm-6 col-lg-3 item">-->
+      <!--  <div class="card p-3">-->
+      <!--    <div class="d-flex align-items-center">-->
+      <!--      <span class="stamp stamp-md bg-danger-gradient text-white mr-3">-->
+      <!--        <i class="icon-fa fa fa-calculator"></i>-->
+      <!--      </span>-->
+      <!--      <div class="d-flex order-lg-2 ml-auto">-->
+      <!--        <div class="ml-2 d-lg-block text-right">-->
+      <!--          <h4 class="m-0 text-right number">₦{{ monthly_profit|floatformat:2|intcomma }}</h4>-->
+      <!--          <small class="text-muted ">Total  Profit  30  days</small>-->
+      <!--        </div>-->
+      <!--      </div>-->
+      <!--    </div>-->
+      <!--  </div>-->
+      <!--</div>-->
+          </div>
+</div>
+<!-- Chart Area -->
+<!--<div class="col-sm-12 charts">-->
+<!--<div class="card">-->
+<!--  <div class="card-header">-->
+<!--    <h3 class="card-title">Recent orders</h3>-->
+<!--  </div>-->
+<!--  <div class="row">-->
+<!--    <div class="col-sm-8">-->
+<!--      <div class="p-4 card">-->
+<!--        <div id="orders_chart_spline" style="height: 20rem;"></div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--    <div class="col-sm-4">-->
+<!--      <div class="p-4 card">-->
+<!--        <div id="orders_chart_pie" style="height: 20rem;"></div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+<!--</div>-->
+<!--<script>-->
+<!--$(document).ready(function(){-->
+<!--  Chart_template.chart_spline('#orders_chart_spline', {"time":["2025-01-28","2025-01-29","2025-01-30","2025-01-31","2025-02-01","2025-02-02","2025-02-03"],"Completed":["31","21","45","19","2",0,0],"Processing":[0,0,0,0,"37",0,0],"Canceled":["1","1","6",0,0,0,0],"Pending":[0,0,0,0,"27","13","5"],"Partial":[0,0,0,"1",0,0,0],"In progress":[0,0,0,0,"6",0,0]});-->
+<!--  Chart_template.chart_pie('#orders_chart_pie', {"Completed":{{ completed }},"Processing":{{ processing }},"Canceled":{{ canceled }},"Pending":{{ pending }},"Partial":{{ partial }},"In progress":{{ progress }}});-->
+<!--});-->
+<!--</script>-->
+
+<!-- Orders Logs -->
+  <div class="col-sm-12">
+  <div class="row">
+      <!--        <div class="col-sm-6 col-lg-3 item">-->
+      <!--  <div class="card p-3">-->
+      <!--    <div class="d-flex align-items-center">-->
+      <!--      <span class="stamp stamp-md text-primary mr-3">-->
+      <!--        <i class="fa fa-list"></i>-->
+      <!--      </span>-->
+      <!--      <div class="d-flex order-lg-2 ml-auto">-->
+      <!--        <div class="ml-2 d-lg-block text-right">-->
+      <!--          <h4 class="m-0 text-right number">{{ order.count }}</h4>-->
+      <!--          <small class="text-muted ">Total Orders</small>-->
+      <!--        </div>-->
+      <!--      </div>-->
+      <!--    </div>-->
+      <!--  </div>-->
+      <!--</div>-->
+      <!--        <div class="col-sm-6 col-lg-3 item">-->
+      <!--  <div class="card p-3">-->
+      <!--    <div class="d-flex align-items-center">-->
+      <!--      <span class="stamp stamp-md text-primary mr-3">-->
+      <!--        <i class="fa fa-check"></i>-->
+      <!--      </span>-->
+      <!--      <div class="d-flex order-lg-2 ml-auto">-->
+      <!--        <div class="ml-2 d-lg-block text-right">-->
+      <!--          <h4 class="m-0 text-right number">{{ completed }}</h4>-->
+      <!--          <small class="text-muted ">Completed</small>-->
+      <!--        </div>-->
+      <!--      </div>-->
+      <!--    </div>-->
+      <!--  </div>-->
+      <!--</div>-->
+      <!--        <div class="col-sm-6 col-lg-3 item">-->
+      <!--  <div class="card p-3">-->
+      <!--    <div class="d-flex align-items-center">-->
+      <!--      <span class="stamp stamp-md text-primary mr-3">-->
+      <!--        <i class="fe fe-trending-up"></i>-->
+      <!--      </span>-->
+      <!--      <div class="d-flex order-lg-2 ml-auto">-->
+      <!--        <div class="ml-2 d-lg-block text-right">-->
+      <!--          <h4 class="m-0 text-right number">{{ processing }}</h4>-->
+      <!--          <small class="text-muted ">Processing</small>-->
+      <!--        </div>-->
+      <!--      </div>-->
+      <!--    </div>-->
+      <!--  </div>-->
+      <!--</div>-->
+      <!--        <div class="col-sm-6 col-lg-3 item">-->
+      <!--  <div class="card p-3">-->
+      <!--    <div class="d-flex align-items-center">-->
+      <!--      <span class="stamp stamp-md text-primary mr-3">-->
+      <!--        <i class="fe fe-loader"></i>-->
+      <!--      </span>-->
+      <!--      <div class="d-flex order-lg-2 ml-auto">-->
+      <!--        <div class="ml-2 d-lg-block text-right">-->
+      <!--          <h4 class="m-0 text-right number">{{ progress }}</h4>-->
+      <!--          <small class="text-muted ">In progress</small>-->
+      <!--        </div>-->
+      <!--      </div>-->
+      <!--    </div>-->
+      <!--  </div>-->
+      <!--</div>-->
+      <!--        <div class="col-sm-6 col-lg-3 item">-->
+      <!--  <div class="card p-3">-->
+      <!--    <div class="d-flex align-items-center">-->
+      <!--      <span class="stamp stamp-md text-primary mr-3">-->
+      <!--        <i class="fa fa-pie-chart"></i>-->
+      <!--      </span>-->
+      <!--      <div class="d-flex order-lg-2 ml-auto">-->
+      <!--        <div class="ml-2 d-lg-block text-right">-->
+      <!--          <h4 class="m-0 text-right number">{{ pending }}</h4>-->
+      <!--          <small class="text-muted ">Pending</small>-->
+      <!--        </div>-->
+      <!--      </div>-->
+      <!--    </div>-->
+      <!--  </div>-->
+      <!--</div>-->
+      <!--        <div class="col-sm-6 col-lg-3 item">-->
+      <!--  <div class="card p-3">-->
+      <!--    <div class="d-flex align-items-center">-->
+      <!--      <span class="stamp stamp-md text-primary mr-3">-->
+      <!--        <i class="fa fa-hourglass-half"></i>-->
+      <!--      </span>-->
+      <!--      <div class="d-flex order-lg-2 ml-auto">-->
+      <!--        <div class="ml-2 d-lg-block text-right">-->
+      <!--          <h4 class="m-0 text-right number">{{ partial }}</h4>-->
+      <!--          <small class="text-muted ">Partial</small>-->
+      <!--        </div>-->
+      <!--      </div>-->
+      <!--    </div>-->
+      <!--  </div>-->
+      <!--</div>-->
+      <!--        <div class="col-sm-6 col-lg-3 item">-->
+      <!--  <div class="card p-3">-->
+      <!--    <div class="d-flex align-items-center">-->
+      <!--      <span class="stamp stamp-md text-primary mr-3">-->
+      <!--        <i class="fe fe-x-square"></i>-->
+      <!--      </span>-->
+      <!--      <div class="d-flex order-lg-2 ml-auto">-->
+      <!--        <div class="ml-2 d-lg-block text-right">-->
+      <!--          <h4 class="m-0 text-right number">{{ canceled }}</h4>-->
+      <!--          <small class="text-muted ">Canceled</small>-->
+      <!--        </div>-->
+      <!--      </div>-->
+      <!--    </div>-->
+      <!--  </div>-->
+      <!--</div>-->
+      <!--        <div class="col-sm-6 col-lg-3 item">-->
+      <!--  <div class="card p-3">-->
+      <!--    <div class="d-flex align-items-center">-->
+      <!--      <span class="stamp stamp-md text-primary mr-3">-->
+      <!--        <i class="fe fe-rotate-ccw"></i>-->
+      <!--      </span>-->
+      <!--      <div class="d-flex order-lg-2 ml-auto">-->
+      <!--        <div class="ml-2 d-lg-block text-right">-->
+      <!--          <h4 class="m-0 text-right number">{{ refunded }}</h4>-->
+      <!--          <small class="text-muted ">Refunded</small>-->
+      <!--        </div>-->
+      <!--      </div>-->
+      <!--    </div>-->
+      <!--  </div>-->
+      <!--</div>-->
+          </div>
+</div>
+</div>
+
+<div class="row">
+  <div class="col-md-12 col-xl-12">
+  <div class="card">
+    <div class="card-header">
+      <h3 class="card-title">Last Newest Users</h3>
+    </div>
+    <div class="table-responsive">
+      <table class="table table-hover table-bordered table-vcenter card-table">
+        <thead><tr><th class="">User Profile</th><th class="text-center">Balance</th><th class="text-center">history IP</th><th class="text-center">Created</th><th class="text-center">Status</th></tr></thead>            <tbody>
+          {% for u in new %}
+          <tr class="tr_448f3f0f1e301d7d92421db3c7f006a6">
+              <td>
+                <div class="title"><h6>{{ u.username }}</h6></div>
+                <div class="sub text-muted">{{ u.email }}</small></div>
+              </td>
+              <td class="text-center w-10p">₦{{ u.balance|floatformat:2|intcomma }}</td></td>
+              <td class="text-center text-muted w-15p">105.112.208.186</td>
+              <td class="text-center w-15p">{{ u.date_joined }}</td>
+              <td class="text-center w-5p"><span class="badge bg-indigo-lt">Active</span></td>
+            </tr>         
+            {% endfor %}                 
+                      </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+</div>
+<!--<div class="row">-->
+<!--<div class="col-md-12 col-xl-12">-->
+<!--  <div class="card">-->
+<!--    <div class="card-header">-->
+<!--      <h4 class="card-title">Top best sellers</h4>-->
+<!--      <div class="card-options">-->
+<!--        <a href="#" class="card-options-collapse" data-toggle="card-collapse"><i class="fa fa-chevron-up"></i></a>-->
+<!--        <a href="#" class="card-options-remove" data-toggle="card-remove"><i class="fa fa-x"></i></a>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--    <div class="table-responsive">-->
+<!--      <table class="table table-hover table-bordered table-vcenter card-table">-->
+<!--        <thead><tr><th class="text-center">Service ID</th><th class="">Name</th><th class="text-center">Total orders</th><th class="text-center">provider</th><th class="text-center">type</th><th class="text-center">Rate per 1k</th><th class="text-center">Min/Max</th><th class="text-center">description</th></tr></thead>            <tbody>-->
+<!--                          <tr class="tr_201e3edd936d224a9e00f4d3e3dfec2c">-->
+<!--              <td class="text-center w-5p text-muted">1543</td>-->
+<!--              <td>-->
+<!--                <div class="title">Telegram Mix Positive Reactions👎 😁 😢 💩 🤮 | Start: 0-1 Hour</div>-->
+<!--              </td>-->
+<!--              <td class="text-center w-5p"> 205</td>-->
+<!--              <td class="text-center w-10p  text-muted">-->
+<!--                smmtitan                    <div class="text-muted small">-->
+<!--                  8103                    </div>-->
+<!--              </td>-->
+<!--              <td class="text-center w-10p">-->
+<!--                default                  </td>-->
+<!--              <td class="text-center w-5p">-->
+<!--                <div>100.2</div>-->
+<!--                <small class="text-muted">0.0403</small>                  </td>-->
+<!--              <td class="text-center w-10p text-muted">10 / 50000</td>-->
+<!--              <td class="text-center w-5p"> </td>-->
+<!--            </tr>-->
+<!--                          <tr class="tr_c058ee5f05e5bad35c2dac9ddbceef97">-->
+<!--              <td class="text-center w-5p text-muted">524</td>-->
+<!--              <td>-->
+<!--                <div class="title">TikTok Likes | 200K | Cancel Enable | NR | 0-10 Min | 50K/Day</div>-->
+<!--              </td>-->
+<!--              <td class="text-center w-5p"> 127</td>-->
+<!--              <td class="text-center w-10p  text-muted">-->
+<!--                smmtitan                    <div class="text-muted small">-->
+<!--                  8766                    </div>-->
+<!--              </td>-->
+<!--              <td class="text-center w-10p">-->
+<!--                default                  </td>-->
+<!--              <td class="text-center w-5p">-->
+<!--                <div>167</div>-->
+<!--                <small class="text-muted">0.0633</small>                  </td>-->
+<!--              <td class="text-center w-10p text-muted">10 / 200000</td>-->
+<!--              <td class="text-center w-5p"> </td>-->
+<!--            </tr>-->
+<!--                          <tr class="tr_5f96cb5bdd66260fd6e3ca85815ac61f">-->
+<!--              <td class="text-center w-5p text-muted">2323</td>-->
+<!--              <td>-->
+<!--                <div class="title">Telegram Reactions Positive | 👍🤩🔥❤️🥰 | Start: Instant | Speed: Fast | Lifetime Guaranteed | Non Drop | MAX 5M</div>-->
+<!--              </td>-->
+<!--              <td class="text-center w-5p"> 99</td>-->
+<!--              <td class="text-center w-10p  text-muted">-->
+<!--                smmtitan                    <div class="text-muted small">-->
+<!--                  3767                    </div>-->
+<!--              </td>-->
+<!--              <td class="text-center w-10p">-->
+<!--                default                  </td>-->
+<!--              <td class="text-center w-5p">-->
+<!--                <div>233.8</div>-->
+<!--                <small class="text-muted">0.09</small>                  </td>-->
+<!--              <td class="text-center w-10p text-muted">10 / 50000</td>-->
+<!--              <td class="text-center w-5p"> </td>-->
+<!--            </tr>-->
+<!--                          <tr class="tr_19398af44c471e9eeddbca34905ca798">-->
+<!--              <td class="text-center w-5p text-muted">475</td>-->
+<!--              <td>-->
+<!--                <div class="title">TikTok Video Views [ Max Unlimited ] | Instant Start | Day 100M ⚡</div>-->
+<!--              </td>-->
+<!--              <td class="text-center w-5p"> 95</td>-->
+<!--              <td class="text-center w-10p  text-muted">-->
+<!--                smmtitan                    <div class="text-muted small">-->
+<!--                  9431                    </div>-->
+<!--              </td>-->
+<!--              <td class="text-center w-10p">-->
+<!--                default                  </td>-->
+<!--              <td class="text-center w-5p">-->
+<!--                <div>5.8784</div>-->
+<!--                <small class="text-muted">0.0022</small>                  </td>-->
+<!--              <td class="text-center w-10p text-muted">100 / 2147483647</td>-->
+<!--              <td class="text-center w-5p"> </td>-->
+<!--            </tr>-->
+<!--                          <tr class="tr_93066a909fd555928eb5f6ae8a318b32">-->
+<!--              <td class="text-center w-5p text-muted">535</td>-->
+<!--              <td>-->
+<!--                <div class="title">TikTok Likes + Views [ Worldwide 🌎] [ Max 1M ] | 𝗛𝗤+𝗥𝗘𝗔𝗟 | Non Drop | Cancel Enable | NR ⚠️ | Day 100K ⚡️</div>-->
+<!--              </td>-->
+<!--              <td class="text-center w-5p"> 66</td>-->
+<!--              <td class="text-center w-10p  text-muted">-->
+<!--                smmtitan                    <div class="text-muted small">-->
+<!--                  8771                    </div>-->
+<!--              </td>-->
+<!--              <td class="text-center w-10p">-->
+<!--                default                  </td>-->
+<!--              <td class="text-center w-5p">-->
+<!--                <div>400.8</div>-->
+<!--                <small class="text-muted">0.153</small>                  </td>-->
+<!--              <td class="text-center w-10p text-muted">10 / 1000000</td>-->
+<!--              <td class="text-center w-5p"> </td>-->
+<!--            </tr>-->
+<!--                      </tbody>-->
+<!--      </table>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+<!--</div>-->
+    </main>
+
+{% endblock content %}

@@ -1,0 +1,667 @@
+{% load static %}
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+    <title>Logsplace - Premium Digital Marketplace</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer="" src="{% static 'js/cdn.min.js' %}"></script>
+    <!--<script type="text/javascript">window.$crisp=[];window.CRISP_WEBSITE_ID="8617ed6e-41e2-4c66-8e45-b45ac0748921";(function(){d=document;s=d.createElement("script");s.src="https://client.crisp.chat/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);})();</script>-->
+    <link rel="stylesheet" href="{% static 'css/all.min.css' %}">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+        * { font-family: 'Inter', sans-serif; }
+        [x-cloak] { display: none; }
+
+        .gradient-bg {
+            background: linear-gradient(135deg, #ff6b35 0%, #f7931e 50%, #ff6b35 100%);
+            background-size: 200% 200%;
+            animation: gradientShift 6s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .glass-effect {
+            backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .dark .glass-effect {
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .pulse-glow {
+            animation: pulseGlow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes pulseGlow {
+            from { box-shadow: 0 0 20px rgba(255, 107, 53, 0.4); }
+            to { box-shadow: 0 0 40px rgba(255, 107, 53, 0.8); }
+        }
+
+        .slide-in-up {
+            animation: slideInUp 0.8s ease-out forwards;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        @keyframes slideInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hover-lift {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .hover-lift:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .dark .hover-lift:hover {
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero-pattern {
+            background-image: 
+                radial-gradient(circle at 25% 25%, rgba(255, 107, 53, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 75% 75%, rgba(247, 147, 30, 0.1) 0%, transparent 50%);
+        }
+
+        .feature-card {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 107, 53, 0.1), transparent);
+            transition: left 0.6s;
+        }
+
+        .feature-card:hover::before {
+            left: 100%;
+        }
+
+        .text-gradient {
+            background: linear-gradient(135deg, #ff6b35, #f7931e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .number-counter {
+            font-feature-settings: 'tnum';
+        }
+    </style>
+</head>
+
+<body x-data="{ 
+        dark: localStorage.getItem('dark') === 'true',
+        menuOpen: false,
+        scrolled: false,
+        featuresVisible: false,
+        statsVisible: false
+    }" x-init="
+        // Sync dark mode with localStorage
+        document.documentElement.classList.toggle('dark', dark);
+        $watch('dark', val => {
+            localStorage.setItem('dark', val);
+            document.documentElement.classList.toggle('dark', val);
+        });
+
+        // Lock scroll when menu is open
+        $watch('menuOpen', val => {
+            document.body.style.overflow = val ? 'hidden' : 'auto';
+        });
+
+        // Scroll listener for triggering animations
+        window.addEventListener('scroll', () => {
+            scrolled = window.scrollY > 50;
+
+            const featuresEl = document.getElementById('features');
+            const statsEl = document.getElementById('stats');
+
+            if (featuresEl) {
+                const rect = featuresEl.getBoundingClientRect();
+                featuresVisible = rect.top < window.innerHeight * 0.8;
+            }
+            if (statsEl) {
+                const rect = statsEl.getBoundingClientRect();
+                statsVisible = rect.top < window.innerHeight * 0.8;
+            }
+        });
+    " class="bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-100 transition-all duration-500 ease-in-out overflow-x-hidden">
+
+
+
+<!-- NAVBAR -->
+<header class="fixed top-0 w-full z-50 transition-all duration-300" :class="scrolled ? 'glass-effect shadow-2xl' : 'bg-transparent'">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+        <!-- Brand -->
+        <div class="flex items-center space-x-3 group">
+            <div class="w-10 h-10 gradient-bg rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+                <!--<i class="fas fa-gem text-white text-lg"></i>-->
+                <img src="https://logsplace.com/static/images/logo.png" alt="Logsplace Logo" class="w-full rounded-2xl shadow-2xl">
+            </div>
+            <span class="font-bold text-2xl text-gradient">Logsplace</span>
+        </div>
+
+        <!-- Desktop Nav -->
+        <nav class="hidden md:flex items-center space-x-8">
+            <a href="#" class="text-sm font-medium hover:text-orange-500 transition-colors duration-300 relative group">
+                Home
+                <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-orange-500 group-hover:w-full transition-all duration-300"></span>
+            </a>
+            <a href="#about" class="text-sm font-medium hover:text-orange-500 transition-colors duration-300 relative group">
+                About
+                <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-orange-500 group-hover:w-full transition-all duration-300"></span>
+            </a>
+            <a href="#features" class="text-sm font-medium hover:text-orange-500 transition-colors duration-300 relative group">
+                Features
+                <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-orange-500 group-hover:w-full transition-all duration-300"></span>
+            </a>
+            <a href="#how-it-works" class="text-sm font-medium hover:text-orange-500 transition-colors duration-300 relative group">
+                How it Works
+                <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-orange-500 group-hover:w-full transition-all duration-300"></span>
+            </a>
+            <a href="#merchant" class="text-sm font-medium hover:text-orange-500 transition-colors duration-300 relative group">
+                Merchant
+                <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-orange-500 group-hover:w-full transition-all duration-300"></span>
+            </a>
+            <button @click="dark = !dark" class="w-10 h-10 glass-effect rounded-full flex items-center justify-center hover:scale-110 transition-all duration-300">
+                <i :class="dark ? 'fas fa-sun text-yellow-400' : 'fas fa-moon text-gray-600'"></i>
+            </button>
+            <a href="/user/signin/" class="gradient-bg text-white px-6 py-2.5 rounded-full text-sm font-semibold hover:scale-105 transition-all duration-300 shadow-lg pulse-glow">
+                Login
+            </a>
+            <a href="/user/signup/" class="gradient-bg text-white px-6 py-2.5 rounded-full text-sm font-semibold hover:scale-105 transition-all duration-300 shadow-lg pulse-glow">
+                Register
+            </a>
+        </nav>
+
+        <!-- Mobile Nav Toggle -->
+        <div class="md:hidden flex items-center space-x-3">
+            <button @click="dark = !dark" class="w-10 h-10 glass-effect rounded-full flex items-center justify-center">
+                <i :class="dark ? 'fas fa-sun text-yellow-400' : 'fas fa-moon text-gray-600'"></i>
+            </button>
+            <button @click="menuOpen = !menuOpen" class="text-gray-600 dark:text-gray-300 hover:scale-110 transition-transform">
+                <i class="fas fa-bars text-2xl"></i>
+            </button>
+        </div>
+    </div>
+<!-- Fullscreen Overlay Mobile Menu -->
+<div x-cloak="" x-show="menuOpen" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" class="fixed inset-0 z-50 flex md:hidden">
+    <!-- Backdrop -->
+    <div class="flex-1 bg-black bg-opacity-50 backdrop-blur-sm" @click="menuOpen = false"></div>
+
+    <!-- Slide-in Menu Panel -->
+    <div @click.away="menuOpen = false" x-transition:enter="transition ease-out duration-300 transform" x-transition:enter-start="translate-x-full" x-transition:enter-end="translate-x-0" x-transition:leave="transition ease-in duration-200 transform" x-transition:leave-start="translate-x-0" x-transition:leave-end="translate-x-full" class="w-4/5 max-w-sm min-h-screen bg-white dark:bg-gray-900 px-6 py-8 space-y-6 overflow-y-auto shadow-2xl rounded-l-2xl">
+        <!-- Header -->
+        <div class="flex justify-between items-center mb-6">
+            <h2 class="text-lg font-bold text-orange-600 dark:text-orange-400">Menu</h2>
+            <button @click="menuOpen = false">
+                <i class="fas fa-times text-xl text-gray-700 dark:text-gray-300"></i>
+            </button>
+        </div>
+
+        <!-- Nav Links -->
+        <nav class="space-y-4 text-gray-800 dark:text-gray-200">
+            <a href="#about" @click="menuOpen = false" class="block font-medium hover:text-orange-500">About</a>
+            <a href="#features" @click="menuOpen = false" class="block font-medium hover:text-orange-500">Features</a>
+            <a href="#how-it-works" @click="menuOpen = false" class="block font-medium hover:text-orange-500">How it Works</a>
+            <a href="#merchant" @click="menuOpen = false" class="block font-medium hover:text-orange-500">Merchant</a>
+        </nav>
+
+        <!-- Login/Register -->
+        <div class="pt-6 border-t border-gray-200 dark:border-gray-700 space-y-4">
+            <a href="/user/signin/" class="block text-center gradient-bg text-white py-3 rounded-full font-semibold shadow-md hover:scale-105 transition">Login</a>
+            <a href="/user/signup/" class="block text-center gradient-bg text-white py-3 rounded-full font-semibold shadow-md hover:scale-105 transition">Register</a>
+        </div>
+    </div>
+</div>
+
+
+
+</header>
+
+
+<!-- HERO -->
+<section class="min-h-screen flex items-center justify-center hero-pattern relative overflow-hidden pt-20">
+    <!-- Floating Elements -->
+    <div class="absolute top-20 left-10 w-20 h-20 gradient-bg rounded-full opacity-20 floating" style="animation-delay: -2s;"></div>
+    <div class="absolute top-40 right-20 w-16 h-16 bg-orange-400 rounded-full opacity-10 floating" style="animation-delay: -4s;"></div>
+    <div class="absolute bottom-32 left-1/4 w-12 h-12 bg-orange-300 rounded-full opacity-15 floating" style="animation-delay: -1s;"></div>
+    
+    <div class="max-w-6xl mx-auto px-6 text-center relative z-10">
+        <div class="slide-in-up" style="animation-delay: 0.2s;">
+            <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black mb-6 leading-tight">
+                <span class="text-gray-900 dark:text-white">Buy and Sell</span>
+                <br>
+                <span class="text-gradient">Premium Accounts</span>
+                <br>
+                <span class="text-gray-900 dark:text-white">with Confidence</span>
+            </h1>
+        </div>
+        
+        <div class="slide-in-up" style="animation-delay: 0.4s;">
+            <p class="max-w-2xl mx-auto text-lg text-gray-600 dark:text-gray-300 mb-10 leading-relaxed">
+                The most trusted marketplace for digital assets. Connect with verified sellers, secure transactions, and discover premium accounts across all platforms.
+            </p>
+        </div>
+        
+        <div class="slide-in-up flex flex-col sm:flex-row gap-4 justify-center items-center" style="animation-delay: 0.6s;">
+            <a href="/marketplace" class="gradient-bg text-white px-6 py-3 rounded-full text-base font-bold hover:scale-105 transition-all duration-300 shadow-2xl pulse-glow">
+                <i class="fas fa-rocket mr-2"></i>
+                Explore Marketplace
+            </a>
+            <a href="#about" class="glass-effect text-gray-900 dark:text-white px-6 py-3 rounded-full text-base font-semibold hover:scale-105 transition-all duration-300">
+                <i class="fas fa-play mr-2"></i>
+                Watch Demo
+            </a>
+        </div>
+    </div>
+    
+    <!-- Scroll Indicator -->
+    <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+        <i class="fas fa-chevron-down text-2xl text-orange-500"></i>
+    </div>
+</section>
+
+<!-- STATS SECTION -->
+<section id="stats" class="py-20 px-6 bg-white dark:bg-gray-800">
+    <div class="max-w-6xl mx-auto">
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-8">
+            <div class="text-center" :class="statsVisible ? 'slide-in-up' : ''" style="animation-delay: 0.1s;">
+                <div class="text-3xl lg:text-4xl font-black text-gradient mb-2 number-counter">50K+</div>
+                <div class="text-gray-600 dark:text-gray-400 font-medium text-sm">Active Users</div>
+            </div>
+            <div class="text-center" :class="statsVisible ? 'slide-in-up' : ''" style="animation-delay: 0.2s;">
+                <div class="text-3xl lg:text-4xl font-black text-gradient mb-2 number-counter">25K+</div>
+                <div class="text-gray-600 dark:text-gray-400 font-medium text-sm">Accounts Sold</div>
+            </div>
+            <div class="text-center" :class="statsVisible ? 'slide-in-up' : ''" style="animation-delay: 0.3s;">
+                <div class="text-3xl lg:text-4xl font-black text-gradient mb-2 number-counter">99.9%</div>
+                <div class="text-gray-600 dark:text-gray-400 font-medium text-sm">Success Rate</div>
+            </div>
+            <div class="text-center" :class="statsVisible ? 'slide-in-up' : ''" style="animation-delay: 0.4s;">
+                <div class="text-3xl lg:text-4xl font-black text-gradient mb-2 number-counter">24/7</div>
+                <div class="text-gray-600 dark:text-gray-400 font-medium text-sm">Support</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="py-24 px-6 bg-gray-50 dark:bg-gray-900 relative overflow-hidden">
+    <div class="absolute top-0 left-0 w-full h-full opacity-5">
+        <div class="absolute top-20 left-20 w-40 h-40 gradient-bg rounded-full blur-3xl"></div>
+        <div class="absolute bottom-20 right-20 w-60 h-60 bg-orange-400 rounded-full blur-3xl"></div>
+    </div>
+    
+    <div class="max-w-6xl mx-auto relative z-10">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl lg:text-4xl font-black mb-6">
+                <span class="text-gray-900 dark:text-white">About</span>
+                <span class="text-gradient">Logsplace</span>
+            </h2>
+            <div class="w-24 h-1 gradient-bg mx-auto rounded-full mb-8"></div>
+            <p class="max-w-3xl mx-auto text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
+                We're revolutionizing the digital marketplace experience. Our platform connects verified buyers and sellers in a secure, transparent environment where trust and quality come first.
+            </p>
+        </div>
+        
+        <div class="grid lg:grid-cols-2 gap-16 items-center">
+            <div class="space-y-8">
+                <div class="flex items-start space-x-4">
+                    <div class="w-12 h-12 gradient-bg rounded-xl flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-shield-alt text-white text-lg"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Bank-Level Security</h3>
+                        <p class="text-gray-600 dark:text-gray-400">Every transaction is protected with advanced encryption and multi-layer security protocols.</p>
+                    </div>
+                </div>
+                
+                <div class="flex items-start space-x-4">
+                    <div class="w-12 h-12 gradient-bg rounded-xl flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-users text-white text-lg"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Verified Community</h3>
+                        <p class="text-gray-600 dark:text-gray-400">All sellers undergo rigorous verification to ensure authenticity and reliability.</p>
+                    </div>
+                </div>
+                
+                <div class="flex items-start space-x-4">
+                    <div class="w-12 h-12 gradient-bg rounded-xl flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-clock text-white text-lg"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Instant Delivery</h3>
+                        <p class="text-gray-600 dark:text-gray-400">Get your digital assets delivered immediately after successful payment verification.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="relative">
+                <div class="glass-effect rounded-3xl p-8 hover-lift">
+                    <img src="{% static 'images/how-works.png' %}" alt="About Logsplace" class="w-full rounded-2xl shadow-2xl">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features" class="py-24 px-6 bg-white dark:bg-gray-800">
+    <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-20">
+            <h2 class="text-4xl lg:text-5xl font-black mb-6">
+                <span class="text-gray-900 dark:text-white">Powerful</span>
+                <span class="text-gradient">Features</span>
+            </h2>
+            <div class="w-24 h-1 gradient-bg mx-auto rounded-full mb-8"></div>
+            <p class="max-w-3xl mx-auto text-xl text-gray-600 dark:text-gray-400">
+                Everything you need for secure and successful digital transactions
+            </p>
+        </div>
+        
+        <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+            <div class="feature-card glass-effect p-8 rounded-3xl text-center hover-lift group" :class="featuresVisible ? 'slide-in-up' : ''" style="animation-delay: 0.1s;">
+                <div class="w-16 h-16 gradient-bg rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
+                    <i class="fas fa-shield-alt text-white text-2xl"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">Safe & Secure</h3>
+                <p class="text-gray-600 dark:text-gray-400 leading-relaxed">Advanced security protocols and verified sellers ensure your transactions are always protected.</p>
+            </div>
+            
+            <div class="feature-card glass-effect p-8 rounded-3xl text-center hover-lift group" :class="featuresVisible ? 'slide-in-up' : ''" style="animation-delay: 0.2s;">
+                <div class="w-16 h-16 gradient-bg rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
+                    <i class="fas fa-comments text-white text-2xl"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">Live Chat</h3>
+                <p class="text-gray-600 dark:text-gray-400 leading-relaxed">Communicate directly with sellers and get instant support from our expert team.</p>
+            </div>
+            
+            <div class="feature-card glass-effect p-8 rounded-3xl text-center hover-lift group" :class="featuresVisible ? 'slide-in-up' : ''" style="animation-delay: 0.3s;">
+                <div class="w-16 h-16 gradient-bg rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
+                    <i class="fas fa-layer-group text-white text-2xl"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">Smart Categories</h3>
+                <p class="text-gray-600 dark:text-gray-400 leading-relaxed">Easily find exactly what you need with our intelligent categorization system.</p>
+            </div>
+            
+            <div class="feature-card glass-effect p-8 rounded-3xl text-center hover-lift group" :class="featuresVisible ? 'slide-in-up' : ''" style="animation-delay: 0.4s;">
+                <div class="w-16 h-16 gradient-bg rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
+                    <i class="fas fa-lock text-white text-2xl"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">Escrow Protection</h3>
+                <p class="text-gray-600 dark:text-gray-400 leading-relaxed">Your funds are held securely until successful delivery is confirmed.</p>
+            </div>
+            
+            <div class="feature-card glass-effect p-8 rounded-3xl text-center hover-lift group" :class="featuresVisible ? 'slide-in-up' : ''" style="animation-delay: 0.5s;">
+                <div class="w-16 h-16 gradient-bg rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
+                    <i class="fas fa-star text-white text-2xl"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">Trust System</h3>
+                <p class="text-gray-600 dark:text-gray-400 leading-relaxed">Comprehensive rating and review system builds community trust and transparency.</p>
+            </div>
+            
+            <div class="feature-card glass-effect p-8 rounded-3xl text-center hover-lift group" :class="featuresVisible ? 'slide-in-up' : ''" style="animation-delay: 0.6s;">
+                <div class="w-16 h-16 gradient-bg rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
+                    <i class="fas fa-wallet text-white text-2xl"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">Smart Wallet</h3>
+                <p class="text-gray-600 dark:text-gray-400 leading-relaxed">Built-in wallet system for instant recharges and lightning-fast purchases.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how-it-works" class="py-24 px-6 bg-gray-50 dark:bg-gray-900 relative overflow-hidden">
+    <div class="absolute top-0 right-0 w-96 h-96 gradient-bg opacity-5 rounded-full blur-3xl"></div>
+    <div class="absolute bottom-0 left-0 w-80 h-80 bg-orange-400 opacity-5 rounded-full blur-3xl"></div>
+    
+    <div class="max-w-7xl mx-auto relative z-10">
+        <div class="text-center mb-20">
+            <h2 class="text-4xl lg:text-5xl font-black mb-6">
+                <span class="text-gray-900 dark:text-white">How It</span>
+                <span class="text-gradient">Works</span>
+            </h2>
+            <div class="w-24 h-1 gradient-bg mx-auto rounded-full mb-8"></div>
+            <p class="max-w-3xl mx-auto text-xl text-gray-600 dark:text-gray-400">
+                Get started in minutes with our simple, secure process
+            </p>
+        </div>
+        
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            <div class="space-y-8">
+                <div class="flex items-start space-x-6 group">
+                    <div class="w-16 h-16 gradient-bg rounded-2xl flex items-center justify-center flex-shrink-0 text-white font-bold text-xl group-hover:scale-110 transition-transform duration-300">
+                        1
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-3">Explore & Discover</h3>
+                        <p class="text-lg text-gray-600 dark:text-gray-400 leading-relaxed">Browse through our curated collection of premium digital accounts across all major platforms. Use advanced filters to find exactly what you need.</p>
+                    </div>
+                </div>
+                
+                <div class="flex items-start space-x-6 group">
+                    <div class="w-16 h-16 gradient-bg rounded-2xl flex items-center justify-center flex-shrink-0 text-white font-bold text-xl group-hover:scale-110 transition-transform duration-300">
+                        2
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-3">Connect & Negotiate</h3>
+                        <p class="text-lg text-gray-600 dark:text-gray-400 leading-relaxed">Chat directly with verified sellers to ask questions, negotiate terms, and get detailed information about the accounts.</p>
+                    </div>
+                </div>
+                
+                <div class="flex items-start space-x-6 group">
+                    <div class="w-16 h-16 gradient-bg rounded-2xl flex items-center justify-center flex-shrink-0 text-white font-bold text-xl group-hover:scale-110 transition-transform duration-300">
+                        3
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-3">Secure Checkout</h3>
+                        <p class="text-lg text-gray-600 dark:text-gray-400 leading-relaxed">Complete your purchase with confidence using our secure escrow system that protects both buyers and sellers.</p>
+                    </div>
+                </div>
+                
+                <div class="flex items-start space-x-6 group">
+                    <div class="w-16 h-16 gradient-bg rounded-2xl flex items-center justify-center flex-shrink-0 text-white font-bold text-xl group-hover:scale-110 transition-transform duration-300">
+                        4
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-3">Instant Delivery</h3>
+                        <p class="text-lg text-gray-600 dark:text-gray-400 leading-relaxed">Receive your digital assets immediately after payment confirmation. Our support team is available 24/7 for any assistance.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="relative">
+                <div class="glass-effect rounded-3xl p-8 hover-lift floating">
+                    <img src="{% static 'images/how-works.png' %}" alt="How Logsplace Works" class="w-full rounded-2xl shadow-2xl">
+                </div>
+                
+                <!-- Floating Action Buttons -->
+                <div class="absolute -top-6 -right-6 w-20 h-20 gradient-bg rounded-full flex items-center justify-center shadow-2xl floating" style="animation-delay: -1s;">
+                    <i class="fas fa-rocket text-white text-2xl"></i>
+                </div>
+                <div class="absolute -bottom-6 -left-6 w-16 h-16 bg-orange-400 rounded-full flex items-center justify-center shadow-xl floating" style="animation-delay: -3s;">
+                    <i class="fas fa-star text-white text-lg"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- MERCHANT CTA -->
+
+
+<!-- TESTIMONIALS -->
+<section class="py-24 px-6 bg-gray-50 dark:bg-gray-900">
+    <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-20">
+            <h2 class="text-4xl lg:text-5xl font-black mb-6">
+                <span class="text-gray-900 dark:text-white">What Our</span>
+                <span class="text-gradient">Users Say</span>
+            </h2>
+            <div class="w-24 h-1 gradient-bg mx-auto rounded-full mb-8"></div>
+        </div>
+        
+        <div class="grid md:grid-cols-3 gap-8">
+            <div class="glass-effect p-8 rounded-3xl hover-lift">
+                <div class="flex items-center mb-6">
+                    <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=60&h=60&fit=crop&crop=face" alt="User" class="w-12 h-12 rounded-full mr-4">
+                    <div>
+                        <h4 class="font-bold text-gray-900 dark:text-white">Alex Johnson</h4>
+                        <div class="flex text-orange-500">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-gray-600 dark:text-gray-400 italic">"Amazing platform! Got my premium account instantly and the support team was incredibly helpful throughout the process."</p>
+            </div>
+            
+            <div class="glass-effect p-8 rounded-3xl hover-lift">
+                <div class="flex items-center mb-6">
+                    <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=60&h=60&fit=crop&crop=face" alt="User" class="w-12 h-12 rounded-full mr-4">
+                    <div>
+                        <h4 class="font-bold text-gray-900 dark:text-white">Sarah Chen</h4>
+                        <div class="flex text-orange-500">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-gray-600 dark:text-gray-400 italic">"As a seller, Logsplace has been fantastic. The escrow system gives me confidence and the fees are very reasonable."</p>
+            </div>
+            
+            <div class="glass-effect p-8 rounded-3xl hover-lift">
+                <div class="flex items-center mb-6">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=60&h=60&fit=crop&crop=face" alt="User" class="w-12 h-12 rounded-full mr-4">
+                    <div>
+                        <h4 class="font-bold text-gray-900 dark:text-white">Mike Rodriguez</h4>
+                        <div class="flex text-orange-500">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-gray-600 dark:text-gray-400 italic">"The best marketplace for digital accounts. Secure, fast, and reliable. I've made multiple purchases without any issues."</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- NEWSLETTER -->
+<section class="py-20 px-6 bg-white dark:bg-gray-800">
+    <div class="max-w-4xl mx-auto text-center">
+        <h2 class="text-3xl lg:text-4xl font-black mb-6">
+            <span class="text-gray-900 dark:text-white">Stay</span>
+            <span class="text-gradient">Updated</span>
+        </h2>
+        <p class="text-xl text-gray-600 dark:text-gray-400 mb-8">
+            Get the latest updates, exclusive deals, and marketplace insights delivered to your inbox.
+        </p>
+        
+        <div class="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto">
+            <input type="email" placeholder="Enter your email address" class="flex-1 px-6 py-4 rounded-full border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-orange-500">
+            <button class="gradient-bg text-white px-8 py-4 rounded-full font-semibold hover:scale-105 transition-all duration-300 shadow-lg">
+                Subscribe
+            </button>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="py-16 px-6 bg-gray-900 dark:bg-black text-white relative overflow-hidden">
+    <div class="absolute top-0 left-0 w-full h-full opacity-5">
+        <div class="absolute top-10 left-10 w-32 h-32 gradient-bg rounded-full blur-2xl"></div>
+        <div class="absolute bottom-10 right-10 w-40 h-40 bg-orange-400 rounded-full blur-2xl"></div>
+    </div>
+    
+    <div class="max-w-7xl mx-auto relative z-10">
+        <div class="grid md:grid-cols-4 gap-8 mb-12">
+            <div class="col-span-2">
+                <div class="flex items-center space-x-3 mb-6">
+                    <div class="w-12 h-12 gradient-bg rounded-xl flex items-center justify-center">
+                        <i class="fas fa-gem text-white text-xl"></i>
+                    </div>
+                    <span class="font-bold text-2xl text-gradient">Logsplace</span>
+                </div>
+                <p class="text-gray-400 leading-relaxed mb-6 max-w-md">
+                    The most trusted marketplace for digital assets. Connecting verified buyers and sellers worldwide with secure, transparent transactions.
+                </p>
+                <div class="flex space-x-4">
+                    <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-orange-600 transition-colors">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-orange-600 transition-colors">
+                        <i class="fab fa-facebook"></i>
+                    </a>
+                    <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-orange-600 transition-colors">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-orange-600 transition-colors">
+                        <i class="fab fa-discord"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div>
+                <h3 class="text-lg font-bold mb-6">Quick Links</h3>
+                <div class="space-y-3">
+                    <a href="#" class="block text-gray-400 hover:text-white transition-colors">Home</a>
+                    <a href="#about" class="block text-gray-400 hover:text-white transition-colors">About</a>
+                    <a href="#features" class="block text-gray-400 hover:text-white transition-colors">Features</a>
+                    <a href="#how-it-works" class="block text-gray-400 hover:text-white transition-colors">How it Works</a>
+                    <a href="#merchant" class="block text-gray-400 hover:text-white transition-colors">Become a Merchant</a>
+                </div>
+            </div>
+            
+            <div>
+                <h3 class="text-lg font-bold mb-6">Support</h3>
+                <div class="space-y-3">
+                    <a href="#" class="block text-gray-400 hover:text-white transition-colors">Help Center</a>
+                    <a href="#" class="block text-gray-400 hover:text-white transition-colors">Contact Us</a>
+                    <a href="#" class="block text-gray-400 hover:text-white transition-colors">Privacy Policy</a>
+                    <a href="#" class="block text-gray-400 hover:text-white transition-colors">Terms of Service</a>
+                    <a href="#" class="block text-gray-400 hover:text-white transition-colors">Security</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center">
+            <p class="text-gray-400 text-sm">� 2025 Logsplace. All rights reserved.</p>
+            <div class="flex items-center space-x-6 mt-4 md:mt-0">
+                <span class="text-gray-400 text-sm">Made with</span>
+                <i class="fas fa-heart text-red-500"></i>
+                <span class="text-gray-400 text-sm">for the community</span>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+</body></html>

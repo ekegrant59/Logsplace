@@ -1,0 +1,579 @@
+{% extends 'partials/sms-base.html' %} {% load static %} {% load humanize %} {% block content %}
+
+<div class="p-6 animate__animated" :class="[$store.app.animation]">
+  <script>
+    $(document).ready(function () {
+      // Remove "active" class from all <a> elements
+      $("#slide-dashboard").removeClass("active");
+
+      // Add "active" class to the specific element with ID "faq"
+      $("#slide-buy-number").addClass("active");
+    });
+  </script>
+  <link rel="stylesheet" type="text/css" href="{% static '/sms-styles/css/nice-select2.css' %}" />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+    integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/boxicons/2.1.0/css/animations.min.css"
+    integrity="sha512-GKHaATMc7acW6/GDGVyBhKV3rST+5rMjokVip0uTikmZHhdqFWC7fGBaq6+lf+DOS5BIO8eK6NcyBYUBCHUBXA=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  />
+  <link
+    href="https://cdn.jsdelivr.net/npm/notiflix@3.2.6/dist/notiflix-3.2.6.min.css"
+    rel="stylesheet"
+  />
+  <style>
+    textarea {
+      display: block;
+      resize: none;
+      padding-top: 5px;
+      padding-left: 15px;
+      border-radius: 10px;
+    }
+    .loadernum {
+      position: relative;
+      width: auto;
+      height: 180px;
+      margin-bottom: 10px;
+      border: 1px solid #d3d3d3;
+      padding: 15px;
+      background-color: #e3e3e3;
+      overflow: hidden;
+    }
+
+    .loadernum:after {
+      content: "";
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      background: linear-gradient(
+        110deg,
+        rgba(227, 227, 227, 0) 0%,
+        rgba(227, 227, 227, 0) 40%,
+        rgba(227, 227, 227, 0.5) 50%,
+        rgba(227, 227, 227, 0) 60%,
+        rgba(227, 227, 227, 0) 100%
+      );
+      animation: gradient-animation_2 1.2s linear infinite;
+    }
+
+    .loadernum .wrapper {
+      width: 100%;
+      height: 100%;
+      position: relative;
+    }
+
+    .loadernum .wrapper > div {
+      background-color: #cacaca;
+    }
+
+    .loadernum .circlenum {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+    }
+
+    .loadernum .buttonnum {
+      display: inline-block;
+      height: 32px;
+      width: 75px;
+    }
+
+    .loadernum .line-1 {
+      position: absolute;
+      top: 11px;
+      left: 58px;
+      height: 10px;
+      width: 100px;
+    }
+
+    .loadernum .line-2 {
+      position: absolute;
+      top: 34px;
+      left: 58px;
+      height: 10px;
+      width: 150px;
+    }
+
+    .loadernum .line-3 {
+      position: absolute;
+      top: 57px;
+      left: 0px;
+      height: 10px;
+      width: 100%;
+    }
+
+    .loadernum .line-4 {
+      position: absolute;
+      top: 80px;
+      left: 0px;
+      height: 10px;
+      width: 92%;
+    }
+
+    @keyframes gradient-animation_2 {
+      0% {
+        transform: translateX(-100%);
+      }
+
+      100% {
+        transform: translateX(100%);
+      }
+    }
+  </style>
+  <wc-toast
+    id="tt"
+    position="top-right"
+    role="status"
+    aria-live="polite"
+    style="
+      --wc-toast-factor: 1;
+      --wc-toast-position: flex-end;
+      --wc-toast-direction: column-reverse;
+    "
+  >
+  </wc-toast>
+
+  <script defer="" src="{% static '/sms-styles/js/apexcharts.js' %}"></script>
+  <!--    <div class="panel p-3 flex items-center text-primary overflow-x-auto whitespace-nowrap mt-3">
+            <div class="ring-2 ring-primary/30 rounded-full bg-primary text-white p-1.5 ltr:mr-3 rtl:ml-3">
+
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5">
+                    <path d="M19.0001 9.7041V9C19.0001 5.13401 15.8661 2 12.0001 2C8.13407 2 5.00006 5.13401 5.00006 9V9.7041C5.00006 10.5491 4.74995 11.3752 4.28123 12.0783L3.13263 13.8012C2.08349 15.3749 2.88442 17.5139 4.70913 18.0116C9.48258 19.3134 14.5175 19.3134 19.291 18.0116C21.1157 17.5139 21.9166 15.3749 20.8675 13.8012L19.7189 12.0783C19.2502 11.3752 19.0001 10.5491 19.0001 9.7041Z" stroke="currentColor" stroke-width="1.5" />
+                    <path opacity="0.5" d="M7.5 19C8.15503 20.7478 9.92246 22 12 22C14.0775 22 15.845 20.7478 16.5 19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                </svg>
+            </div>
+            <span class="ltr:mr-3 rtl:ml-3">Join Telegram For Latest Updates </span><a href="" target="_blank"><button type="button" class="btn btn-primary btn-sm">Join Now</button></a>
+        </div> -->
+  <!-- Searchable -->
+  <div class="panel mt-2 dark:bg-[#1b2e4b] dark:border-0">
+    <a
+      id="slide-buy-number"
+      href="/all"
+      class="group active"
+      style="
+        display: flex;
+        justify-content: center;
+        background: #ad2300;
+        height: 50px;
+        border-radius: 10px;
+        color: white;
+      "
+    >
+      <div class="flex items-center">
+        <svg
+          class="group-hover:!text-warning"
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M10.4036 22.4797L10.6787 22.015C11.1195 21.2703 11.3399 20.8979 11.691 20.6902C12.0422 20.4825 12.5001 20.4678 13.4161 20.4385C14.275 20.4111 14.8523 20.3361 15.3458 20.1317C16.385 19.7012 17.2106 18.8756 17.641 17.8365C17.9639 17.0571 17.9639 16.0691 17.9639 14.093V13.2448C17.9639 10.4683 17.9639 9.08006 17.3389 8.06023C16.9892 7.48958 16.5094 7.0098 15.9388 6.66011C14.919 6.03516 13.5307 6.03516 10.7542 6.03516H8.20964C5.43314 6.03516 4.04489 6.03516 3.02507 6.66011C2.45442 7.0098 1.97464 7.48958 1.62495 8.06023C1 9.08006 1 10.4683 1 13.2448V14.093C1 16.0691 1 17.0571 1.32282 17.8365C1.75326 18.8756 2.57886 19.7012 3.61802 20.1317C4.11158 20.3361 4.68882 20.4111 5.5477 20.4385C6.46368 20.4678 6.92167 20.4825 7.27278 20.6902C7.6239 20.8979 7.84431 21.2703 8.28514 22.015L8.5602 22.4797C8.97002 23.1721 9.9938 23.1721 10.4036 22.4797ZM13.1928 14.5171C13.7783 14.5171 14.253 14.0424 14.253 13.4568C14.253 12.8713 13.7783 12.3966 13.1928 12.3966C12.6072 12.3966 12.1325 12.8713 12.1325 13.4568C12.1325 14.0424 12.6072 14.5171 13.1928 14.5171ZM10.5422 13.4568C10.5422 14.0424 10.0675 14.5171 9.48193 14.5171C8.89637 14.5171 8.42169 14.0424 8.42169 13.4568C8.42169 12.8713 8.89637 12.3966 9.48193 12.3966C10.0675 12.3966 10.5422 12.8713 10.5422 13.4568ZM5.77108 14.5171C6.35664 14.5171 6.83133 14.0424 6.83133 13.4568C6.83133 12.8713 6.35664 12.3966 5.77108 12.3966C5.18553 12.3966 4.71084 12.8713 4.71084 13.4568C4.71084 14.0424 5.18553 14.5171 5.77108 14.5171Z"
+            fill="currentColor"
+          ></path>
+          <path
+            opacity="0.5"
+            d="M15.486 1C16.7529 0.999992 17.7603 0.999986 18.5683 1.07681C19.3967 1.15558 20.0972 1.32069 20.7212 1.70307C21.3632 2.09648 21.9029 2.63623 22.2963 3.27821C22.6787 3.90219 22.8438 4.60265 22.9226 5.43112C22.9994 6.23907 22.9994 7.24658 22.9994 8.51343V9.37869C22.9994 10.2803 22.9994 10.9975 22.9597 11.579C22.9191 12.174 22.8344 12.6848 22.6362 13.1632C22.152 14.3323 21.2232 15.2611 20.0541 15.7453C20.0249 15.7574 19.9955 15.7691 19.966 15.7804C19.8249 15.8343 19.7039 15.8806 19.5978 15.915H17.9477C17.9639 15.416 17.9639 14.8217 17.9639 14.093V13.2448C17.9639 10.4683 17.9639 9.08006 17.3389 8.06023C16.9892 7.48958 16.5094 7.0098 15.9388 6.66011C14.919 6.03516 13.5307 6.03516 10.7542 6.03516H8.20964C7.22423 6.03516 6.41369 6.03516 5.73242 6.06309V4.4127C5.76513 4.29934 5.80995 4.16941 5.86255 4.0169C5.95202 3.75751 6.06509 3.51219 6.20848 3.27821C6.60188 2.63623 7.14163 2.09648 7.78361 1.70307C8.40759 1.32069 9.10805 1.15558 9.93651 1.07681C10.7445 0.999986 11.7519 0.999992 13.0188 1H15.486Z"
+            fill="currentColor"
+          ></path>
+        </svg>
+        <span
+          class="ltr:pl-3 rtl:pr-3 text-black dark:text-[#506690] dark:group-hover:text-white-dark"
+          style="color: white"
+          >Click Here To Buy All Countries Numbers</span
+        >
+      </div>
+    </a>
+    <div class="flex items-center justify-between mb-5">
+      <h5 class="font-semibold text-lg dark:text-white-light">Buy Numbers</h5>
+    </div>
+    <input type="hidden" id="server_no" value="" />
+    <input type="hidden" id="token" value="9845120d36e6697e3b2104dbdda3d4" />
+    <div class="mb-5">
+      <select id="server-id" style="display: none">
+        <option value="" selected="" disabled="">Select Server</option>
+        <!--<option value="" selected disabled>Select Server</option>-->
+        <option value="usa">USA</option>
+      </select>
+      
+    </div>
+    <div class="mb-3">
+      <select
+        id="service-id"
+        class="scrollable-select"
+        style="max-height: 300px; overflow-y: auto; display: none"
+      >
+        <option value="" selected="" disabled="">Select Service</option>
+        {% for o in s2 %}
+        <option value="{{ o.key }}">{{ o.name }} - ₦{{ o.price|floatformat:2 }}</option>        
+        {% endfor %}      
+      </select>      
+    </div>
+
+    <style>
+      /* Make the select dropdown scrollable and responsive */
+      .scrollable-select {
+        width: 100%;
+        min-height: 38px; /* Standard form control height */
+      }
+
+      /* For better mobile experience */
+      @media (max-width: 768px) {
+        .scrollable-select {
+          font-size: 16px; /* Prevent iOS zooming on focus */
+        }
+      }
+
+      /* Custom scrollbar for better UX */
+      .scrollable-select option {
+        padding: 8px 12px;
+      }
+
+      /* For Firefox */
+      .scrollable-select {
+        scrollbar-width: thin;
+        scrollbar-color: #888 #f1f1f1;
+      }
+
+      /* For Chrome/Safari/Edge */
+      .scrollable-select::-webkit-scrollbar {
+        width: 8px;
+      }
+
+      .scrollable-select::-webkit-scrollbar-track {
+        background: #f1f1f1;
+      }
+
+      .scrollable-select::-webkit-scrollbar-thumb {
+        background-color: #888;
+        border-radius: 4px;
+      }
+    </style>
+
+    <!--                <div class="mt-2 text-sm text-gray-600" id="available-count-display">-->
+    <!--  Available: <span id="count-display">0</span> numbers-->
+    <!--</div>-->
+
+    <div class="mt-5">
+      <button type="button" id="buy-numbers" class="btn btn-primary w-full">
+        <span class="fa fa-cart-plus" style="margin-right: 8px"></span>Buy
+        Number
+      </button>
+    </div>
+  </div>
+
+  {% if p %}
+  {% for p in p %}
+  <div class="unique-content">
+      <span class="order_get" style="font-size: 12px; display: none;">{{ p.number_id }}</span>
+      <span class="order_get_id" style="font-size: 12px; display: none;">{{ p.id }}</span>
+  </div>
+  <div id="sdfgcard-container" class="mt-3 rounded-lg">
+  <div class="card shadow-white col-md-12" style="border-radius: 18px">
+    <div
+      class="panel shadow dark:bg-[#1b2e4b] dark:border-0 flex flex-col p-4 mt-3 mb-2"
+    >
+      <div class="card-text space-y-3">
+        <div class="flex items-center mb-0">
+          <img
+            id="flag_g3WiYxSrDZBmZ6ehMzUp"
+            src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEACAYAAABccqhmAAAACXBIWXMAAAdhAAAHYQGVw7i2AAAAGXRFWHRTb2Z0d2FyZQB3d3cuaW5rc2NhcGUub3Jnm+48GgAAIABJREFUeJzt3XlsXdd94PHvufct3CWR4iaK1L5LlmXRWihZmyU7dhI7TeTsTZMiTTFAmmJmgnY6g6CetphBkSDdgJm2aN12miaBWydxHO+LFIui9s2WtS8kJZESSXHf3nLvmT9oyZJJSnzvnfvuI/n7AAJsSu/cnyje3z33LL8DQgghhBBCCCGEEEIIIYQQQgghhBBCCCGEEEIIIYQQQgghhBBCCCGEEEIIIYQQQgghhBBCCCGEEEIIIYQQQgghhBBCCAPUSF985u/0FDfsbHddt8pSqjTdQYkJQNGv0de0pet+/rXwab/DESO7KwE88y+6Iu46f6LQXwVCPsUkJhgFx134o59/I/ia37GIu91OAL/xj7GNyuJnQLGP8YgJTCl+sKI+8IfPPqtcv2MRQyyAZ56LLFUWv0JufuEhrfnuiar4n/gdh/iI9eyz2nKV9VNgit/BiIlPKf77zudiNX7HIYZY7892dmpY4XcgYtJQjkJ6ARnC0lp/3u8gxOSiYMszz2l53cwAFuhqv4MQk46trfgqv4MQYIGSTCzSzkGV+R2DGJoFCPodhJh8FK783GUAy+8AhBD+kQQgxCQmCUCIScz/BBCMg9J+RyHEpBRI58V09iBuZTNOZTO6sAud2//Rb8aCWF15WM0lWI0zsNqmgR5xs6IQwpC0JAC3sJP46g9wZ9wY/WkfjOFO78Cd3gErzqL6crDfX4R9bjbK9b+jIsRE5GkC0OEo8bUncOZcSbibr3P7ia87hrP0PMH9q7CaSjyKUojJy7NHqy7oJfrkbpy5jSm94+uCXqI7anFWnDUYnRACPOoB6OJ2ojtq0aGYmQaVJrb6JG5uP8H9soJUCFOMJwCd10dk2z4wdfPfwVl8CdWTR+CDBak1pGBRMVRNg2xZj3ZPGuiNwOkbcL3b72iEaWYTgO0Q3bYPsgeNNnunePX7WJ0FWNeSL1W4cgYsk5XoY5YfhrIC2H0emiUJTChGE0B82QV0YZfJJodTmtj6o4R//jg4iQ9hWAoWyXhiwhSwtMx8Aji86/D0eJDFWrnzQRdqpXKVVrkaPU1DrkKFNLpPafqUUr0ubofSVp9Ct7iKc0rFz9bU1AyYjWryUJ/9p1gUExuCQlEGd74OoWjqUY1B8MBK7NPzE/5cKAA7V3oQ0CTQNQgvf5D854tCg8zK6aEk3M+cvJ6LuXZsGlCYYlgadCNYZxX6DJo6FXB3r1u37kaK7U4KxnoA8WUX0nbzA8QeOIt9dh64iS0WisahcwCmZnsU2AR2oyexPz8lEGVWbg9VOT1UZveSG7hrXGieobAUqFmgZ2l4DMV3tGPpur0HP1DwjlZ6l2Xpd9atWycvLyMwlgDcWVdNNTU22YO4JW1Y1xMvZ3CgATbPgywZAByz9n54r+n+fy5sOczP62RpfgdVuT0jHzzhPQUs17Acrb7jOipSt/fgmyj9/0Ih+xfV1dXmR6jHKSOvAG5BH9HPpr/ku31qPsGDyfXnQzaU5kM4rYuhx6feKLT0gDvKcg6lYG5OF8untDM3tws7k/d2aK5j6Z9obT23YcPDJ/0Ox29GEoCz6DKx9UcNhTR2qqOA8Is70n5dMUQpWJjXQU3RdYpC3s38eEbzlov7vY0b1+33OxS/GHn+uVP8eb3SBb1Dqwxl01Ba2UqzOL+ddYU3mBaK+B1O8hTbLaztdbUH9yrNn69/ZM1LfoeUbmY6wOH0Df7dxXbRwTgqKi/z6bI4v4PN05vID/r0b+4FxQat+OW+vYd2Kcf59rpN6075HVK6GNkLoG3/TnpStuPbtSeTqaEoOysu8qny+ol1899Bo7e6tnV8396Df1VbW5vvdzzpYCQBqLhtopmk6JiM4nkpoFxqipr5xqxTzM6dFDNpQQ3fsVToTF3dga/5HYzXzCSAfp8m1aMhVFwSgFeKQoN8teosNUXXM3tk3xsz0Opf6uoOvrBr17GpfgfjFTMJoN2fYwWt9gJfrjsZLCu4yVerzjI9PA5H903SfDYUih3Yu/fgg36H4gUjj0+rqRRcC6z0jgXYV8uT/uzMKVBVCFk+dyAcDa29cLYFnAw4NDtkOWwvvcrS/Ha/Q8kYChYC++rqDv63mpo1f+V3PCYZ+fFX0SDW9eKhkl9pZDXOSOpzi0pgdaXhYFJQMQVmFMBb5xnaf+uTKYEoO2deGN9Te97JQvOXdbWHHgplqW9OlNWExioC2RfTe0dZrYWo7rzEP6hgRXJ5w1Ml+VDu47hzUWiQL1ael5v/fpT+WjTivjpRZgnMJYBLVVjt6RsrCRxdltTnwvbQMuBMlBf257rlWX18sfL8hJ3e88Cjlgq9/e67R8f9uZrmagJqReBIcjdloqwr5VjNyW3qj8ShN5qZI9rtfem/5vy8Lr5YeYFsO57+i49vDwfs+Lu1tYer/A4kFUaLglrXyrDPzDXZ5DBqIJvg/tQGZA81KOIZMOB2p7MtcLP//n/OpLm5XTxVfhlbZdg3Y/xYbCl317vvHk5+NNpn5gqC3GJpYjtqccpbjDV5i3Jsgq9twmpNtYbEUHd75lT/ZwHiLrT1wvUE99qnakZ2H89UXCCY5pmbe4gAF0Bf0KiOWxWAtNJ9H6sQVAzuIlBV4Ndu42GOh8LWlurqao/LYZlnPgEAhKJEt+3HLWs112YsSGj3GqxrUswvVUWhQb5UeZ4sH7v9A47dlB2I/0y5aperrBPXrl2q//znPz/mdd11dXXZWgcWKaXWaq23KtgK+FfsTbG7s3PaJ558csG4GkX1JgHAUE/g4RM4Sy6m3JTqySX4dg1Wpyz8SVV+IMqXfRrwax7M4VR3Eed6p9DnBL75s6+H/tFU21prVVd3aKVS+sto9RUg7XM9Cl64cq3+C4kkMr951wF2FcEDD2I3lRCrPomekkQf17GxT80n8P4i2fFngK1cfqPiUlpv/phrcaKriPe6immP3jHNYXhpsVJKA8eB488///wfzZw5azva+j3QT5KmVwUNn6usmP0s8L10XM8E73oAd7I08XmNuPPrcUtu3vcfX/XlYDfMwP5gAaovx9PQJpPtJVd4cGpbWq4VdW1OdhdyoL2UvvgIP15KG+0BjGb//v0PuI76LqgvA+mYAHY17hMbNqx7Iw3XSll6EsCdsiI4Fdc/PB14YOgAkbgNkRCqKx+7uQR1c8LuvfDNwvxOniq/7Pl1NHC6u5BdrRUMOPfoYKYpAdyyd+/BBy34vxrWpeFyLa4OrNq48aExVFH0V/rHwAfD2BdnQepDA2KMpgajPF7S6Pl1WiLZvHmjkubBXM+vlagNG9Yc11pv2L/34Le0sv4X6GkeXq7EVs6Pnn/++R2ZPh4g525PcArNJ8svE/awcIoGDneU8KPGRRl589+ilHLXb1z7t65WDwL7vLyWRm+dOWP2H3h5DRMkAUxwD069SXmWdyuMIo7NS81z2N1agTtOajNu3FjdGIn2bdLo/wl4txBC8b09ew55uzIuRZIAJrDcQIyN0717De2KhfjXK4s51zP+xmy2bt0a37Bh7bMo/VXAq2mRbNvSGb19WBLABLZ5ehNhy5uuf1ski59cWUBnNORJ++lSU7P2Jxr9BOBVvbNP7as99JRHbafMAnzYgiK8VpnTy5ICb4p6NA3m8pOrC+mNp3Dzu1avuYhSs2HD2nc0bAc8WcqrlfvXhw8fzsj57ABwDRi5D6c1ruugxsernbjD5ulXPVn9cjOSxQtXZjHoaOBeS4kVyhp92t1CXzEeXAo2bFhzaN+eQ5/Rln4VyDLbupoViTi/B/y52XZTpz73XOyvtOI7t77gxiLEIt240X60m9EzGGIU86bG+cpS8x277ojFP53MpSsyxjdHpbACYQLhfOysPNRHKanLzg2U/PvnVcYVINhXe+gprfQLmJ8ibwmFrTnV1dVp3vN5bxa2/mfA1VoT7WlhsOsazmCP3Pzj2CMzze9HiTmKH59O4OaHoR5kbJBobyuRjqu4ztD9rlA/ysSbH2D9xod/qdD/w4OmS6JR93c8aDcl1gu/FTqG1j+KdDcTj2TMa5lI0sz8OFUF5nf5vXY5i5b+5MeMXSdGpLMJJzbYHYvbf2owNOPW1az5PugXjTes+e4rr5z3qe7TyCyA/o76ATc2ycs/TxCbK80//T9oC3KsJfXRfq1dIl1N8UjPqYwuqKmU0o4b/QboBsNNz5w6tfPrhttMifXED84vxdXf9DsQkbqiLJd5U80+/Xtjil9dNHrwS6Fy7D8y2aAXHnnkkQ4Uv2u8Ya2/bbzNFFi47m+Tnl1SwmMPlJh/sL5xOYuIY3o+Qf32lmd3ZfyRTjU1a18H/R+Gm11eV3doleE2k2ZpxQ6/gxCpU8DyYrPjag1dAT5o82ShT2F2/sxqLxo2Le7Y38H4IiH3N822lzxLw7iuaiqGVE2JMy1sblm7Zmjgz6v6ydpxMuholtFt2lTdrFA/NNqoVl/etSszekCWgszdviXGbOV0s0//8x1BbvR7+GaoGDf13bSK/Q1gsmxraSiU87jB9pImewEmAIVmyXSzg397rozvNf4m1dTUtCvU/zHZplLqGZPtJUsSwARQnucSts111hu7A1zrzYgeasawg/ovAXOjrJpHjbWVAkkAE8Acw1N/x1ukAOvHrVmz5jqK1ww2OXP//v0LDLaXFEkAE8CcAnPLtuOu4ky7JICR6X812Zrr2ttMtpeM9Pfzgi5U9aCKByA/BmEHYhYMBqA9jG7Mg66MWi2Z0WwLZuab65mevhlkMC7bP0cSifS/FA7ldjLa7tmE6W3A35lpKzlpSwBqQScsa0fN7oHA6NNVCqA1G31+KhwrRg/IGqV7mZHnGD3t+EKnfL9Hs3Xr1sG6vQfeArXTSIOaLUbaSYHnrwBqRh/qi+dRT19Gze+6581/W/EAqqYZ9a2TqJrmsX1mkirNNvv+X98l3f970ahdBpsr2bt3r3/HmeFxD0DVNKNqriffQNBF1VxHLexE/3weukumpj6uKNtccmzrt+mJSvf/XpSy3kEbXHClA4sA8yfpjpE3PYCgi/rMpdRu/jtNH0R95SxUSPWyjyvKMffD2Ngj3f/7qampPgPcMNWeUmqxqbaSYb4HoDTqk/VD3X2TcuJYOy/g/tsiaEu9YlN2OEBFUTY54fH9Q1+eby4pBrPzeGBO/l1fU0BXf4wrbf04jlcLg8cZxWk0pSaasmCRiXaSZTwBqEeazd/8twRdrN+4OJQE+pMPvXRqFo8/VEooOL5vfrQmt9fciT8zyqZRZI+8QrezN8bLh5oYiEqlKFx9FqW2mGhK+5wAjL4CqKpe1BpjvaORTYmiHk2tnuSm5cXj/+YHAjoKBrfrOGr0ntXUvCDVCwuNXWs8U1hnDTbm68EhZhPAI+k5C1Et6kTNSK7rmxWymZI7MUa6LW32aRy37v19KZ1iuFjuOOUqzHW7NMXG2kqCsQSgFnVCeRoH6ZJMNpGoQ8yZGNOKyuRoNBbcp5B4bySjK3mlja2N1gco1Fr7tiLXXAJYdtNUU2O7XmUvakriW2A1cOJip/mAfKAw1wPQ6t6vRBo4PkG+b6mK45jcGmzv3bvXty35ZgYBgy5Upb+isJ7fBUcS70Edv9xJX8Rhbnku2SaX0aXZVBXB1Ft5TENb98gFRXsGYpys7+ZGpxSOHWKZTAAEg0HfFrgYSQBqdrcvq/WseV24SSQAgPNNPZxvMvrvmHary6JUGRpC6h5w+cWxa2Yam+Asy45gcPwlFgv6tvnFzCtAyYCRZhJW7NN1M4StZF5+IlAK30alzSQAg7vREpIdH3r9EEIkxUwCCPq3OET5eG0hxjsjCUC5/m0g0Y7UNBEiWUbuHj3g0yuMoyAqCUCIZJm5ezp8msXoDIOW7atCJMvINKBuzr3PGjJv6Kbk10/YlqJ4SpjssL/Vbx3HpbU7ykDE/Im+QtyPmZ/+G9no/iAqJ72zAfpycmdLTMsLsmNVOQU5mVH62nE0dafbOHttfK9LEOOP+sT3z0Yh9XlIteUaqjqNhU0Gbdy/XQ7xxN9inl5XQfGUzCo86mrNC7VX6eofPYlaOFQX7WF98dtU5V6gLLuNHEOzIK6G7jSOpxQEO1pz7N5xmfE0wWBElxg72iysWs4rYldQ1KJ5Qa3mPVNt34+xR6A+WIJ6oA1C6ZmX1wfLkrr5QwGL6Rl28wNYSlFemDVqAniosJbfXfC/qcq94E0ACnLSu9mv+MNf444iRpYyumpyAbAAzTbge/oIP0PzX1S1wV2HozCX8vuD6CNpqm/YG0Qfm57UR+OOxs3QyjaDsZGT5zOz/oE/W/k73t38IpMo4HMoDulj1Hh9MaN9Pn2oFDq8f7rqt2cOnSWQBFdrTl81fNqzAT0Dca61DV/a/PiM/+C3530fpWTF4yRTgstr+jjLvLyI2VGwqIX783lYXzk7dOCHB/S+sqEzA1Jw8Gw7kZjLvLI8csL+riOIu5rrHYMcONs+rE5BVe4Fvr3oj32KTGSAfBx+op9nlfq8wb3fdzA/DN4exn1pNtZnLhvfIajPTEPXlaXcjqs1xy52cOxih4GovPP1eX9BQMn04CS3grl8FfgXLxr35vFXX4D744XobnMLhPTBUvTLsybNwp+CYCdrikyeQSHGLcU3vGrau/5vSzb8eCEkOVd/i+4N4v5yDvrdGZPm5oehUX9byUYnAcBGXUv+/f9Y4jxdCaN7g+gX5kFVD9amJijrH/uHIzb6UMnQzEKSA37jWVnWVb9DEJnDJodK4JTphtOzFK4xH/dHi6BocOjMgHldQ6cD37mXXyvoDkFDHvrCFHRjflLz/BNFflDq74m7eLJmIr1rYW9moW9mwYHSoWr2WQ6E4xC3YdAe2t0nAFBS7UfcyfXmdd3fxfCDH974QghfTN4+thBCEoAQk5kkACEmMQu8WWIohMh8FuDxcb5CiExlodUJv4MQQvjD0pb+D7+DEEL4w4r0Nv1Ew2m/AxFCpJ+1+9mt8UBu4d+jZBVeJrG1A3GS+yXDuplHk/y/ZxyI4cmKucAzz+tspz/+X107xGBPC2ipPJMJlvYchSMpNBACKoHkKqcJUzTQALQCqdxaZawA3jIS0x0spy/2DTQzrVAOWdNmYoeTr7UvMkgUuAhkXvWzyaWRoXm2DH2uBkB95tb/WFaAcH4pOjeOExtAOzG0K/1JPyhlaI1WO5BaSQaRiswuOkUAhhcdVFaAQNiT+gNijJRtaJ/WOFvr6WrF2aZSzlwrpaMvh4FokILsQYoLenlw1lXKpkmXxqQAUOR3EMIjinEzBhBzbN44sYSXjy6jZ2DkAwr+bc/DzC6+yc51x1g522hdfu+UAFf8DmJ0AcbdM2JycAiktlk7G5gJ5BgKyENN7VP4i5e3cb3z/u8q9a1F/OCl7axdUM+3tu8lFMjwoqkzGErErUBqJ+eNk6rAwogzhTUsWHTI7zA8d+F6Md9/cTv90cQKyB44P5uWrnz++2dfJyuY3jMpE1b+4a9UaN43EcrHydNf+KajL4e/fnVLwjf/LZdbivibVzfjTqJisaZJAhC++ad31tPRm9o7ynsNFew5Pd9QRJOPfwkgK4Iu6sQtbcOd3oFb0AeW1MGbLM41l3CsfqaRtl448CAxR0rLJSN9YwC2i1vWglPVhFN5HXKGn4OHY2HfKMZqnIHVWI7qz05beCK93j1l7qnd0ZvDycYZrJqTwcPtGcr7BKA07qxrxKrfR+fd51wA28WZcQNnxg1YexyroYLg4eWoXlmdOJFoDcfqK422eezyTEkASfD2YJBp3UQ3HUAns3hDadzZV4nMbCZwbBmBDxaYD1D4ojcSprt/5Ln+ZF1rT+3A2MnKswTgVlwntvkgOpTiFE3AIf7we7jTOwjVrgZ51xv3ujx4tevsk9fFZHiSAJx5jcQ2HgaDh1u4c64QzR4k9MZGcM2MXSogmKH5xJ7A8zMBZX5nTMDwSdSThfEEoIvbidUcMXrz3+KWtRKrOUqwtjqldgI2VFdC1dSh/85ECxwydgdZqqbebywoCdNyzbc5GRh9zuisQSLb9oHt3U+uM78BZ9HllNpYUwVzizL35p/osoJxZkzrMtrm3JI2o+1NFkYTQPzBM5A9aLLJEcVWn0SHo0l91rJg1jTDAYmErZ7baLa9eWbbmyyMJQCd34ezMLUn85iFojgrzib1UVsNvftnOjs+CBGS+5VcbkyrbcvPEbDN7G+ZV9qW+T0Al+T/PSPAAGEvwjI2BuAsPQ9W+l5ancWXCBxfOnSycAJiDlzvgbIML5JReO0gNKXQQICh3YClhgIybHpBL489cIZXjg0rR5EQpeBLGw9nbklLB6gHbjJUHixZZSwBXjMR0p2M9QCcqmZTTY2JDsRxZyR3psmBBmjrNRxQpokz9IOXwfUznll/lMUVqZ1L89m1x1mU5M9BWlwB2kjt5veQkR6AO70D7cMorFPZhNU4I+HP9UXhjbOQG4Zwhg4EVmswsrTlJhlbEixgu3z7iV/zgxcfpb418bo02x84w9PVGX6uTbvfAdybkQSgS/15/0r1un0R6DMUi2mOqTe+DE1wt0zJHuB7O1/jn3eto/bsPPQYnpTZoRhf2nCYrcvPeR9gqmxSLQTiKTM9gHx/+tNufv/QDkI3U18AfaaAYr+DuL9QIM63dtSyY+VpXjqygiOXKnFHWOyVlxVl05LzfGr1SfLTMNtkRClDZcEzlJlBwFSX+yZLaXQwhookV1Aik0VVFkmP+yogi6FBwHG0QnZOyU2+88Ru/ubVzRy8MHvY739t837Wp2umyZQyhkba2khtdsbyZm7HTALwcx+/B8tKM8H5aWtYvHCf32H4whrl52nc9vNKPvyVCs0pE6F8nJlZgJiPpQVjQf+uLcQ4ZyQB+LVfXw1ko2R3oBBJM5IArDZ/9mIrn64rxERhpO9uXS8Zeg0IprdGu30l8TUAMLR6bHkZzCqELJ/fIBwXWnvh2NWh9QlCpJOZl3fHwrpWhjv7qpHmxkQrrCtlSX30oZmwKNVBGVNsqJoGRbnw8imIy1GMIo2MLQUOnJtjqqkxsa+Uo0Y5QupelIIFGXhcVm4IyuU4RpFmxhKA1VSC3ZSmnSdaYR9dntRHgxaYOnjXtLCc0yTSzOitEDi8Ii2r8gJn52B1Jve4jDrQnoHrf7WGGz1+RyEmG6MJQLVPIXBopckmh7Hap2IfXpFSG/vroSdiJh4TXBcONmZWTGJyMN7pDJyeh57alXLZrhENZBF8ez0qnlrYXYPwygdQlAdZPne7HQ03+2AwgzeMiInLkx//4P5VEA0lXbVnJFZ3LoF3NqD6zJx37WhokS63mOS8ef5pRfDIcqyePGLrjqVcKci6Vkro12sgyVNkx6OseG/ye5VvbQbK0MHO+wmO8vMSDIzjOdI4Q6W9kmfmyfcxnnaA7XOzsa6VEF95BmdBfcKlwlVvLoFjS7AvzvImwAw2r/sopFLn0gIqgOTWSvlqflkre87Mu+trttLMyfS6fyOJA5eAjhTbKWMh8HLqAd3N8zdg1ZdDsO4hAmfnEp/XgFvVdO8zAh0b61opduMM7EuVxg4BmXRchspRZQPjrAry5mXnOXSxipMfrvS0lOYLGw5T6MF5Ap67Quo3v4fSNgSmbk4leHMqHFyJntaNO60TcgeGjg6L26hIGLrysFuLEi70Ke6hk3GXAGzL5Q+efosPrpbT1pPLgrJWKgo7/Q4rOZOhJFiiVEcBdkeGFqqbaMZpLlVKs7wylbLIGSLA0GtAhpL+9URmk7FlwSeNcr8DuDdZfJqhBuw8SKXMQhZDA4CeHCchxqyEoUTcRmrFQW0GzAR0N0kAGerSlIdYNn+P32EIE4o+/JUKjblFNXeQVwAhJjELhdljWoUQ40aAoQOkMnCHvPCLS4h+vYCYW4SrpOhqJrjpbttcV7c9oftUa0tr7d5wXfvCpk3VI57dF9AuryhFtZkwxXg2oGdxNfZN2t1NuOPpQIHJ4Y8T/YBCo5TCsl29b+/BA2i+v37jmp/d+WesgB34e/BmhFGMH9fjn+dE5Ke0uY/LzT/xKA3rtOKFurqDv6ytrb1dTMP6999S14A/9zE44bNrzm9xOf5d9HhdNSTGTvNpywq+uWvXriz4cBbggYbAn4L+qb+RCT90u6tpjP0nv8MQ6aTV2lAo94fwYQJ49lnlPtAQ/IpS/DEwTk5dFCbUx38fmQ2efBR8a9++fUtu/8s/+6xyX/h68E9sO7AI+FMUh4FW/0IUXutzF9LnLvY7DOEPWzv218bteYsTnT7CD4H/7OU1mpyv0BD7fS8vITKZUkek75e5PN9DFnWTO1hFTBBaV0kCyFSaG15fwvGmypQYP6ZIAshcZ/wOIFWxeJTu7i60TqwUXDporenu7iIWy8xyzIODA/T1eX+AhewGzFRTeItueoBxeWDYvoP7OP7eMbTW5Ofn89i2xyktyYziBE3NTby16016+3qxlMXqVdU8vPphv8MCIBaL8eaut6hvuARAeVk5j217nNzcVPaGj056ABlKLSACPOd3HMk4d+Ecx04cvf3k7+np4bW3XiUe9780TiwW4/W3X6O3rxcAV7scOnqQy/UenGORhP0H99+++QGarzezu3aXZ9eTBJDJNH9Ghk/FDgwM0D9w90ryxiv1w/5cX18fN29+VNXX1S7d3V04jnelvl3Xobun+65XkJbWFgYGhq98r2+8OwH09/cxEPF2hXxPbw/R6N1nwjeM8L27eu3qXd+neDw+7O+VLHkFyGCqmjZ9hM8BbwEZdShCJBLhzV1v0nilAYDKmZU8unk7OTk5DEaiI38mOlQY/1L9JXbv2cXg4CDBQJANNRtZumip0fjeP/Ue+w7sIx6Pk5OdzZZN25hdNft2DMNjG4q5t6+Xt3e9xbXmawDMmT2HRzdvJxQy9+1v7+zg9bdeo6OjHaUUy5YuZ8PaDdi2TXSE+BzHIR6PY1kWR48f4dCAyAlGAAAJSklEQVTRQ7iuS35uHo9u3cGM8uRrv0sPIMOp1ezB5XHgpt+x3Gnv/trbNz/AlatXePHlX9Dff++BqzPnz/D6W68xODi04DQWj/HrPbtpbWsxFlvzjSZq62pvv3L0Dwzw2huvcv7S+Xt+rqevl1/86he3b36Ay/WX2X94v7HYtNa88eardHS03/7/kx+8zxtvv37P3pDWmj11ezhw+ACu696O9/W3XxvWi0iEJIBxQD3MbhQPoPgHMqTGbH1jw7CvdXR28OLLL476g3zl2hV2/fqdYV1XrTUNjamcgnK3hsaGYddwtcvb77xF840Rt8UTj8d58Ve/oLt7eH2choZ6Y7H19HTT3jn8oIDLDZd54+3XR/3cvoP7OHnq/WFfHxgYoKU1+RljeQUYJ9RDNAG/o+v4Q8I8CawAylFkJdtmTBc+DMxO5rNZ4TCDg8PfkTs6O24PsH3cifdP3LM9U8Khkb8lrnZ5//33Rvy9putNxEeZEgxnJf0tHiYUCqOUGvH9/XLDZWx75Gfy6bOnRm8znHx8kgDGGVVDO/AjE23t27vhOeAbyXz2wZWr2P3uyKPTic6t5+bksmD+wmTCGNHihYs59t6xEROUq0c+d3C0mx/gwRWrjMWWlZXF4oWLOX329Ii/7ziJnaNZMaOC4qLkC3rJK4BIytJFS6letTrldsLhME8+/iRhgz2A7OxsPv3Ep430KlatfIiF8xcYiOojmzduZnbV7JTbKSos4rHtj6NU8lt6JAGIpK2pXpdSEgiHwzz15FMUTy8xGNWQ4unFfPrJp1NKAqtWPsT6NesNRjXEsmw+seMTKSWBosIinvrU02SHU6veJLsBJ7F9ew8+pxN4BdBac+LkCc6dP0tPb8/trztOnHg8sfl8pRTBYPD208u2baYXFbN+zXqKCpMrot/a1sKBwwdoa2vF+XCkXGtNLBol0RlzOxAgYH9UIakgv4DFixazfMmKpJ64sViMA4cP0HilnoHBj0puxGOx27GOlbIsQsGPirWGQiEqyitYt6aGnOyEEkJUxgDEmB09cYQDhw4YaUtrPWz6qrG/gRs3mvnCzi+Rl5uXUHvdPd384qUXicWTnxK7kxOP49yxcrE10kprWyuuo1m5YmXC7b35zhvUN9YbiU27LpHIR+sFIpEIZ3rO0NZ+k51P78Syxt6xl1cAMWYfnB59JNqUSDTKhYsXEv7cufPnjN3893Lq7AcJf6a/v9/YzX8vbW2ttLQmtp5CEoAYM9dJzxKEeBLLg71cUnynZPYzxNP0fYPE45MEIMZs3hyzo+EjsW2bubNnJ/y5OXPmpjQaPlbz58xP+DP5efmeDHQOu05uXsI7LiUBiDFbt2YdSxYtIRDwZugoPy+fHVsfo3Ba4oOAJdOL2b5th2fbZgOBAMuWLOPh1WsS/qxSik/s+AQzK2Z6kqSUUhRPL+HJT3yKYDCxk5xkFmASS3QW4BZXu8SiQwtnzl04R+2+PUntTCsomMInH/8kOdk5KKWMbbiJRKOgNb39vbzy+iv09HQn3IZSik0bNjN/7tATPxgKYqnUn5e3NvZordl/cH9SYwoAlRWVPLplO7ZtY9t2skk5Kj0AkTBLWYTDYS43XE765gfo7u7i1TdeIe7Eje62C4dCROMxXn3j1aRufhiapXh3769puFJPOBw2cvPD0CtOKBTi0JFDSd/88OG+inffIRAIpNQjkwQgktJ4pZFd7w7f2JOozq5OfvXaS7iuuUG8eDzOr1755YgbexKhtebt3W/TdMfuQBOOHDvC+6dG3pOQiIYrDfy6dndKbUgCEEnZf3j/qDd/IvPQADdv3uTchXtv1U3EmbOn6Rhhx929jBaz1poDhw6aCAsYqpN4+NihUX8/0TGCM+fOJPx3vZMkAJGU0brWWVlZlBSPPBI9b+68hNtLxp2rFD9u/tyRZzLKysoJj/Ia0tNrLra+vv7b+/k/rqiwiFBo5EG8ihkzR22zp2f0v+/9SAIQSSkvLR/2taysLJ568ulR3+eXLFzCqpUj76wrKxveXrLKRogN4OGH1jB/3sjTeFnhLD71xFMjJoGR/q7JKigoICdneDn2W2v71Sjj8tu3bKeyonLY1wOBAMXTi5OORxKASMrGmkeYOmXq7f8vKJjC05/8DNPvszV1/Zoa1lavvT2oppRi5fIHR/zhTtac2XNYvmT57f+3bZuatTX3rfxbWlLKp598mvz8jwoxT5tWyPp1NcZis5TF9i3b79qkVFFecd+NPYFAgCcee5IFd/RgAoEAmzdsITux9f93t5v0J8WkVpBfwBd3fpHm69fRWlNeVo794eaZYGDkbuyt0erVq6pZuGARbTfbmDZ12l2JxJRNGzezfPkDdHV1Mn16Mfkf7i0I2CP/yN+KraS4hC/t/DLNN5qxLIuykrLbfy9TZlZU8uUv/CYtLdcJh7MoKS65/e4fCAQhcnddQKXU7am+HY8+xkOrVtPd001pcQk5Oamte5AEIJJmWTYVMyqGfb28rIyLl+9ezx8MBikq+qirmp+XT36et0ceFE6dRuHUaXd9raS4mEAgMGzJ7IyyjwprBgIBoz2SkWSFw1RVzhr29bKyci5cvHtAtGR66V1TfUWFRUnvmPw4eQUQxi1fuoJZVR/9cAcCAbZu2jbqIFs6ZWVls3nDlrue6nPnzGPJoiU+RvWRmrU1dyWtvNw8tmza4tn1ZCXgJJbsSsCx0FrT2tZKX38vpcVlIw58+amvv4+Wlhby8vJSGkTzgus6NF+/jus6lJWVEQx4ljilHoDwhlKKkuISwPtNMMnIzcllzuw5focxotFerTy5VlquIjKS1vT7HYPwk+qTBDCJKVST3zEIP+lrkgAmMYV61+8YhI80v5YEMIk1Nl3ahyIzjsUV6WfxY5kFmOT27j30RYX+id9xiHTTL9ZsWPsZ6QFMchs2PPxT4O/9jkOkk27QxL8FMgsggFDY+jZK/a3fcYi0OOm41rYNGza0gCwEEneoqzvwKaXVn2lIvPC9yHCqQ6N/GA5bP6yurr49/SsJQAxTW3tokY27zlWq0kIldkKHyCA6ppW6rhw+GIz31m7dujUjjpYXQgghhBBCCCGEEEIIIYQQQgghhBBCCCGEEEIIIYQQQgghhBBCCCGEEEIIIYQQQgghhBBCCCGEEEIIIYQQQgghhBBiAvr/HNOzPaTc2hUAAAAASUVORK5CYII="
+            height="45"
+            width="45"
+            class="me-2"
+          />
+          <div class="flex-grow-1 mb-0">
+            <div class="flex items-center">
+              <p id="num" class="ml-2">{{ p.phone_number }}</p>
+              <span
+                id="copy"
+                onclick="copyToClipboard({{ p.phone_number }})"
+                class="copy-icon ml-2 cursor-pointer"
+                ><i class="far fa-copy me-2"></i
+              ></span>
+            </div>
+            <p id="service-name" class="inline-block text-sm mb-0 ml-2">
+              {{ p.service }} - ₦{{ p.amount|floatformat:2|intcomma }}
+            </p>
+          </div>
+        </div>
+        <div class="relative">
+          <textarea
+            id="respond"
+            class="dark:bg-[#0e1726] form-control shadow w-full mt-0"
+            placeholder="Searching for otp"
+            rows="4"
+            disabled=""
+          ></textarea>
+          <p id="timer" class="dark:text-[#0e1726]" style="position: absolute; bottom: 10px; right: 10px; border-radius: 20px; background: #e1e3e5; padding-right: 10px; padding-left: 10px; padding-top: 5px; padding-bottom: 5px;"><i class="fa fa-clock"></i> {{ o.get_dynamic_duration }}</p>
+        </div>
+
+        <div class="text-center mt-2">
+          <div class="flex">
+            <button
+              id="buy_g3WiYxSrDZBmZ6ehMzUp"
+              onclick="buy('g3WiYxSrDZBmZ6ehMzUp', 'buy_g3WiYxSrDZBmZ6ehMzUp','{{ p.phone_number }}')"
+              class="btn btn-rounded color-primary btn-outline-primary mr-2"
+            >
+              <span class="fa fa-history mr-2"></span>Buy New
+            </button>
+            <button
+                id="cancel_{{ o.id }}"
+                onclick="s_model_cancle('{{ p.number_id }}', 'cancel_{{ p.id }}','{{ p.phone_number }}')"
+                class="btn btn-rounded color-danger btn-outline-danger lh-normal mb-0"
+              >
+                <span class="fa fa-trash-alt" style="margin-right: 8px"></span
+                >Cancel
+              </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+    function s_model_cancle(ids, element, number) {
+      var cardContainer = document.getElementById("my_model");
+      cardContainer.classList.remove("hidden");
+
+      cardContainer.innerHTML = "";
+
+      cardContainer.innerHTML = `    <div class="fixed inset-0 bg-[black]/60 z-[999] px-4 overflow-y-auto">
+        <div class="flex items-center justify-center min-h-screen">
+            <div x-transition x-transition.duration.300 class="panel border-0 p-0 rounded-lg overflow-hidden md:w-full max-w-lg w-[90%] my-8">
+                <button type="button" onclick="close_btn()" class="absolute top-4 ltr:right-4 rtl:left-4 text-white-dark hover:text-dark" @click="isDeleteNoteModal = false">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+                <div class="text-lg font-medium bg-[#fbfbfb] dark:bg-[#121c2c] ltr:pl-5 rtl:pr-5 py-3 ltr:pr-[50px] rtl:pl-[50px]">Number Delete Request</div>
+                <div class="p-5 text-center">
+                    <div class="text-white bg-danger ring-4 ring-danger/30 p-4 rounded-full w-fit mx-auto">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 mx-auto">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 mx-auto">
+                                    <path d="M20.5001 6H3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
+                                    <path d="M18.8334 8.5L18.3735 15.3991C18.1965 18.054 18.108 19.3815 17.243 20.1907C16.378 21 15.0476 21 12.3868 21H11.6134C8.9526 21 7.6222 21 6.75719 20.1907C5.89218 19.3815 5.80368 18.054 5.62669 15.3991L5.16675 8.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
+                                    <path opacity="0.5" d="M9.5 11L10 16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
+                                    <path opacity="0.5" d="M14.5 11L14 16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
+                                    <path opacity="0.5" d="M6.5 6C6.55588 6 6.58382 6 6.60915 5.99936C7.43259 5.97849 8.15902 5.45491 8.43922 4.68032C8.44784 4.65649 8.45667 4.62999 8.47434 4.57697L8.57143 4.28571C8.65431 4.03708 8.69575 3.91276 8.75071 3.8072C8.97001 3.38607 9.37574 3.09364 9.84461 3.01877C9.96213 3 10.0932 3 10.3553 3H13.6447C13.9068 3 14.0379 3 14.1554 3.01877C14.6243 3.09364 15.03 3.38607 15.2493 3.8072C15.3043 3.91276 15.3457 4.03708 15.4286 4.28571L15.5257 4.57697C15.5433 4.62992 15.5522 4.65651 15.5608 4.68032C15.841 5.45491 16.5674 5.97849 17.3909 5.99936C17.4162 6 17.4441 6 17.5 6" stroke="currentColor" stroke-width="1.5"></path>
+                                </svg>
+                        </svg>
+                    </div>
+                    <div class="sm:w-3/4 mx-auto mt-5">Are you sure you want to delete this Number ${number}</div>
+                    <div class="flex justify-center items-center mt-8">
+                        <button type="button" class="btn btn-outline-danger" onclick="close_btn()">Cancel</button>
+                        <button type="button" data-key="${ids}" id="" class="delete_number btn btn-primary ltr:ml-4 rtl:mr-4">Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>`;
+    }
+    function close_btn() {
+      var modals = document.getElementById("my_model");
+      modals.classList.add("hidden");
+    }
+    
+    $(document).on("click", ".delete_number", function() {
+        let order_id = $(this).attr("data-key")
+        let id = $(this).attr("data-real")
+        $(this).prop("disabled", true).html('<span class="animate-spin border-2 border-white border-l-transparent rounded-full w-4 h-4 ltr:mr-1 rtl:ml-1 inline-block align-middle"></span>Cancel');
+
+        console.log("This is the Order ID:", order_id);
+        console.log("This is the ID:", id);
+
+        $.ajax({
+            url: "/reject-s2/",
+            data: {
+                "id": order_id,
+                // "id": id,
+            },
+            success: function (res) {
+                if (res.bool === true) {
+                    window.location.reload()
+                } else {
+                    $(".delete_number").prop("disabled", false).html('<span></span>Cancel');
+                    
+                    Toastify({
+                      text: "You can't cancel Yet",
+                      duration: 1000,
+                      gravity: "top",
+                      position: 'center',
+                    }).showToast();
+                }
+            }
+        })
+        
+    })
+</script>
+
+<script>
+  $(document).ready(function () {
+    let countdownTime = {{ p.get_dynamic_duration }};
+
+    const timerElement = $('#timer');
+
+    const interval = setInterval(() => {
+      if (countdownTime > 0) {
+        timerElement.html(`<i class="fa fa-clock"></i> ${countdownTime}`);
+        countdownTime--;
+      } else {
+        clearInterval(interval);
+        timerElement.html(`<i class="fa fa-clock"></i> 0`);
+        
+        $(".delete_number").click();
+      }
+    }, 1000);
+  });
+</script>
+
+
+<script>
+    $("#sms_res").val("Checking for code...");
+$(document).ready(function() {
+    console.log("Requesting for code");
+
+    function fetchData(key, id, $element) {
+        $.ajax({
+            url: "/s2-code/",
+            type: "GET",
+            data: {
+                "key": key,
+                "id": id,
+            },
+            success: function(response) {
+                console.log(response);
+
+                if (response.bool === true) {
+                    let pin = response.sms;
+                    console.log("Pin has changed from null:", pin);
+                    $("#respond").val(pin);
+                    $("#holdthebutton").empty()
+                    $("#sms_res").val("Changed");
+
+                    // Stop the interval for this specific element
+                    clearInterval($element.data("intervalId"));
+
+                    // Update the input field for this specific element
+                    $element.find("#sms_res").val(pin);
+                }
+            },
+            error: function(error) {
+                console.error("Error fetching data", error);
+            }
+        });
+    }
+
+    $(".unique-content").each(function() {
+        let key = $(this).find(".order_get").text();
+        let id = $(this).find(".order_get_id").text();
+        let $this = $(this); // Cache the current element
+
+        // Set an interval and store it with the element
+        let intervalId = setInterval(function() {
+            fetchData(key, id, $this); // Pass $this to fetchData
+        }, 2000);
+
+        $this.data("intervalId", intervalId); // Store intervalId in the element's data
+    });
+});
+
+</script>
+
+  {% endfor %}
+  {% else %}
+  <div id="kjcard-container" class="mt-3 rounded-lg">
+    <div class="panel dark:bg-[#1b2e4b]">
+      <center>
+        <img
+          src="https://cdn-icons-png.flaticon.com/512/5089/5089767.png"
+          height="100"
+          width="100"
+        />
+      </center>
+      <div class="flex items-center justify-center mt-2">
+        <h5 class="font-bold text-lg dark:text-white-light">
+          No Any Active Numbers
+        </h5>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+  <div id="my_model" class=""></div>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script>
+    const audio = new Audio(
+      "https://dl.dropboxusercontent.com/s/h8pvqqol3ovyle8/tom.mp3"
+    );
+    audio.muted = true; // Initially muted to comply with autoplay restrictions
+
+    // Function to ask for permission using SweetAlert
+    function showPermissionDialog() {
+      // Check if permission is already granted
+      if (localStorage.getItem("soundPermission") === "granted") {
+        // Permission is already granted, unmute and play the sound
+        audio.muted = false;
+        audio
+          .play()
+          .then(() => console.log("Sound playback started"))
+          .catch((error) => console.error("Error playing sound:", error));
+        return;
+      }
+
+      // Show SweetAlert to ask for permission
+      Swal.fire({
+        title: "Sound Permission",
+        text: "This webpage would like to play sounds. Do you allow it?",
+        icon: "question",
+        showCancelButton: true,
+        confirmButtonText: "Allow",
+        cancelButtonText: "Block",
+        allowOutsideClick: false, // Prevent closing without user action
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // User allowed sound; store permission and unmute
+          localStorage.setItem("soundPermission", "granted");
+          audio.muted = false;
+          audio
+            .play()
+            .then(() => console.log("Sound playback started"))
+            .catch((error) => console.error("Error playing sound:", error));
+        } else {
+          // User blocked sound; store permission as blocked
+          localStorage.setItem("soundPermission", "blocked");
+          console.log("Sound playback blocked by the user.");
+        }
+      });
+    }
+
+    // Automatically ask for permission when the page loads
+    window.addEventListener("load", () => {
+      showPermissionDialog();
+    });
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/notiflix@3.2.6/dist/notiflix-aio-3.2.6.min.js"></script>
+
+  <script src="{% static '/sms-styles/js/nice-select2.js' %}"></script>
+
+  <script src="{% static '/sms-styles/js/main33.js' %}"></script>
+  <script type="module" src="{% static '/sms-styles/js/sms.js' %}"></script>
+  <script src="{% static '/sms-styles/js/xy.js' %}"></script>
+</div>
+
+{% endblock content %}

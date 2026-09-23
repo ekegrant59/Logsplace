@@ -1,0 +1,167 @@
+{% extends 'partials/backend.html' %}
+{% block content %}
+
+
+<main class="app-content">
+          
+<div class="page-title m-b-20">
+                <div class="row justify-content-between">
+                    <div class="col-md-6">
+                        <h1 class="page-title">
+                            <span class="fe fe-settings"></span> Settings
+                        </h1>
+                    </div>
+                    <div class="col-md-6">
+                        
+                    </div>
+                </div>
+            </div><div class="row settings justify-content-center">
+  <div class="col-md-12 col-lg-12">
+    <div class="row">
+      <div class="col-md-2 col-lg-2">
+        <div class="sidebar o-auto">
+        <div class="list-group list-group-transparent mb-0 mt-5">
+          <h5><span class="icon mr-3"><i class="fe fe-disc"></i></span>General setting</h5>
+        </div><div class="list-group list-group-transparent mb-0"><a href="/admin/settings/website_setting" class="list-group-item list-group-item-action "><span class="icon mr-3"><i class="fe fe-globe"></i></span>Website setting</a><a href="/admin/settings/website_logo" class="list-group-item list-group-item-action "><span class="icon mr-3"><i class="fe fe-image"></i></span>Website logo</a><a href="/admin/settings/default" class="list-group-item list-group-item-action "><span class="icon mr-3"><i class="fe fe-box"></i></span>Default setting</a><a href="/admin/settings/template" class="list-group-item list-group-item-action active"><span class="icon mr-3"><i class="fe fe-layout"></i></span>Template</a><a href="/admin/settings/cookie_policy" class="list-group-item list-group-item-action "><span class="icon mr-3"><i class="fe fe-bookmark"></i></span>Cookie policy</a><a href="/admin/settings/terms_policy" class="list-group-item list-group-item-action "><span class="icon mr-3"><i class="fe fe-award"></i></span>Terms policy</a><a href="/admin/settings/currency" class="list-group-item list-group-item-action "><span class="icon mr-3"><i class="fe fe-dollar-sign"></i></span>Currency</a><a href="/admin/settings/other" class="list-group-item list-group-item-action "><span class="icon mr-3"><i class="fe fe-command"></i></span>Other</a></div>
+        <div class="list-group list-group-transparent mb-0 mt-5">
+          <h5><span class="icon mr-3"><i class="fe fe-disc"></i></span>Email</h5>
+        </div><div class="list-group list-group-transparent mb-0"><a href="/admin/settings/email_setting" class="list-group-item list-group-item-action "><span class="icon mr-3"><i class="fe fe-mail"></i></span>Email setting</a><a href="/admin/settings/email_template" class="list-group-item list-group-item-action "><span class="icon mr-3"><i class="fe fe-file-text"></i></span>Email template</a></div>
+        <div class="list-group list-group-transparent mb-0 mt-5">
+          <h5><span class="icon mr-3"><i class="fe fe-disc"></i></span>Integrations</h5>
+        </div><div class="list-group list-group-transparent mb-0"><a href="/admin/settings/payment" class="list-group-item list-group-item-action "><span class="icon mr-3"><i class="fe fe-file-text"></i></span>Manual payments</a></div></div>      </div>
+      <div class="col-md-10 col-lg-10">
+        <div class="card content">
+  <div class="card-header">
+    <h3 class="card-title"><i class="fe fe-layout"></i> Template</h3>
+  </div>
+  <form action="/admin/settings/store/" class="form actionForm" data-redirect="/admin/settings/template" method="POST" accept-charset="utf-8">
+<input type="hidden" name="token" value="c676cee0a3250778e41d52227c4bdcb1">                                               
+    <div class="card-body">
+        <div class="row">
+          <div class="col-md-12">
+            <h5 class="text-info"><i class="fe fe-link"></i> User Layout</h5>
+            <div class="form-group">
+              <div class="custom-switches-stacked">
+                <label class="custom-switch">
+                  <input type="radio" name="user_layout" class="custom-switch-input" value="vertical">
+                  <span class="custom-switch-indicator"></span>
+                  <span class="custom-switch-description">Vertical</span>
+                </label>
+                <label class="custom-switch">
+                  <input type="radio" name="user_layout" value="horizontal" class="custom-switch-input" checked=""> 
+                  <span class="custom-switch-indicator"></span>
+                  <span class="custom-switch-description">Horizontal</span>
+                </label>
+              </div>
+            </div>  
+            <div class="row smtp-configure d-none">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Header Menu Skin and Button Colors</label>
+                        <select name="default_header_skin" class="form-control">
+<option value="default" selected="selected">Default</option>
+<option value="purple">Purple</option>
+<option value="light-blue">Light Blue</option>
+<option value="lawrencium">Lawrencium</option>
+<option value="cool-sky">Cool Sky</option>
+<option value="dark-ocean">Dark Ocean</option>
+<option value="cosmic-fusion">Cosmic Fusion</option>
+<option value="royal">Royal</option>
+<option value="twitch">Twitch</option>
+<option value="bluelagoo">Bluelagoo</option>
+<option value="dimigo">Dimigo</option>
+</select>
+
+                    </div>
+                </div>             </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <h5 class="text-info"><i class="fe fe-link"></i> Default Landing Page</h5>
+              <select name="default_home_page" class="form-control square">
+                                <option value="monoka"> Monoka</option>
+                                    <option value="nico"> Nico</option>
+                                    <option value="pergo"> Pergo</option>
+                                    <option value="regular" selected=""> Regular</option>
+                                </select>
+            </div>
+          </div>
+        </div>
+                <h5 class="nico-landing-page d-none"><i class="fe fe-slack"></i> Nico Landing page Options</h5>
+        <div class="row nico-landing-page d-none m-l-20">
+            <div class="col-md-6">
+              <div class="form-group">
+                <h5 class="text-success"><i class="fe fe-server"></i> Type</h5>
+                <select name="default_nico_type" class="form-control square">
+                  <option value="light" selected=""> Light</option>
+                  <option value="dark"> Dark</option>
+                </select>
+              </div>  
+            </div>
+            <div class="col-md-12">
+              <div class="form-group">
+                <h5 class="text-success"><i class="fe fe-server"></i> Default Number</h5>
+              </div> 
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Happy clients</label>
+                <input class="form-control" name="default_happy_clients_number" value="13237">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Total orders</label>
+                <input class="form-control" name="default_total_orders_number" value="224058">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Hours of support</label>
+                <input class="form-control" name="default_hours_of_support_number" value="17732">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Fast services</label>
+                <input class="form-control" name="default_fast_services_number" value="4401">
+              </div>
+            </div>
+        </div>
+        
+    </div>
+    <div class="card-footer text-end">
+      <button class="btn btn-primary btn-min-width text-uppercase">Save</button>
+    </div>
+  </form></div>
+
+<script>
+  // Check post type
+  $(document).on("change","input[type=radio][name=user_layout]", function(){
+    var _that = $(this);
+    var _type = _that.val();
+    if(_type == 'horizontal'){
+      $('.smtp-configure').removeClass('d-none');
+    }else{
+      $('.smtp-configure').addClass('d-none');
+    }
+  });
+  $(document).on("change","select[name=default_home_page]", function(){
+    var _that = $(this);
+    var _type = _that.val();
+    if(_type == 'nico') {
+      $('.nico-landing-page').removeClass('d-none');
+    } else {
+      $('.nico-landing-page').addClass('d-none');
+    }
+  });
+</script>      </div>
+    </div>
+  </div>
+</div>
+        </main>
+        
+{% endblock content %}

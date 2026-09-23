@@ -1,0 +1,353 @@
+{% extends 'partials/new_base.html' %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup Page</title>
+</head>
+{% block content %}
+<!--<style>-->
+<!--    .lb {-->
+<!--        text-align: left;-->
+<!--        width: 100%;-->
+<!--        display: block;-->
+<!--    }-->
+<!--    .fle {-->
+<!--        display: flex;-->
+<!--    }-->
+<!--    .popup-container {-->
+<!--        position: fixed;-->
+<!--        top: 0;-->
+<!--        left: 0;-->
+<!--        width: 100%;-->
+<!--        height: 100%;-->
+<!--        background: rgba(0, 0, 0, 0.5);-->
+<!--        justify-content: center;-->
+<!--        align-items: center;-->
+<!--        z-index: 1;-->
+<!--    }-->
+
+<!--    .popup-content {-->
+<!--        background: #fff;-->
+<!--        width: 300px;-->
+<!--        border-radius: 10px;-->
+<!--        overflow: hidden;-->
+<!--        box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);-->
+<!--    }-->
+
+<!--    .popup-header {-->
+<!--        background: #007BFF;-->
+<!--        padding: 15px;-->
+<!--        color: #fff;-->
+<!--        display: flex;-->
+<!--        justify-content: space-between;-->
+<!--        align-items: center;-->
+<!--    }-->
+
+<!--    .popup-header h2 {-->
+<!--        margin: 0;-->
+<!--    }-->
+
+<!--    .close-button {-->
+<!--        cursor: pointer;-->
+<!--    }-->
+
+<!--    .popup-body {-->
+<!--        padding: 20px;-->
+<!--    }-->
+
+<!--    .popup-row {-->
+<!--        display: flex;-->
+<!--        justify-content: space-between;-->
+<!--        margin-bottom: 15px;-->
+<!--    }-->
+
+<!--    #gateway-select {-->
+<!--        width: 100%;-->
+<!--        padding: 10px;-->
+<!--        margin-top: 5px;-->
+<!--        border-radius: 5px;-->
+<!--        border: 1px solid #ccc;-->
+<!--    }-->
+
+<!--    .popup-footer {-->
+<!--        padding: 15px;-->
+<!--        background: #007BFF;-->
+<!--        text-align: center;-->
+<!--    }-->
+
+<!--    .payment-button {-->
+<!--        background: #fff;-->
+<!--        color: #007BFF;-->
+<!--        padding: 10px 20px;-->
+<!--        border: none;-->
+<!--        cursor: pointer;-->
+<!--        font-size: 16px;-->
+<!--        border-radius: 5px;-->
+<!--    }-->
+
+<!--    .payment-button:hover {-->
+<!--        background: #f1f1f1;-->
+<!--    }-->
+    
+<!--    .popup-rowu p {-->
+<!--        padding: 0px;-->
+<!--        margin-top: 0px;-->
+<!--        margin-bottom: 5px;-->
+<!--        font-size: 15px;-->
+<!--    }-->
+<!--    .errorlist {-->
+<!--        list-style-type: none;-->
+<!--        padding: 0px;-->
+<!--    }-->
+<!--</style>-->
+<!--<body>-->
+<!--    <div class="dep_con">-->
+<!--        <div class="container">-->
+<!--            <h2>Sign Up</h2>-->
+<!--            <form action="" method="post">-->
+<!--                {% csrf_token %}-->
+<!--                <label class="lb" for="email">Email:</label>-->
+<!--                <div class="fle">-->
+<!--                    {{form.email}}-->
+<!--                </div>-->
+<!--                <label class="lb" for="email">First Name:</label>-->
+<!--                <div class="fle">-->
+<!--                    {{form.first_name}}-->
+<!--                </div>-->
+<!--                <label class="lb" for="email">Last Name:</label>-->
+<!--                <div class="fle">-->
+<!--                    {{form.last_name}}-->
+<!--                </div>-->
+<!--                <label class="lb" for="password">Password:</label>-->
+<!--                <div class="fle">-->
+<!--                    {{form.password1}}-->
+<!--                </div>-->
+<!--                <label class="lb" for="password">Confirm Password:</label>-->
+<!--                <div class="fle">-->
+<!--                    {{form.password2}}-->
+<!--                </div>-->
+<!--                <input type="submit" class="btn" id="thesignup" value="Sign Up">-->
+<!--            </form>-->
+<!--            <div class="login-link">-->
+<!--                Already have an account? <a href="/user/signin/">Login</a>-->
+<!--            </div>-->
+<!--{% if form.errors %}-->
+<!--<div class="popup-container" id="popup" style="display: flex;">-->
+<!--            <div id="popup" class="popup-content">-->
+<!--        <div class="popup-header">-->
+<!--            <h4>Notice! Notice!! Notice!!!</h4>-->
+<!--            <span class="close-button" onclick="closePopup()">&times;</span>-->
+<!--        </div>-->
+<!--        <div class="popup-body" style="line-height: 20px;">-->
+<!--            <div class="popup-rowu" style="justify-content: center; align-content: center;">-->
+<!--                <p style="text-align: center; font-weight: 300;">{{ form.errors }}</p>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+<!--{% else %}-->
+<!--{% endif %}-->
+<!--        </div>-->
+<!--    </div>-->
+    
+<!--    <script>-->
+        <!--// Function to show the popup-->
+<!--        function showPopup() {-->
+<!--            document.getElementById('popup').style.display = 'flex';-->
+<!--        }-->
+    
+        <!--// Function to close the popup-->
+<!--        function closePopup() {-->
+<!--            document.getElementById('popup').style.display = 'none';-->
+<!--        }-->
+<!--    </script>-->
+    
+<!--    <script>-->
+<!--        var form_fields = document.getElementsByTagName('input')-->
+        <!--// form_fields[2].placeholder='Username...';-->
+<!--        form_fields[2].placeholder='Email Address...';-->
+<!--        form_fields[3].placeholder='First Name...';-->
+<!--        form_fields[4].placeholder='Last Name...';-->
+<!--        form_fields[5].placeholder='Password...';-->
+<!--        form_fields[6].placeholder='Confirm Password...';-->
+<!--    </script>-->
+    
+<!--    <script src="{% static 'js/function.js' %}"></script>-->
+<!--    <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>-->
+<!--    <script src="{% static 'js/jquery-ui.min.js' %}"></script>-->
+    
+<!--    <script>-->
+<!--        $(document).on("click", "#thesignup", function() {-->
+<!--        console.log("Signup Clicked");-->
+        
+<!--        let username = $("#id_username").val()-->
+<!--        let email = $("#id_email").val()-->
+<!--        let pass = $("#id_password1").val()-->
+<!--        let pass2 = $("#id_password2").val()-->
+        
+<!--        console.log("Username:", username);-->
+<!--        console.log("Email:", email);-->
+<!--        console.log("Password:", pass);-->
+<!--        console.log("Password2:", pass2);-->
+
+<!--            $.ajax({-->
+<!--                url: '/email-verify/',-->
+<!--                data: {-->
+<!--                    "username": username,-->
+<!--                    "email": email,-->
+<!--                    "pass": pass,-->
+<!--                    "pass2": pass2,-->
+<!--                },-->
+<!--                success: function(response) {-->
+<!--                    if (response.bool === true){-->
+<!--                        console.log("Email Sent")-->
+<!--                    }-->
+<!--                    if (response.bool === false){-->
+<!--                        console.log("Form Not Filled")-->
+<!--                    }-->
+<!--                }-->
+<!--            })-->
+<!--        })-->
+<!--    </script>-->
+<!--</body>-->
+
+
+<section class="account d-flex">
+    <img src="https://loggsplug.com/assets/assets2/images/thumbs/account-img.png" alt="" class="account__img">
+    <div class="account__left d-md-flex d-none flx-align section-bg position-relative z-index-1 overflow-hidden">
+        <img src="https://loggsplug.com/assets/assets2/images/shapes/pattern-curve-seven.png" alt=""
+             class="position-absolute end-0 top-0 z-index--1 h-100">
+        <div class="account-thumb">
+            <img src="https://loggsplug.com/assets/assets2/images/thumbs/barrr.png" alt="">
+            <div class="statistics animation bg-main text-center">
+                <h5 class="statistics__amount text-white">Logsplace</h5>
+            </div>
+        </div>
+    </div>
+    <div class="account__right padding-y-120 flx-align">
+        <div class="account-content">
+            <a href="/" class="logo mb-64">
+                <img src="{% static 'img/logo.jpeg' %}" alt="Logo">
+            </a>
+            <h4 class="account-content__title mb-48 text-capitalize">Create A Free Account</h4>
+            
+            {% if messages %}
+            <div class="alert alert-danger">
+            <ul>
+                {% for m in messages %}
+                <li>
+                    {{ m }}.
+                </li>
+                {% endfor %}
+            </ul>
+                </div>
+            {% endif %}
+
+            <form action="#" method="POST" class="verify-gcaptcha">
+                {% csrf_token %}
+
+                <div class="row gy-4">
+                    <div class="col-12">
+                        <label for="email" class="form-label mb-2 font-18 font-heading fw-600">Username</label>
+                        <div class="position-relative">
+                            <input required type="text" name="username" value=""
+                                   class="common-input common-input--bg common-input--withIcon" id="email"
+                                   placeholder="john">
+                            <span class="input-icon"><img src="https://loggsplug.com/assets/assets2/images/icons/user-icon.svg"
+                                                          alt=""></span>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <label for="email" class="form-label mb-2 font-18 font-heading fw-600">Email</label>
+                        <div class="position-relative">
+                            <input required type="text" value=""
+                                   class="common-input common-input--bg common-input--withIcon" id="email" name="email"
+                                   placeholder="infoname@mail.com">
+                            <span class="input-icon"><img
+                                    src="https://loggsplug.com/assets/assets2/images/icons/envelope-icon.svg" alt=""></span>
+                        </div>
+                        <small class="text-danger usernameExist"></small>
+                    </div>
+
+
+                    <div class="col-12">
+                        <label for="your-password" class="form-label mb-2 font-18 font-heading fw-600">Password</label>
+                        <div class="position-relative">
+                            <input required type="password" name="password"
+                                   class="common-input common-input--bg common-input--withIcon" id="your-password"
+                                   placeholder="6+ characters, 1 Capital letter">
+                            <span class="input-icon toggle-password cursor-pointer" id="#your-password"><img
+                                    src="https://loggsplug.com/assets/assets2/images/icons/lock-icon.svg" alt=""></span>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <label for="your-password" class="form-label mb-2 font-18 font-heading fw-600">Password</label>
+                        <div class="position-relative">
+                            <input type="password" name="password_confirmation"
+                                   class="common-input common-input--bg common-input--withIcon" id="your-password"
+                                   placeholder="6+ characters, 1 Capital letter">
+                            <span class="input-icon toggle-password cursor-pointer" id="#your-password"><img
+                                    src="https://loggsplug.com/assets/assets2/images/icons/lock-icon.svg" alt=""></span>
+                        </div>
+                    </div>
+
+
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-main btn-lg w-100 pill"> Register</button>
+                    </div>
+
+
+                    <div class="row">
+
+
+                        <div class="d-flex justify-content-end col-6 my-3">
+                            <div class="form-check">
+                                <input class="form-check-input" name="agree" type="checkbox" required value="1"
+                                       id="flexCheckChecked" checked>
+                                <label class="form-check-label" for="flexCheckChecked">
+                                    Terms and Conditions
+                                </label>
+                            </div>
+                        </div>
+
+
+
+                        <div class="d-flex justify-content-start col-6 my-3">
+                            <div class="have-account">
+                                <p class="text font-14">Already had an account? <a
+                                        class="link text-main text-decoration-underline fw-500" href="/user/signin/">Login</a></p>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+
+
+
+
+
+
+                </div>
+
+
+
+            </form>
+
+
+        </form>
+    </div>
+
+    <!-- Page Content End -->
+
+
+</section>
+<!-- ================================== Account Page End =========================== -->
+{% endblock content %}
+</html>

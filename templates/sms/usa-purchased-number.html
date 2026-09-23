@@ -1,0 +1,111 @@
+{% load humanize %}
+<div id="puchased">
+    {% for p in p %}
+<div id="" class="mt-3 rounded-lg" style="">
+  <div class="card shadow-white col-md-12" style="border-radius: 18px">
+    <div
+      class="panel shadow dark:bg-[#1b2e4b] dark:border-0 flex flex-col p-4 mt-3 mb-2"
+    >
+        <div class="unique-content">
+            <span class="order_get" style="font-size: 12px; display: none;">{{ p.number_id }}</span>
+            <span class="order_get_id" style="font-size: 12px; display: none;">{{ p.id }}</span>
+        </div>
+      <div class="card-text space-y-3">
+        <div class="flex items-center mb-0">
+          <img
+            id="flag_O9s4ThYbiDfkCdJJnIFC"
+            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_u8bkK6j3_AQyAuoynuI2f1opZBlc4vKjCg&amp;usqp=CAU"
+            height="45"
+            width="45"
+            class="me-2"
+          />
+          <div class="flex-grow-1 mb-0">
+            <div class="flex items-center">
+              <p id="num" class="ml-2">+{{ p.phone_number }}</p>
+              <span
+                id="copy"
+                onclick="copyToClipboard('+{{ p.phone_number }}')"
+                class="copy-icon ml-2 cursor-pointer"
+                ><i class="far fa-copy me-2"></i
+              ></span>
+            </div>
+            <p id="service-name" class="inline-block text-sm mb-0 ml-2">
+              {{ p.service }} - ₦{{ p.amount|floatformat:2|intcomma }}
+            </p>
+          </div>
+        </div>
+        <div class="relative">
+          <textarea
+            id="respond"
+            class="dark:bg-[#0e1726] form-control shadow w-full mt-0"
+            placeholder="Searching for otp"
+            rows="4"
+            disabled=""
+          >
+Waiting for sms</textarea
+          >
+          <p
+            id="timer"
+            class="dark:text-[#0e1726]"
+            style="
+              position: absolute;
+              bottom: 10px;
+              right: 10px;
+              border-radius: 20px;
+              background: #e1e3e5;
+              padding-right: 10px;
+              padding-left: 10px;
+              padding-top: 5px;
+              padding-bottom: 5px;
+            "
+          >
+            <i class="fa fa-clock"></i> {{ p.get_dynamic_duration }}
+          </p>
+        </div>
+
+        <div class="text-center mt-2">
+          <div class="flex">
+            <!--<button id="buy_O9s4ThYbiDfkCdJJnIFC" onclick="buy('O9s4ThYbiDfkCdJJnIFC', 'buy_O9s4ThYbiDfkCdJJnIFC','15043250255')" class="btn btn-rounded color-primary btn-outline-primary mr-2"><span class="fa fa-history mr-2"></span>Buy New</button>-->
+            <button
+              id="copy"
+              onclick="copyOtpToClipboard('{{ p.id }}')"
+              class="btn btn-rounded color-primary btn-outline-primary mr-2"
+            >
+              <span class="copy-icon mr-2 cursor-pointer"></span>Copy OTP
+            </button>
+            <button
+              id="cancel_{{ p.id }}"
+              onclick="model_cancle('{{ p.id }}', '{{ p.id }}','{{ p.phone_number }}')"
+              class="btn btn-rounded color-danger btn-outline-danger lh-normal mb-0"
+            >
+              <span class="fa fa-trash-alt" style="margin-right: 8px"></span
+              >Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  $(document).ready(function () {
+    let countdownTime = {{ p.get_dynamic_duration }};
+
+    const timerElement = $('#timer');
+
+    const interval = setInterval(() => {
+      if (countdownTime > 0) {
+        timerElement.html(`<i class="fa fa-clock"></i> ${countdownTime}`);
+        countdownTime--;
+      } else {
+        clearInterval(interval);
+        timerElement.html(`<i class="fa fa-clock"></i> 0`);
+        
+        $(".delete_number").click();
+      }
+    }, 1000);
+  });
+</script>
+{% endfor %}
+</div>

@@ -1,0 +1,55 @@
+<div id="main-modal-content">
+  <div class="modal-dialog modal-md" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-pantone">
+        <h4 class="modal-title">
+          <i class="fa fa-edit"></i>View Order ({{ o.id }}) Log
+        </h4>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <form
+        action="/admin/provider/store/{{ o.id }}"
+        class="form actionForm"
+        data-redirect="/admin/provider"
+        method="POST"
+        accept-charset="utf-8"
+      >
+        <input type="hidden" name="id" value="1" />
+        <input
+          type="hidden"
+          name="token"
+          value="8bedbdd9cd9e51e20d379c5503ea337e"
+        />
+        <div class="modal-body">
+          <div class="row justify-content-md-center">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+              <div class="form-group">
+              </div>
+            </div>  
+            {% for o in l %}
+            <div class="col-md-12">
+              <div class="form-group">
+                <label>Log {{ forloop.counter }}</label>
+                <textarea
+                  name="description"
+                  cols="40"
+                  rows="3"
+                  class="form-control"
+                >
+{{ o.log }}
+</textarea
+                >
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>        
+      </form>
+    </div>
+  </div>
+</div>

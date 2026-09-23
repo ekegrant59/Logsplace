@@ -1,0 +1,946 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <!-- <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> -->
+    <meta
+      name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+    />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta http-equiv="Content-Language" content="en" />
+    <meta
+      name="description"
+      content="Logsplace Backend"
+    />
+    <meta
+      name="keywords"
+      content="Logsplace Backend"
+    />
+    <title>Logsplace Backend</title>
+
+    <link
+      rel="shortcut icon"
+      type="image/x-icon"
+      href="https://logsplace.com/shopviaclone22.com/assets/storage/images/logo_dark_BUP.png"
+    />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="MobileOptimized" content="320" />
+    <script
+      type="text/javascript"
+      src="{% static 'backend/js/chart_template.js' %}"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i,500,500i,600,600i,700,700i&amp;subset=latin-ext"
+    />
+
+    <!-- Load D3.js first (required for C3.js) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.16.0/d3.min.js"></script>
+
+    <!-- Load C3.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.7.20/c3.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.7.20/c3.min.css" />
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    <!-- <script src="{% static 'backend/js/jquery-3.2.1.min.js' %}"></script> -->
+    <script src="{% static 'backend/js/jquery-ui.min.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'backend/css/font-awesome.min.css' %}" />
+
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'backend/css/emojionearea.min.css' %}"
+      media="screen"
+    />
+    <script
+      type="text/javascript"
+      src="{% static 'backend/js/emojionearea.min.js' %}"
+    ></script>
+
+    <!-- c3.js Charts Plugin -->
+    <link href="{% static 'backend/css/fa fa-c3.css' %}" rel="stylesheet" />
+    <script src="{% static 'backend/js/fa fa-d3.v3.min.js' %}"></script>
+    <script src="{% static 'backend/js/fa fa-c3.min.js' %}"></script>
+    <link href="{% static 'backend/css/flag-icon.css' %}" rel="stylesheet" />
+    <!-- vendor -->
+    <link href="{% static 'backend/css/vendor.css' %}" rel="stylesheet" />
+    <link href="{% static 'backend/css/core.css' %}" rel="stylesheet" />
+    <link href="{% static 'backend/css/admin-core.css' %}" rel="stylesheet" />
+    <link href="{% static 'backend/css/layout.css' %}" rel="stylesheet" />
+    <script type="text/javascript">
+      var token = "5f17e8d88bc35df452edf39b8545b315",
+        PATH = "/",
+        BASE = "/";
+      var deleteItem = "Are you sure you want to delete this item?";
+      var deleteItems = "Are you sure you want to delete all items?";
+    </script>
+  </head>
+  <body class="antialiased vertical-menu">
+    <div id="page-overlay" class="visible incoming">
+      <div class="loader-wrapper-outer">
+        <div class="loader-wrapper-inner">
+          <div class="lds-double-ring">
+            <div></div>
+            <div></div>
+            <div>
+              <div></div>
+            </div>
+            <div>
+              <div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <style>
+      .search-box div.form-group {
+        margin-bottom: 0px !important;
+      }
+      .search-box .form-control {
+        height: auto !important;
+      }
+    </style>
+
+    <header class="navbar navbar-expand-xl js-header">
+      <div class="header-wrap">
+        <a class="navbar-toggler mobile-menu">
+          <span class="navbar-toggler-icon"
+            ><i class="fa fa-bars"></i
+          ></span>
+        </a>
+
+        <a href="/" class="navbar-brand text-inherit mr-md-3">
+          <img
+            src="https://logsplace.com/shopviaclone22.com/assets/storage/images/logo_dark_BUP.png"
+            alt="Website Logo"
+            class="d-md-none navbar-brand-logo"
+          />
+        </a>
+
+        <ul class="nav navbar-menu align-items-center order-1 order-lg-2">
+          <li class="nav-item d-none d-lg-block">
+            <a class="nav-link" href="#customize" data-toggle="modal">
+              <span class="nav-icon">
+                <i
+                  class="icon fe fe-sliders"
+                  data-toggle="tooltip"
+                  data-placement="bottom"
+                  title="Theme Customizer"
+                ></i>
+              </span>
+            </a>
+          </li>
+          <li class="nav-item dropdown">
+            <a
+              href="#"
+              data-toggle="dropdown"
+              class="nav-link d-flex align-items-center py-0 px-lg-0 px-2 text-color ml-2"
+            >
+              <span class="ml-2 d-none d-lg-block leading-none">
+                <span class="mt-1">Hi! {{ request.user.username }} </span>
+              </span>
+              <span class="avatar admin-profile m-l-10"></span>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+              <!--<a class="dropdown-item" href="/admin/profile">-->
+              <!--  <i class="icon fa fa-user dropdown-icon"></i>-->
+              <!--  Profile-->
+              <!--</a>-->
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="/admin/logout">
+                <i class="icon fa fa-log-out dropdown-icon"></i>
+                Logout2
+              </a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </header>
+    <div class="d-flex flex-row h-100p">
+      <style>
+        .tickets-number {
+          font-size: 14px !important;
+        }
+      </style>
+
+      <aside class="navbar navbar-side navbar-fixed js-sidebar" id="aside">
+        <div class="mobile-logo">
+          <a href="/admin/statistics" class="navbar-brand text-inherit">
+            <img
+              src="https://logsplace.com/shopviaclone22.com/assets/storage/images/logo_dark_BUP.png"
+              alt="Website Logo"
+              class="hide-navbar-folded navbar-brand-logo"
+            />
+            <img
+              src="https://logsplace.com/shopviaclone22.com/assets/storage/images/logo_dark_BUP.png"
+              alt="Website Logo"
+              class="hide-navbar-expanded navbar-brand-logo"
+            />
+          </a>
+        </div>
+        <div class="flex-fill scroll-bar">
+          <ul class="navbar-nav mb-md-4" id="menu">
+            <h6 class="navbar-heading first">
+              <span class="text">General</span>
+            </h6>
+            <li class="nav-item">
+              <a
+                class="nav-link active"
+                href="/admin/statistics"
+                data-toggle="tooltip"
+                data-placement="right"
+                title="Statistics"
+              >
+                <span class="nav-icon">
+                  <i class="fa fa-bar-chart"></i>
+                </span>
+                <span class="nav-text"> Statistics </span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                href="/admin/category"
+                data-toggle="tooltip"
+                data-placement="right"
+                title="Orders"
+              >
+                <span class="nav-icon">
+                  <i class="fa fa-shopping-cart"></i>
+                </span>
+                <span class="nav-text"> Category </span>
+              </a>
+            </li>
+             <li class="nav-item">
+              <a
+                class="nav-link"
+                href="/admin/log"
+                data-toggle="tooltip"
+                data-placement="right"
+                title="Log"
+              >
+                <span class="nav-icon">
+                  <i class="fa fa-file-text"></i>
+                </span>
+                <span class="nav-text"> Log </span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                href="/admin/logdetails"
+                data-toggle="tooltip"
+                data-placement="right"
+                title="Log Details"
+              >
+                <span class="nav-icon">
+                  <i class="fa fa-file-text"></i>
+                </span>
+                <span class="nav-text"> Log Details </span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                href="/admin/bulk"
+                target="_blank"
+                data-toggle="tooltip"
+                data-placement="right"
+                title="Add Log Details"
+              >
+                <span class="nav-icon">
+                  <i class="fa fa-file-text"></i>
+                </span>
+                <span class="nav-text"> Add Log Details </span>
+              </a>
+            </li>
+            <!--<li class="nav-item">-->
+            <!--  <a-->
+            <!--    class="nav-link"-->
+            <!--    href="/admin/bulk-profile"-->
+            <!--    target="_blank"-->
+            <!--    data-toggle="tooltip"-->
+            <!--    data-placement="right"-->
+            <!--    title="Add Log Details"-->
+            <!--  >-->
+            <!--    <span class="nav-icon">-->
+            <!--      <i class="fa fa-file-text"></i>-->
+            <!--    </span>-->
+            <!--    <span class="nav-text"> Add Profile Details </span>-->
+            <!--  </a>-->
+            <!--</li>-->
+            <h6 class="navbar-heading first">
+              <span class="text">Service</span>
+            </h6>
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                href="/admin/order"
+                data-toggle="tooltip"
+                data-placement="right"
+                title="Orders"
+              >
+                <span class="nav-icon">
+                  <i class="fa fa-shopping-cart"></i>
+                </span>
+                <span class="nav-text"> Orders </span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                href="/admin/sms-order"
+                data-toggle="tooltip"
+                data-placement="right"
+                title="SMS Orders"
+              >
+                <span class="nav-icon">
+                  <i class="fa fa-shopping-cart"></i>
+                </span>
+                <span class="nav-text"> SMS Orders </span>
+              </a>
+            </li>
+            <!-- <li class="nav-item">
+              <a
+                class="nav-link"
+                href="/admin/dripfeed"
+                data-toggle="tooltip"
+                data-placement="right"
+                title="Dripfeed"
+              >
+                <span class="nav-icon">
+                  <i class="fa fa-droplet"></i>
+                </span>
+                <span class="nav-text"> Dripfeed </span>
+              </a>
+            </li> -->
+            <!-- <li class="nav-item">
+              <a
+                class="nav-link"
+                href="/admin/subscriptions"
+                data-toggle="tooltip"
+                data-placement="right"
+                title="Subscriptions"
+              >
+                <span class="nav-icon">
+                  <i class="fa fa-thumbs-up"></i>
+                </span>
+                <span class="nav-text"> Subscriptions </span>
+              </a>
+            </li> -->
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                href="/admin/transactions"
+                data-toggle="tooltip"
+                data-placement="right"
+                title="Transaction logs"
+              >
+                <span class="nav-icon">
+                  <i class="fa fa-file-text-o"></i>
+                </span>
+                <span class="nav-text"> Transaction logs </span>
+              </a>
+            </li>
+            <h6 class="navbar-heading first">
+              <span class="text">Manage Users</span>
+            </h6>
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                href="/admin/users"
+                data-toggle="tooltip"
+                data-placement="right"
+                title="Users"
+              >
+                <span class="nav-icon">
+                  <i class="fa fa-users"></i>
+                </span>
+                <span class="nav-text"> Users </span>
+              </a>
+            </li>
+            <!-- <li class="nav-item">
+              <a
+                class="nav-link"
+                href="/admin/subscribers"
+                data-toggle="tooltip"
+                data-placement="right"
+                title="Subscribers"
+              >
+                <span class="nav-icon">
+                  <i class="fa fa-user-plus"></i>
+                </span>
+                <span class="nav-text"> Subscribers </span>
+              </a>
+            </li> -->
+            <!-- <li class="nav-item">
+              <a
+                class="nav-link"
+                href="/admin/users_activity"
+                data-toggle="tooltip"
+                data-placement="right"
+                title="User activity log"
+              >
+                <span class="nav-icon">
+                  <i class="icon-fa fa fa-history"></i>
+                </span>
+                <span class="nav-text"> User activity log </span>
+              </a>
+            </li> -->
+            <!-- <h6 class="navbar-heading first">
+              <span class="text">Blacklist</span>
+            </h6>
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                href="/admin/blacklist/ip"
+                data-toggle="tooltip"
+                data-placement="right"
+                title="Blacklist IP address"
+              >
+                <span class="nav-icon">
+                  <i class="fa fa-user-x"></i>
+                </span>
+                <span class="nav-text"> Blacklist IP address </span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                href="/admin/blacklist/link"
+                data-toggle="tooltip"
+                data-placement="right"
+                title="Blacklist Link"
+              >
+                <span class="nav-icon">
+                  <i class="fa fa-link"></i>
+                </span>
+                <span class="nav-text"> Blacklist Link </span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                href="/admin/blacklist/email"
+                data-toggle="tooltip"
+                data-placement="right"
+                title="Blacklist Email"
+              >
+                <span class="nav-icon">
+                  <i class="fa fa-mail"></i>
+                </span>
+                <span class="nav-text"> Blacklist Email </span>
+              </a>
+            </li>
+            <h6 class="navbar-heading first"><span class="text">Blog</span></h6>
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                href="/admin/blog_category"
+                data-toggle="tooltip"
+                data-placement="right"
+                title="Blog Category"
+              >
+                <span class="nav-icon">
+                  <i class="fa fa-th-large"></i>
+                </span>
+                <span class="nav-text"> Blog Category </span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                href="/admin/blog_posts"
+                data-toggle="tooltip"
+                data-placement="right"
+                title="Blog Posts"
+              >
+                <span class="nav-icon">
+                  <i class="fa fa-edit"></i>
+                </span>
+                <span class="nav-text"> Blog Posts </span>
+              </a>
+            </li> -->
+            <!--<h6 class="navbar-heading first">-->
+            <!--  <span class="text">Settings</span>-->
+            <!--</h6>-->
+            <!-- <li class="nav-item">-->
+            <!--  <a-->
+            <!--    class="nav-link"-->
+            <!--    href="/admin/settings"-->
+            <!--    data-toggle="tooltip"-->
+            <!--    data-placement="right"-->
+            <!--    title="Setting"-->
+            <!--  >-->
+            <!--    <span class="nav-icon">-->
+            <!--      <i class="fe fe-dollar-sign"></i>-->
+            <!--    </span>-->
+            <!--    <span class="nav-text"> Setting </span>-->
+            <!--  </a>-->
+            <!--</li>-->
+            <!-- <li class="nav-item">
+              <a
+                class="nav-link"
+                href="/admin/role_permission"
+                data-toggle="tooltip"
+                data-placement="right"
+                title="Role Permissions"
+              >
+                <span class="nav-icon">
+                  <i class="fa fa-user-check"></i>
+                </span>
+                <span class="nav-text"> Role Permissions </span>
+              </a>
+            </li> -->
+            <!-- <li class="nav-item">
+              <a
+                class="nav-link"
+                href="/admin/settings"
+                data-toggle="tooltip"
+                data-placement="right"
+                title="Settings"
+              >
+                <span class="nav-icon">
+                  <i class="fe fe-settings"></i>
+                </span>
+                <span class="nav-text"> Settings </span>
+              </a>
+            </li> -->
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                href="/admin/provider"
+                data-toggle="tooltip"
+                data-placement="right"
+                title="Providers"
+              >
+                <span class="nav-icon">
+                  <i class="fe fe-git-pull-request"></i>
+                </span>
+                <span class="nav-text"> Providers </span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                href="/admin/payments"
+                data-toggle="tooltip"
+                data-placement="right"
+                title="Payments"
+              >
+                <span class="nav-icon">
+                  <i class="fa fa-usd"></i>
+                </span>
+                <span class="nav-text"> Payments </span>
+              </a>
+            </li>
+            <!-- <li class="nav-item">
+              <a
+                class="nav-link"
+                href="/admin/payments_bonuses"
+                data-toggle="tooltip"
+                data-placement="right"
+                title="Payment Bonuses"
+              >
+                <span class="nav-icon">
+                  <i class="fa fa-award"></i>
+                </span>
+                <span class="nav-text"> Payment Bonuses </span>
+              </a>
+            </li> -->
+            <!-- <li class="nav-item">
+              <a
+                class="nav-link"
+                href="/admin/plugins"
+                data-toggle="tooltip"
+                data-placement="right"
+                title="Modules"
+              >
+                <span class="nav-icon">
+                  <i class="fa fa-database"></i>
+                </span>
+                <span class="nav-text"> Modules </span>
+              </a>
+            </li> -->
+            <!-- <li class="nav-item">
+              <a
+                class="nav-link"
+                href="/admin/news"
+                data-toggle="tooltip"
+                data-placement="right"
+                title="News"
+              >
+                <span class="nav-icon">
+                  <i class="fa fa-bell"></i>
+                </span>
+                <span class="nav-text"> News </span>
+              </a>
+            </li> -->
+            <!-- <li class="nav-item">
+              <a
+                class="nav-link"
+                href="/admin/language"
+                data-toggle="tooltip"
+                data-placement="right"
+                title="Languages"
+              >
+                <span class="nav-icon">
+                  <i class="fa fa-language"></i>
+                </span>
+                <span class="nav-text"> Languages </span>
+              </a>
+            </li> -->
+            <!-- <li class="nav-item">
+              <a
+                class="nav-link"
+                href="/admin/faqs"
+                data-toggle="tooltip"
+                data-placement="right"
+                title="FAQs"
+              >
+                <span class="nav-icon">
+                  <i class="fa fa-help-circle"></i>
+                </span>
+                <span class="nav-text"> FAQs </span>
+              </a>
+            </li> -->
+            <!-- <li class="nav-item">
+              <a
+                class="nav-link"
+                href="/admin/cronjobs"
+                data-toggle="tooltip"
+                data-placement="right"
+                title="Cronjobs link"
+              >
+                <span class="nav-icon">
+                  <i class="fa fa-rotate-cw"></i>
+                </span>
+                <span class="nav-text"> Cronjobs link </span>
+              </a>
+            </li> -->
+          </ul>
+        </div>
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a
+              href="/admin/logout"
+              class="nav-link"
+              data-toggle="tooltip"
+              data-placement="right"
+              title="Logout"
+            >
+              <span class="nav-icon"><i class="icon fe fe-power"></i> </span>
+              <span class="nav-text">Logout</span>
+            </a>
+          </li>
+        </ul>
+      </aside>
+
+      <div class="layout-main d-flex flex-column flex-fill max-w-full">
+        {% block content %} {% endblock content %}
+      </div>
+    </div>
+    <!-- modal -->
+    <div id="modal-ajax" class="modal fade" tabindex="-1"></div>
+    <!-- Theme Settings -->
+    <div
+      class="modal fade"
+      id="customize"
+      tabindex="-1"
+      role="dialog"
+      aria-hidden="true"
+    >
+      <div class="modal-right">
+        <div class="modal-dialog theme-customizer" role="document">
+          <div class="modal-content">
+            <div class="modal-body">
+              <div class="modal-header bg-pantone">
+                <h4 class="modal-title">
+                  <i class="icon-fa fa fa-cogs"></i> Theme Customizer
+                </h4>
+                <button
+                  type="button"
+                  class="close"
+                  data-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <form action="#" class="form js-layout-form p-l-20">
+                <!--Color mode  -->
+                <div class="form-group m-t-20">
+                  <label class="form-label">Day | Night mode</label>
+                  <div class="custom-controls-stacked">
+                    <div class="row">
+                      <div class="col-6">
+                        <label class="form-check-inline custom-control-inline"
+                          >Day
+                          <input
+                            class="selectgroup-input"
+                            type="radio"
+                            name="color-scheme"
+                            value="light"
+                          />
+                          <span class="checkmark"></span>
+                        </label>
+                      </div>
+                      <div class="col-6">
+                        <label class="form-check-inline custom-control-inline"
+                          >Night 1
+                          <input
+                            class="selectgroup-input"
+                            type="radio"
+                            name="color-scheme"
+                            value="dark"
+                          />
+                          <span class="checkmark"></span>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group mb-2 d-none">
+                  <label class="form-label">Nav position</label>
+                  <div class="selectgroup w-100p">
+                    <label class="selectgroup-item">
+                      <input
+                        type="radio"
+                        name="nav-position"
+                        value="top"
+                        class="selectgroup-input"
+                      />
+                      <span class="selectgroup-button">top</span>
+                    </label>
+                    <label class="selectgroup-item">
+                      <input
+                        type="radio"
+                        name="nav-position"
+                        value="side"
+                        class="selectgroup-input"
+                      />
+                      <span class="selectgroup-button">side</span>
+                    </label>
+                  </div>
+                </div>
+
+                <div class="form-group mb-2 d-none">
+                  <label class="form-label">Header color</label>
+                  <div class="selectgroup w-100p">
+                    <label class="selectgroup-item">
+                      <input
+                        type="radio"
+                        name="header-color"
+                        value="light"
+                        class="selectgroup-input"
+                      />
+                      <span class="selectgroup-button">light</span>
+                    </label>
+                    <label class="selectgroup-item">
+                      <input
+                        type="radio"
+                        name="header-color"
+                        value="dark"
+                        class="selectgroup-input"
+                      />
+                      <span class="selectgroup-button">dark</span>
+                    </label>
+                  </div>
+                </div>
+
+                <!--</div>-->
+                <div class="form-group mb-2 d-none">
+                  <label class="form-label">Sidebar position</label>
+                  <div class="selectgroup w-100p">
+                    <label class="selectgroup-item">
+                      <input
+                        type="radio"
+                        name="sidebar-position"
+                        value="left"
+                        class="selectgroup-input"
+                      />
+                      <span class="selectgroup-button">left</span>
+                    </label>
+                    <label class="selectgroup-item">
+                      <input
+                        type="radio"
+                        name="sidebar-position"
+                        value="right"
+                        class="selectgroup-input"
+                      />
+                      <span class="selectgroup-button">right</span>
+                    </label>
+                  </div>
+                </div>
+
+                <!--Layout Option-->
+                <div class="form-group m-t-20">
+                  <label class="form-label"
+                    ><i class="fa fa-layout"></i> Layout option</label
+                  >
+                  <div class="custom-controls-stacked">
+                    <div class="row">
+                      <div class="col-6">
+                        <label class="form-check-inline custom-control-inline"
+                          >Expanded menu
+                          <input
+                            class="selectgroup-input"
+                            type="radio"
+                            name="sidebar-size"
+                            value="default"
+                          />
+                          <span class="checkmark"></span>
+                        </label>
+                      </div>
+                      <div class="col-6">
+                        <label class="form-check-inline custom-control-inline"
+                          >Collapsed menu
+                          <input
+                            class="selectgroup-input"
+                            type="radio"
+                            name="sidebar-size"
+                            value="folded"
+                          />
+                          <span class="checkmark"></span>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!--Sidebar color option-->
+                <div class="form-group m-t-20">
+                  <label class="form-label">Sidebar color option</label>
+                  <div class="custom-controls-stacked">
+                    <div class="row">
+                      <div class="col-6">
+                        <label class="form-check-inline custom-control-inline"
+                          >Light
+                          <input
+                            class="selectgroup-input"
+                            type="radio"
+                            name="sidebar-color"
+                            value="light"
+                          />
+                          <span class="checkmark"></span>
+                        </label>
+                      </div>
+                      <div class="col-6">
+                        <label class="form-check-inline custom-control-inline"
+                          >dark
+                          <input
+                            class="selectgroup-input"
+                            type="radio"
+                            name="sidebar-color"
+                            value="dark"
+                          />
+                          <span class="checkmark"></span>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group mb-2 d-none">
+                  <label class="form-label">Sidebar fixed</label>
+                  <div class="selectgroup w-100p">
+                    <label class="selectgroup-item">
+                      <input
+                        type="radio"
+                        name="sidebar-fixed"
+                        value="fixed"
+                        class="selectgroup-input"
+                      />
+                      <span class="selectgroup-button">fixed</span>
+                    </label>
+                    <label class="selectgroup-item">
+                      <input
+                        type="radio"
+                        name="sidebar-fixed"
+                        value="default"
+                        class="selectgroup-input"
+                      />
+                      <span class="selectgroup-button">default</span>
+                    </label>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Scripts -->
+    <!-- General scripts -->
+    <script
+      type="text/javascript"
+      src="{% static 'backend/js/bootstrap.bundle.min.js' %}"
+    ></script>
+    <script
+      type="text/javascript"
+      src="{% static 'backend/js/jquery.sparkline.min.js' %}"
+    ></script>
+    <script
+      type="text/javascript"
+      src="{% static 'backend/js/selectize.min.js' %}"
+    ></script>
+    <script
+      type="text/javascript"
+      src="{% static 'backend/js/autosize/autosize.min.js' %}"
+    ></script>
+    <script
+      type="text/javascript"
+      src="{% static 'backend/js/perfect-scrollbar.js' %}"
+    ></script>
+    <!-- Core scripts -->
+    <script src="{% static 'backend/js/bootstrap-datepicker.js' %}"></script>
+
+    <!-- Core scripts -->
+    <script type="text/javascript" src="{% static 'backend/js/core.js' %}"></script>
+    <script
+      type="text/javascript"
+      src="{% static 'backend/js/admin-core.min.js' %}"
+    ></script>
+    <script
+      type="text/javascript"
+      src="{% static 'backend/js/customizer.js' %}"
+    ></script>
+
+    <!-- toast -->
+    <script
+      type="text/javascript"
+      src="{% static 'backend/js/jquery.toast.js' %}"
+    ></script>
+    <!-- Tiny Editor -->
+    <script
+      type="text/javascript"
+      id="tinymce-js"
+      src="{% static 'backend/js/tinymce.min.js' %}"
+    ></script>
+    <!-- emoji picker -->
+    <script src="{% static 'backend/js/config.js' %}"></script>
+    <script src="{% static 'backend/js/util.js' %}"></script>
+    <script src="{% static 'backend/js/jquery.emojiarea.js' %}"></script>
+    <script src="{% static 'backend/js/emoji-picker.js' %}"></script>
+    <!-- flags icon -->
+    <script type="text/javascript" src="{% static 'backend/js/docs.js' %}"></script>
+    
+    <script
+      type="text/javascript"
+      src="{% static 'backend/js/notify.min.js' %}"
+    ></script>
+    <!-- general JS -->
+    <script type="text/javascript" src="{% static 'backend/js/process.js' %}"></script>
+    <script type="text/javascript" src="{% static 'backend/js/general.js' %}"></script>
+    <script type="text/javascript" src="{% static 'backend/js/admin.js' %}"></script>
+  </body>
+</html>

@@ -1,0 +1,178 @@
+{% extends 'partials/sms-base.html' %}
+{% load static %}
+{% load humanize %}
+{% block content %}
+
+<div class="p-6 animate__animated" :class="[$store.app.animation]">
+<script src="https://vplug.ng/js/simple-datatables.js"></script>
+
+<script defer="" src="https://vplug.ng/js/apexcharts.js"></script>
+<script>
+        $(document).ready(function() {
+            // Remove "active" class from all <a> elements
+            $('#slide-dashboard').removeClass("active");
+            
+            // Add "active" class to the specific element with ID "faq"
+            $("#slider-numbers").addClass("active");
+        });
+    </script>   
+<style>
+.pl1 {
+  display: block;
+  width: 8em;
+  height: 8em;
+}
+
+.pl1__g,
+  .pl1__rect {
+  animation: pl1-a 1.5s cubic-bezier(0.65,0,0.35,1) infinite;
+}
+
+.pl1__g {
+  transform-origin: 64px 64px;
+}
+
+.pl1__rect:first-child {
+  animation-name: pl1-b;
+}
+
+.pl1__rect:nth-child(2) {
+  animation-name: pl1-c;
+}
+
+@keyframes pl1-a {
+  from {
+    transform: rotate(0);
+  }
+
+  80%,
+      to {
+    animation-timing-function: steps(1,start);
+    transform: rotate(90deg);
+  }
+}
+
+@keyframes pl1-b {
+  from {
+    animation-timing-function: cubic-bezier(0.33,0,0.67,0);
+    width: 40px;
+    height: 40px;
+  }
+
+  20% {
+    animation-timing-function: steps(1,start);
+    width: 40px;
+    height: 0;
+  }
+
+  60% {
+    animation-timing-function: cubic-bezier(0.65,0,0.35,1);
+    width: 0;
+    height: 40px;
+  }
+
+  80%,
+      to {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+@keyframes pl1-c {
+  from {
+    animation-timing-function: cubic-bezier(0.33,0,0.67,0);
+    width: 40px;
+    height: 40px;
+    transform: translate(0,48px);
+  }
+
+  20% {
+    animation-timing-function: cubic-bezier(0.33,1,0.67,1);
+    width: 40px;
+    height: 88px;
+    transform: translate(0,0);
+  }
+
+  40% {
+    animation-timing-function: cubic-bezier(0.33,0,0.67,0);
+    width: 40px;
+    height: 40px;
+    transform: translate(0,0);
+  }
+
+  60% {
+    animation-timing-function: cubic-bezier(0.33,1,0.67,1);
+    width: 88px;
+    height: 40px;
+    transform: translate(0,0);
+  }
+
+  80%,
+      to {
+    width: 40px;
+    height: 40px;
+    transform: translate(48px,0);
+  }
+}
+</style>    
+<div x-data="basic">
+      <input type="hidden" id="token" value="x2saKKsXbic2jwIgsJw0TgBNsrM7WE"> 
+<div id="empty_data"></div>                                                                                           
+    <div class="panel" id="display_data">
+    <h5 class="font-semibold text-lg dark:text-white-light">Numbers History</h5>   
+        <div class="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
+            <div class="dataTable-top">
+                <div class="dataTable-search">
+                    <input class="dataTable-input" placeholder="Search..." type="text">
+                    </div>
+                    </div>
+                    <div class="dataTable-container">
+                        <table id="trans_tb" class="panel whitespace-nowrap table-hover dataTable-table">
+       <tbody>
+           {% for n in num %}
+           <tr>
+               <td>{{ n.number_id }}</td>
+               <td>{{ n.service }}</td>
+               <td>{{ n.phone_number }}</td>
+               <td>${{ n.amount|floatformat:2 }}</td>
+               <td>{{ n.date }}</td>
+               <td onclick="copyText(&quot;{{ n.info }}&quot;)">{{ n.info }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    <thead><tr><th data-sortable="" style="width: 10.3518%;"><a href="#" class="dataTable-sorter">ID</a></th><th data-sortable="" style="width: 16.8844%;"><a href="#" class="dataTable-sorter">Service</a></th><th data-sortable="" style="width: 18.392%;"><a href="#" class="dataTable-sorter">Number</a></th><th data-sortable="" style="width: 15.5779%;"><a href="#" class="dataTable-sorter">Amount</a></th><th data-sortable="" style="width: 26.6332%;"><a href="#" class="dataTable-sorter">Date</a></th><th data-sortable="" style="width: 12.1608%;"><a href="#" class="dataTable-sorter">Sms</a></th></tr></thead></table></div><div class="dataTable-bottom"><div class="dataTable-info">Showing 1 to 1 of 1 entries</div><nav class="dataTable-pagination"><ul class="dataTable-pagination-list"></ul></nav></div></div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<script>
+  function copyText(text) {
+    // Create a textarea element to hold the text
+    var textarea = document.createElement("textarea");
+    textarea.value = text;
+
+    // Make the textarea invisible
+    textarea.style.position = "absolute";
+    textarea.style.left = "-9999px";
+
+    // Add the textarea to the document
+    document.body.appendChild(textarea);
+
+    // Select and copy the text
+    textarea.select();
+    document.execCommand("copy");
+
+    // Remove the textarea from the document
+    document.body.removeChild(textarea);
+    Toastify({
+  text: "Sms Copied: "+text,
+  duration: 1000,
+  gravity: "top",
+  position: 'center',
+}).showToast();
+}
+</script>
+
+</div>
+
+{% endblock content %}

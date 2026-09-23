@@ -1,0 +1,77 @@
+{% extends 'partials/bbase.html' %}
+{% load static %}
+{% load humanize %}
+{% block content %}
+<div class="container-fluid">
+
+    <!-- ========== Page Title Start ========== -->
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box">
+                <h4 class="mb-0">Manual Payment</h4>
+                <ol class="breadcrumb mb-0">
+                    <li class="breadcrumb-item"><a href="/backend/">Backend</a></li>
+                    <li class="breadcrumb-item active">Manual Payment</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+    <!-- ========== Page Title End ========== -->
+
+    <div class="card">
+         <div class="card-body">
+              <!-- <div class="card-header">
+                   <h5 class="card-title">
+                        Striped columns
+                   </h5>
+                   <p class="card-subtitle">
+                        Use <code>.table-striped-columns </code>to add zebra-striping to any table
+                        column.
+                   </p>
+              </div> -->
+              {% if messages %}
+              {% for m in messages %}
+              <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                {{ m }}
+            </div>
+            {% endfor %}
+            {% endif %}
+
+              <div class="table-responsive-sm">
+                   <table class="table table-striped-columns table-centered">
+                        <thead>
+                             <tr>
+                                  <th scope="col">#</th>
+                                  <th scope="col">Handle</th>
+                                  <th scope="col">Amount</th>
+                                  <th scope="col">Status</th>
+                                  <th scope="col">Receipt</th>
+                                  <th scope="col">Action</th>
+                                  <!-- <th scope="col">Date</th>                                   -->
+                             </tr>
+                        </thead>
+                        <tbody>
+                            {% for h in manual %}
+                             <tr>
+                                  <td>{{ h.id }}</td>
+                                  <td>{{ h.user.username }}</td>
+                                  <td>₦{{ h.amount|floatformat:2|intcomma }}</td>
+                                  <td>{{ h.status }}</td>
+                                  <td><a href="{{ h.receipt.url }}"><img src="{{ h.receipt.url }}" width="50px"></a></td>
+                                  <td>
+                                    <a href="{% url 'edit_manual' h.id %}" class="btn btn-sm btn-light">
+                                         Edit
+                                     </a>
+                                  </td>
+                                  <!-- <td>{{ h.date }}</td> -->
+                             </tr>          
+                             {% endfor %}                   
+                        </tbody>
+                   </table>
+              </div>
+         </div>
+
+    </div>    
+</div>
+{% endblock content %}

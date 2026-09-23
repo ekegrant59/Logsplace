@@ -1,0 +1,92 @@
+{% extends 'partials/backend.html' %}
+{% block content %}
+
+<main class="app-content">
+          <div class="row">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header d-flex align-items-center">
+                <h3 class="h4"><i class="fa fa-ticket"></i> Ticket #{{ t.id }}</h3>
+            </div>
+            <div class="card-body">
+                <div class="ticket-details">
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <td scope="row">Status</td><td><span class="badge bg-secondary">{{ t.status }}</span></td></tr>
+                            <tr>
+                                <td scope="row">Name</td><td>{{ t.user.username }}</td>
+                            </tr>
+                            <tr>
+                                <td scope="row">E-mail</td><td>{{ t.user.email }}</td>
+                            </tr>
+                            <tr>
+                                <td scope="row">Created</td><td>{{ t.date }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        <div class="col-md-8">
+        <div class="card">
+            <div class="card-header d-flex align-items-center">
+                <h3 class="h4 ticket-title">{{ t.subject }}</h3>
+            </div>
+            <form action="" class="card-body form m-t-20" data-redirect="" method="POST" accept-charset="utf-8">
+                {% csrf_token %}
+<input type="hidden" name="ids" value="50c5f9bbc29d754048b283696b35975e">
+                       <input type="hidden" name="token" value="c676cee0a3250778e41d52227c4bdcb1">
+                <div class="form-group">
+                    <label for="userinput8">Message</label>
+                    <textarea rows="10" class="form-control" name="message"></textarea>
+                </div>
+                <button type="submit" class="btn btn-info btn-min-width m-r-5">Submit</button><div class="btn-group" role="group" aria-label="Actions Group">
+                <a href="/admin/tickets/change_status/closed/{{ t.id }}" class="btn btn-outline-primary">Close ticket</a>
+                <div class="btn-group" role="group"> 
+            <button id="btnGroupDrop1" type="button" class="btn btn-outline-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="btnGroupDrop1" x-placement="top-end" style="position: absolute; transform: translate3d(41px, -2px, 0px); top: 0px; left: 0px; will-change: transform;"><a href="/admin/tickets/change_status/answered/{{ t.id }}" class="dropdown-item">Mark as Answered</a><a href="/admin/tickets/change_status/pending/{{ t.id }}" class="dropdown-item">Mark as Pending</a><a href="/admin/tickets/change_status/unread/{{ t.id }}" class="dropdown-item">Mark as Unread</a></div></div>
+            </div>            </form>            <hr>
+            <!--<div id="frame">-->
+            <!--    <div class="content">-->
+            <!--        <div class="messages">-->
+            <!--            <ul class="p-l-0">-->
+            <!--                <li class="replies tr_f77bf51beb92363f021acccf4ae4fc78">-->
+            <!--    <img src="/assets/images/support-icon.png" alt="Image Icon">-->
+            <!--    <div class="message">-->
+            <!--        <div>-->
+            <!--            <strong> </strong>-->
+            <!--            <span class="text-muted small"> 2025-02-04 12:53:51 </span>-->
+            <!--        </div>-->
+            <!--        <div class="msg-content"> jh </div>-->
+            <!--        <div class="msg-footer p-t-5">-->
+            <!--            <a href="/admin/tickets/edit_item_ticket_message?action=form&amp;ids=f77bf51beb92363f021acccf4ae4fc78" class="ajaxModal btn btn-sm btn-info" data-toggle="tooltip" data-placement="bottom" data-original-title="Edit message">-->
+            <!--                <i class="fe fe-edit"></i>-->
+            <!--            </a>-->
+            <!--            <a href="/admin/tickets/delete_item_ticket_message/f77bf51beb92363f021acccf4ae4fc78" class="ajaxDeleteItem btn btn-sm btn-secondary" data-toggle="tooltip" data-placement="bottom" data-original-title="Delete">-->
+            <!--                <i class="fe fe-trash"></i>-->
+            <!--            </a>-->
+            <!--        </div>-->
+            <!--    </div>-->
+            <!--</li>                            <li class="sent 50c5f9bbc29d754048b283696b35975e">-->
+            <!--    <img src="/assets/images/client-icon.png" alt="Image Icon">-->
+            <!--    <div class="message">-->
+            <!--        <div>-->
+            <!--            <strong>Support</strong>-->
+            <!--            <span class="text-muted small"> 2025-02-04 00:28:11 </span>-->
+            <!--        </div>-->
+            <!--        <div class="msg-content"> Please cancel the order  </div>-->
+                    
+            <!--    </div>-->
+            <!--</li>                        </ul>-->
+            <!--        </div>-->
+            <!--    </div>-->
+            <!--</div>-->
+        </div>
+    </div>
+</div>
+        </main>
+        
+{% endblock content %}

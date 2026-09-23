@@ -1,0 +1,293 @@
+{% load humanize %}
+{% load static %}
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="GTCMYINjUhzJyshmGy6kRhfoL26vFo3b4osHU2M5">
+    <title>Logsplace</title>
+
+    <!-- Tailwind CSS & Config -->
+    <!--<script type="text/javascript">window.$crisp=[];window.CRISP_WEBSITE_ID="8617ed6e-41e2-4c66-8e45-b45ac0748921";(function(){d=document;s=d.createElement("script");s.src="https://client.crisp.chat/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);})();</script>-->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        orange: {
+                            DEFAULT: '#f97316',
+                        },
+                    },
+                }
+            }
+        }
+    </script>
+
+    <!-- Hide Alpine elements until ready -->
+    <style>
+        [x-cloak] { display: none !important; }
+        input, textarea, select {
+            font-size: 16px !important;
+        }
+    </style>
+
+    <!-- Set dark mode on load -->
+    <script>
+        if (localStorage.getItem('dark') === 'true') {
+            document.documentElement.classList.add('dark');
+        }
+    </script>
+
+    <!-- AlpineJS -->
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- Chart.js (if used) -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+
+<body x-data="{ darkMode: localStorage.getItem('dark') === 'true' }"
+      x-init="$watch('darkMode', val => localStorage.setItem('dark', val))"
+      :class="{ 'dark': darkMode }"
+      class="font-sans antialiased bg-white text-gray-800 dark:bg-gray-900 dark:text-white text-xs sm:text-sm">
+
+<div class="h-screen flex relative">
+
+    <!-- Mobile Overlay -->
+    <div id="mobile-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden hidden"></div>
+
+    <!-- Sidebar -->
+<aside id="sidebar"
+       class="fixed lg:relative w-60 sm:w-64 bg-white dark:bg-gray-800 shadow-xl z-50 transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out h-screen flex flex-col border-r border-gray-200 dark:border-gray-700 text-sm sm:text-base">
+
+    <!-- Sidebar Header -->
+    <div class="p-3 border-b border-gray-200 dark:border-gray-700">
+        <div class="flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <div class="w-8 h-8 bg-orange-100 rounded-lg flex items-center justify-center shadow-md">
+                    <svg class="w-4 h-4 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                    </svg>
+                </div>
+            </div>
+            <button id="close-sidebar" class="lg:hidden text-gray-800 hover:text-red-600 dark:text-white">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                          stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+        </div>
+        <p class="text-gray-600 dark:text-gray-300 text-xs mt-2 hidden lg:block">
+            Welcome, {{ request.user.username }}
+        </p>
+    </div>
+
+    <!-- Sidebar Content (scrollable nav + footer) -->
+    <div class="flex-1 flex flex-col justify-between overflow-y-auto">
+
+<nav class="p-3 space-y-1">
+    
+    <a href="/dashboard" class="dashboard flex items-center gap-2 px-3 py-2 rounded-lg transition bg-white text-black dark:bg-orange-100 dark:text-orange-800 font-semibold">
+        🏠 <span>Dashboard</span>
+    </a>
+
+    <a href="/marketplace" class="marketplace flex items-center gap-2 px-3 py-2 rounded-lg transition text-gray-700 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800">
+        🛍️ <span>Marketplace</span>
+    </a>
+    
+    <a href="/buy-number" class="marketplace flex items-center gap-2 px-3 py-2 rounded-lg transition text-gray-700 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800">
+        🛍️ <span>Buy Numbers</span>
+    </a>
+    
+    <a href="/smm" class="marketplace flex items-center gap-2 px-3 py-2 rounded-lg transition text-gray-700 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800">
+         <span>Boost Account</span>
+    </a>
+
+    <a href="/history" class="history flex items-center gap-2 px-3 py-2 rounded-lg transition text-gray-700 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800">
+        📦 <span>Orders</span>
+    </a>
+    
+    <a href="https://t.me/@Logsplace1" class="marketplace flex items-center gap-2 px-3 py-2 rounded-lg transition text-gray-700 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800">
+         <span>Contact Us</span>
+    </a>
+    
+    <a href="https://chat.whatsapp.com/HeWST6hVMUVJ1YVTnajN0e" class="marketplace flex items-center gap-2 px-3 py-2 rounded-lg transition text-gray-700 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800">
+         <span>Join our Community</span>
+    </a>
+
+
+    <!-- Wallet & Settings -->
+    <div class="hidden sm:block">
+        <a href="/wallet" class="wallet flex items-center gap-2 px-3 py-2 rounded-lg transition text-gray-700 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800">
+            💰 <span>Wallet</span>
+        </a>
+        <a href="/user/signout" class="osocialboost flex items-center gap-2 px-3 py-2 rounded-lg transition hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-white">
+            <span>Logout</span>
+        </a>
+        <!--<a href="/settings" class="flex items-center gap-2 px-3 py-2 rounded-lg transition text-gray-700 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800">-->
+        <!--    ⚙️ <span>Settings</span>-->
+        <!--</a>-->
+    </div>
+</nav>
+
+
+
+        <!-- User Info + Logout -->
+        <div class="p-4 border-t border-gray-700 bg-gray-900">
+            <div class="flex items-center gap-3 bg-gray-800 p-3 rounded-xl">
+                <div class="w-10 h-10 rounded-full bg-orange-300 text-orange-900 flex items-center justify-center font-semibold">
+                    M
+                </div>
+                <div class="min-w-0">
+                    <p class="text-white text-sm font-medium truncate">{{ request.user.username }}</p>
+                    <p class="text-gray-400 text-xs truncate">{{ request.user.email }}</p>
+                </div>
+            </div>
+
+            <form method="GET" action="/user/signout/" class="mt-3">
+                <button type="submit"
+                        class="w-full flex items-center justify-center gap-2 py-2 text-red-500 hover:text-red-700 hover:bg-red-100 dark:hover:bg-red-800 rounded-lg text-sm transition">
+                    <span>🚪</span> <span>Logout</span>
+                </button>
+            </form>
+        </div>
+
+    </div>
+</aside>
+
+
+    <!-- Main Content -->
+    <main class="flex-1 bg-white dark:bg-gray-900 w-full overflow-hidden">
+        
+        <!-- Header -->
+<header class="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-4 sm:px-6 lg:px-8 py-3">
+    <div class="flex justify-between items-center">
+        <!-- Left: App name + Page title -->
+        <div class="flex items-center space-x-3">
+            <!-- Mobile Menu Button -->
+            <button id="mobile-menu-btn"
+                    class="lg:hidden p-2 rounded-lg bg-orange-100 text-orange-800 hover:bg-orange-200 transition">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+
+            <!-- App Name & Page Title -->
+            <div class="flex flex-col">
+                <div class="text-orange-600 dark:text-orange-400 font-bold text-sm sm:text-base lg:text-lg uppercase">
+                    Logsplace
+                </div>
+                            </div>
+        </div>
+
+    <!-- Right: Wallet + Dark Mode Toggle -->
+<div class="flex items-center space-x-4">
+    <!-- Buyer Wallet Display -->
+    <div class="flex flex-col text-right text-xs sm:text-sm">
+        <span class="text-sm font-bold text-orange-600 dark:text-orange-400">
+            ₦{{ balance|floatformat:2|intcomma }}
+        </span>
+        <span class="text-[11px] text-gray-500 dark:text-gray-400"></span>
+    </div>
+
+    <!-- Seller Wallet Display (Only if user is a seller) -->
+    
+    <!-- Dark Mode Toggle -->
+    <button @click="darkMode = !darkMode"
+            class="p-2 bg-orange-100 dark:bg-gray-700 text-orange-800 dark:text-white rounded transition duration-150 ease-in-out">
+        <template x-if="!darkMode">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none"
+                 viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M12 3v1m0 16v1m8.66-13.66l-.707.707M4.05 19.95l-.707-.707M21 12h-1M4 12H3m16.66 6.66l-.707-.707M4.05 4.05l-.707.707M12 5a7 7 0 000 14 7 7 0 000-14z"/>
+            </svg>
+        </template>
+        <template x-if="darkMode">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="currentColor"
+                 viewBox="0 0 24 24">
+                <path d="M17.293 13.293A8 8 0 016.707 2.707a1 1 0 00-1.142 1.454A6.5 6.5 0 0016.5 14.435a1 1 0 00.793-1.142z"/>
+            </svg>
+        </template>
+    </button>
+</div>
+
+    </div>
+</header>
+
+
+
+      <!-- Page Content -->
+{% block content %}
+{% endblock content %}
+
+    </main>
+</div>
+
+<!-- Sidebar Toggle Script -->
+<script>
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const sidebar = document.getElementById('sidebar');
+    const mobileOverlay = document.getElementById('mobile-overlay');
+    const closeSidebar = document.getElementById('close-sidebar');
+
+    function openSidebar() {
+        sidebar.classList.remove('-translate-x-full');
+        mobileOverlay.classList.remove('hidden');
+        document.body.classList.add('overflow-hidden');
+    }
+
+    function closeSidebarFunc() {
+        sidebar.classList.add('-translate-x-full');
+        mobileOverlay.classList.add('hidden');
+        document.body.classList.remove('overflow-hidden');
+    }
+
+    mobileMenuBtn?.addEventListener('click', openSidebar);
+    closeSidebar?.addEventListener('click', closeSidebarFunc);
+    mobileOverlay?.addEventListener('click', closeSidebarFunc);
+</script>
+<!-- Bottom Navigation (Mobile Only) -->
+<!-- Bottom Navigation (Mobile Only) -->
+<nav class="fixed bottom-0 inset-x-0 z-40 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 shadow lg:hidden">
+    <div class="flex justify-around text-xs sm:text-sm">
+        <a href="/dashboard" id="dashboard" class="flex flex-col items-center justify-center py-2 px-3 w-full font-semibold">
+            <i class="fas fa-home text-lg"></i>
+            <span class="mt-1">Home</span>
+        </a>
+        <a href="/marketplace" id="marketplace" class="flex flex-col items-center justify-center py-2 px-3 w-full text-gray-500 dark:text-gray-300">
+            <i class="fas fa-store text-lg"></i>
+            <span class="mt-1">Market</span>
+        </a>
+        <a href="/history" id="history" class="flex flex-col items-center justify-center py-2 px-3 w-full text-gray-500 dark:text-gray-300">
+            <i class="fas fa-box text-lg"></i>
+            <span class="mt-1">Orders</span>
+        </a>
+        <a href="/wallet" id="wallet" class="flex flex-col items-center justify-center py-2 px-3 w-full text-gray-500 dark:text-gray-300">
+            <i class="fas fa-wallet text-lg"></i>
+            <span class="mt-1">Wallet</span>
+        </a>
+        <!--<a href="/settings" class="flex flex-col items-center justify-center py-2 px-3 w-full text-gray-500 dark:text-gray-300">-->
+        <!--    <i class="fas fa-cog text-lg"></i>-->
+        <!--    <span class="mt-1">Settings</span>-->
+        <!--</a>-->
+    </div>
+</nav>
+
+<!-- Seller Info Modal (Show on Every Page Visit) -->
+ <!-- Seller Info Modal (Every 10 Minutes) -->
+
+
+
+</body>
+</html>

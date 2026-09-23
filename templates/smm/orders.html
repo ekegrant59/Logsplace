@@ -1,0 +1,144 @@
+{% extends 'partials/smm-base.html' %}
+{% load static %}
+{% load humanize %}
+{% block content %}
+<section id="order" class="mt-md-3 mt-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <div id="order_filter">
+            <div class="order_filter_btn">
+              <a href="/orders" class="order_btn order_btn_active">All</a>
+              <a class="order_btn " href="/orders?status=pending">Pending</a>
+              <a href="/orders?status=inprogress" class="order_btn ">In progress</a>
+              <a href="/orders?status=completed" class="order_btn ">Completed</a>
+              <a href="/orders?status=partial" class="order_btn ">Partial</a>
+              <a href="/orders?status=processing" class="order_btn ">Processing</a>
+              <a href="/orders?status=canceled" class="order_btn ">Canceled</a>
+            </div>
+  
+            <div class="order_search">
+              <form action="/orders" method="get" id="history-search">
+                <input type="text" placeholder="Search" required value="" name="search">
+                <span class="input-group-btn">
+                  <button type="submit" class="btn btn-default">
+                    <i class="fa fa-search" aria-hidden="true"></i>
+                  </button>
+                </span>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <section id="order_List">
+    <div class="container">
+      <div class="row">
+        <div class="col-12" id="order_list_wrapper">
+          <!-- service list heading  -->
+          <div class="order_list_heading">
+            <div class="order_sl">
+              <h4>ID</h4>
+            </div>
+            <div class="order_date">
+              <h4>Date</h4>
+            </div>
+            <div class="order_link"><h4>Link</h4></div>
+            <div class="order_charge">
+              <h4>Charge</h4>
+            </div>
+            <div class="order_count">
+              <h4>Start count</h4>
+            </div>
+            <div class="order_quantity">
+              <h4>Quantity</h4>
+            </div>
+            <div class="order_service"><h4>Service</h4></div>
+            <div class="order_remain"><h4>Remains</h4></div>
+            <!--<div class="order_refill"><h4>Action</h4></div>-->
+            <div class="order_status"><h4>Status</h4></div>
+            <div class="order"><h4>Order</h4></div>
+          </div>
+          {% for s in ser %}
+            <div class="order_list">
+                <div class="order_sl">
+                  <h4>{{ s.id }}</h4>
+                </div>
+                <div class="order_date">
+                  <h4>{{ s.date }}</h4>
+                </div>
+                <div class="order_link">
+                  <h4>
+                    <a href="{{ s.link }}" target="_blank">
+                      {{ s.link }}
+                    </a>
+                                </h4>
+                </div>
+                <div class="order_charge">
+                  <h4>{{ s.price|floatformat:2|intcomma }}</h4>
+                </div>
+                <div class="order_count"><h4>{{ s.start_count }}</h4></div>
+                <div class="order_quantity"><h4>{{ s.qty }}</h4></div>
+                <div class="order_service" style="font-size: 14px;">
+                  <!--<a href="/?service=867" class="text-primary">867</a>-->
+                  {{ s.name }}
+                </div>
+                <!--<div class="order_refill">-->
+                <!--                                                  <a href="/orders/{{ s.order_id }}/cancel" class="btn btn-sm btn-default">Cancel</a>                                  </div>-->
+                <div class="order_remain"><h4>{{ s.remain }}</h4></div>
+                {% if s.status == "Completed" %}
+                <div class="order_status order_completed"><button>{{ s.status }} </button></div>
+                {% else %}
+                <div class="order_status order_progressing"><button>{{ s.status }} </button></div>
+                {% endif %}
+                <!--<div class="order"><a href="https://logsplace.com/?service={{ s.order_id }}" class="re_order_btn">Re-order</a></div>-->
+            </div>
+            {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  <section class="paginations_global">
+    <ul class="pagination">
+
+  {% if ser.has_previous %}
+    <li>
+      <a href="?page={{ ser.previous_page_number }}{% if request.GET.status %}&status={{ request.GET.status }}{% endif %}" aria-label="Previous">
+        <span aria-hidden="true">«</span>
+      </a>
+    </li>
+  {% else %}
+    <li class="disabled">
+      <span aria-hidden="true">«</span>
+    </li>
+  {% endif %}
+
+  {% for num in ser.paginator.page_range %}
+    {% if ser.number == num %}
+      <li class="active"><a href="#">{{ num }}</a></li>
+    {% else %}
+      <li><a href="?page={{ num }}{% if request.GET.status %}&status={{ request.GET.status }}{% endif %}">{{ num }}</a></li>
+    {% endif %}
+  {% endfor %}
+
+  {% if ser.has_next %}
+    <li>
+      <a href="?page={{ ser.next_page_number }}{% if request.GET.status %}&status={{ request.GET.status }}{% endif %}" aria-label="Next">
+        <span aria-hidden="true">»</span>
+      </a>
+    </li>
+  {% else %}
+    <li class="disabled">
+      <span aria-hidden="true">»</span>
+    </li>
+  {% endif %}
+
+</ul>
+
+</section>
+
+
+{% endblock content %}

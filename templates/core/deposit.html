@@ -1,0 +1,140 @@
+{% extends 'partials/base.html' %}
+{% load humanize %}
+{% block content %}
+
+<style>
+    #wallet {
+    --tw-text-opacity: 1;
+    color: rgb(234 88 12 / var(--tw-text-opacity, 1));
+}
+</style>
+
+<div class="p-3 sm:p-4 lg:p-6 pb-32 overflow-y-auto h-full text-xs sm:text-sm">
+    <div class="mx-auto py-2 text-gray-800 dark:text-gray-100">
+
+    <!-- Header -->
+    <div class="bg-white dark:bg-gray-800 border border-orange-100 dark:border-gray-700 shadow-md rounded-xl p-6 mb-8">
+        <h2 class="text-3xl font-bold text-orange-600 flex items-center gap-2">
+            <i class="fas fa-wallet text-orange-500"></i>
+            <span>Fund Wallet</span>
+        </h2>
+        <p class="text-gray-500 dark:text-gray-300 mt-1">Top up your wallet using Virtual account</p>
+        {% if not b %}
+        <form method="POST" action="https://logsplace.com/pocket/" class="mt-6 space-y-4">
+            {% csrf_token %}
+            <div>
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">
+                Select Bank <span class="text-red-500">*</span>
+              </label>
+              <select 
+                name="bank" 
+                required 
+                class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-900 dark:text-white focus:ring-2 focus:ring-orange-500 focus:outline-none"
+              >
+                <option value="" selected="" disabled="">Select Bank</option>
+                <!--<option value="" selected disabled>Select Server</option>-->
+                <option value="palmpay">Palmpay</option>
+                <option value="saveheaven">Saveheaven</option>
+                <option value="paga">Paga</option>
+                <option value="kuda">Kuda</option>
+                <option value="9psb">9psb</option>
+              </select>
+            </div>
+
+
+            <div>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">Phone Number <span class="text-red-500">*</span></label>
+                <input type="number" name="number" required="" class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-900 dark:text-white focus:ring-2 focus:ring-orange-500 focus:outline-none" placeholder="Enter phone number">
+
+            </div>
+
+            <button type="submit" class="w-full bg-orange-600 hover:bg-orange-700 text-white font-medium py-2.5 rounded-lg shadow transition">
+                Create account
+            </button>
+        </form>
+        {% else %}
+        <form class="mt-6 space-y-4">
+            <div>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">Account Number <span class="text-red-500"></span></label>
+                <input type="text" value="{{ b.account_number }}" class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-900 dark:text-white focus:ring-2 focus:ring-orange-500 focus:outline-none" readonly>
+
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">Account Name <span class="text-red-500"></span></label>
+                <input type="text" value="{{ b.account_name }}" class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-900 dark:text-white focus:ring-2 focus:ring-orange-500 focus:outline-none" readonly>
+
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">Bank Name <span class="text-red-500"></span></label>
+                <input type="text" value="{{ b.bank_name }}" class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-900 dark:text-white focus:ring-2 focus:ring-orange-500 focus:outline-none" readonly>
+
+            </div>
+        </form>
+        {% endif %}
+    </div>
+    
+    <!--<div class="bg-white dark:bg-gray-800 border border-orange-100 dark:border-gray-700 shadow-md rounded-xl p-6 mb-8">-->
+    <!--    <h2 class="text-3xl font-bold text-orange-600 flex items-center gap-2">-->
+    <!--        <i class="fas fa-wallet text-orange-500"></i>-->
+    <!--        <span>Fund Wallet</span>-->
+    <!--    </h2>-->
+    <!--    <p class="text-gray-500 dark:text-gray-300 mt-1">Top up your wallet using SprintPay</p>-->
+
+    <!--    <form method="POST" action="https://logsplace.com/deposit/" class="mt-6 space-y-4">-->
+    <!--        {% csrf_token %}-->
+    <!--        <div>-->
+    <!--            <label class="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">Amount (₦) <span class="text-red-500">*</span></label>-->
+    <!--            <input type="number" name="amount" min="100" required="" oninvalid="this.setCustomValidity('Minimum amount is ₦1,000')" oninput="this.setCustomValidity('')" class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-900 dark:text-white focus:ring-2 focus:ring-orange-500 focus:outline-none" placeholder="Enter amount (minimum ₦1,000)">-->
+
+    <!--        </div>-->
+
+    <!--        <button type="submit" class="w-full bg-orange-600 hover:bg-orange-700 text-white font-medium py-2.5 rounded-lg shadow transition">-->
+    <!--            Continue to SprintPay-->
+    <!--        </button>-->
+    <!--    </form>-->
+    <!--</div>-->
+
+    <!-- Transaction History Table -->
+        <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-sm rounded-xl p-6 mt-8">
+        <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-4">💸 Recent Wallet Transactions</h3>
+
+        <div class="overflow-x-auto">
+            <table class="min-w-full text-sm text-left text-gray-800 dark:text-gray-200">
+                <thead class="bg-gray-100 dark:bg-gray-700 text-xs uppercase text-gray-500 dark:text-gray-300">
+                    <tr>
+                        <th class="px-4 py-3">Description</th>
+                        <th class="px-4 py-3">Amount</th>
+                        <th class="px-4 py-3">Type</th>
+                        <th class="px-4 py-3">Date</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-100 dark:divide-gray-700">
+                    {% for t in trans %}
+                                        <tr class="hover:bg-orange-50 dark:hover:bg-gray-700/40">
+                        <td class="px-4 py-3">Funding</td>
+                        <td class="px-4 py-3 font-medium">
+                            ₦{{ t.amount|floatformat:2|intcomma }}
+                        </td>
+                        <td class="px-4 py-3">
+                            <span class="px-2 py-1 rounded-full text-xs font-semibold 
+                                bg-green-100 text-green-700 dark:bg-green-800/30 dark:text-green-300">
+                                Credit
+                            </span>
+                        </td>
+                        <td class="px-4 py-3 text-sm text-gray-500 dark:text-gray-400">
+                            {{ t.date }}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                                    </tbody>
+            </table>
+        </div>
+    </div>
+    
+</div>
+<script>
+    
+    
+    </script>
+</div>
+{% endblock content %}

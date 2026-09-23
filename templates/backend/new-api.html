@@ -1,0 +1,73 @@
+{% extends 'partials/bbase.html' %}
+{% load static %}
+{% load humanize %}
+{% block content %}
+<div class="container-fluid">
+
+    <!-- ========== Page Title Start ========== -->
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box">
+                <h4 class="mb-0">Add New API</h4>
+                <ol class="breadcrumb mb-0">
+                    <li class="breadcrumb-item"><a href="/backend/">Backend</a></li>
+                    <li class="breadcrumb-item active">Add New API</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+    <!-- ========== Page Title End ========== -->
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title">
+                Add New API
+            </h5>
+            <p class="card-subtitle">Careful inorder not to cause any damages</p>
+        </div>
+
+        <div class="card-body">
+
+            <div class="mb-3">
+                <form class="row g-3" method="POST">
+                    {% csrf_token %}
+                    <div class="col-md-4">
+                        <label for="validationDefault01" class="form-label">API Name</label>
+                        <input type="text" class="form-control" id="validationDefault01" value="" name="name" required="">
+                    </div>
+                    <div class="col-md-4">
+                        <label for="validationDefault01" class="form-label">API URL</label>
+                        <input type="text" class="form-control" id="validationDefault01" value="" name="api_url" required="">
+                    </div>   
+                    <div class="col-md-4">
+                        <label for="validationDefault01" class="form-label">API KEY</label>
+                        <input type="text" class="form-control" id="validationDefault01" value="" name="api_key" required="">
+                    </div>
+                    <h5>Status</h5>                    
+                    <div class="mb-3">
+                        <div class="form-check form-check-inline">
+                             <input class="form-check-input" required checked type="radio" name="inlineRadioOptions" id="inlineRadio1" value="true">
+                             <label class="form-check-label" for="inlineRadio1">Active</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" required type="radio" name="inlineRadioOptions" id="inlineRadio2" value="false">
+                            <label class="form-check-label" for="inlineRadio2">Inactive</label>
+                       </div>                        
+                   </div> 
+                   <div class="col-md-4">
+                        <label for="validationDefault01" class="form-label">Percentage</label>
+                        <input type="text" class="form-control" id="validationDefault01" value="" name="percentage" required="">
+                   </div>
+                   <div class="col-md-4">
+                        <label for="validationDefault01" class="form-label">Balance</label>
+                        <input type="text" class="form-control" id="validationDefault01" value="0" name="balance" required="">
+                    </div>   
+
+                    <div class="col-12">
+                        <button class="btn btn-primary" type="submit">Add New API</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>    
+</div>
+{% endblock content %}

@@ -1,0 +1,158 @@
+{% extends 'partials/new_base.html' %}
+
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+</head>
+{% block content %}
+
+<!--<style>-->
+<!--    .lb {-->
+<!--        text-align: left;-->
+<!--        width: 100%;-->
+<!--        display: block;-->
+<!--    }-->
+<!--</style>-->
+<!--<body>-->
+<!--    <div class="dep_con">-->
+<!--        <div class="container">-->
+<!--            <h2>Login</h2>-->
+<!--            <form method="post">-->
+<!--                {% csrf_token %}-->
+<!--                <label class="lb" for="username">Email:</label>-->
+<!--                <div class="" style="display: flex;">-->
+<!--                    <input type="text" class="user_stuff" id="username" name="username" required>-->
+<!--                </div>-->
+<!--                <label class="lb" for="password">Password:</label>-->
+<!--                <div style="display: flex;">-->
+<!--                    <input type="password" class="user_stuff" id="password" name="password" required>-->
+<!--                </div>-->
+<!--                <input type="submit" class="btn" value="Login">-->
+<!--            </form>-->
+<!--            <div class="login-link">-->
+<!--                Don't have an account? <a href="/user/signup/">Sign up</a>-->
+<!--            </div>-->
+<!--            <div style="margin-top: 10px;" class="login-link">-->
+<!--                Forgotten Password? <a href="/user/reset-password/">Reset here</a>-->
+<!--            </div>-->
+<!--            {% for message in messages %}-->
+<!--            <div class="errorshow">-->
+<!--                <p>{{message}}</p>-->
+<!--            </div>-->
+<!--            {% endfor %}-->
+<!--        </div>-->
+       
+<!--        </div>-->
+        
+<!--        <div class="img_about">-->
+
+<!--<img src="{% static 'img/about.jpg' %}" style="width: 100%;" alt="Ads">-->
+
+<!--</div>-->
+<!--    <div class="blue_part" style="background: #007bff; color: white; display: grid; text-align: center; justify-content: center;">-->
+<!--            <h2 style="height: 1px;">45</h2>-->
+<!--            <h5>Team Members</h5>-->
+<!--            <h2 style="height: 1px;">60</h2>-->
+<!--            <h5>Winning Awards</h5>-->
+<!--            <h2 style="height: 1px;">2000</h2>-->
+<!--            <h5>Happy Clients</h5>-->
+<!--    </div>-->
+<!--    <div class="container-a" style="align-content: center; justify-content: center; text-align: center;">-->
+<!--        <span>We are best at what we do</span>-->
+<!--        <br>-->
+<!--        <p>-->
+<!--            In the modern era of digital connectivity, social media stands as an essential asset for individuals, enterprises, and influencers seeking to forge meaningful connections, foster engagement, and expand their online footprint. Yet, cultivating a robust following and cementing credibility across social platforms demands significant time and effort. Enter our solution - the key to unleashimg the full potential of a distinguished social meadia presence-->
+<!--        </p>-->
+<!--    </div>-->
+<!--    </div>-->
+<!--    <script>-->
+<!--        var form_fields = document.getElementsByTagName('input')-->
+<!--        form_fields[2].placeholder='Email...';-->
+<!--        form_fields[3].placeholder='Password...';-->
+<!--    </script>-->
+
+
+<!-- ================================== Account Page Start =========================== -->
+<section class="account d-flex">
+    <img src="https://loggsplug.com/assets/assets2/images/thumbs/account-img.png" alt="" class="account__img">
+    <div class="account__left d-md-flex d-none flx-align section-bg position-relative z-index-1 overflow-hidden">
+        <img src="https://loggsplug.com/assets/assets2/images/shapes/pattern-curve-seven.png" alt="" class="position-absolute end-0 top-0 z-index--1 h-100">
+        <div class="account-thumb">
+            <img src="https://loggsplug.com/assets/assets2/images/thumbs/barrr.png" alt="">
+            <div class="statistics animation bg-main text-center">
+                <h5 class="statistics__amount text-white">Logsplace</h5>
+            </div>
+        </div>
+    </div>
+    <div class="account__right padding-y-120 flx-align">
+        <div class="account-content">
+            <a href="/" class="logo mb-64">
+                <img src="{% static 'img/logo.jpeg' %}" alt="Logo">
+            </a>
+            <h4 class="account-content__title mb-48 text-capitalize">Welcome Back!</h4>
+            
+            {% if messages %}
+            <div class="alert alert-danger">
+            <ul>
+                {% for m in messages %}
+                <li>
+                    {{ m }}.
+                </li>
+                {% endfor %}
+            </ul>
+                </div>
+            {% endif %}
+            
+            <form method="POST" action="#" class="verify-gcaptcha">
+                {% csrf_token %}
+
+                                                
+
+                <div class="row gy-4">
+                    <div class="col-12">
+                        <label for="email" class="form-label mb-2 font-18 font-heading fw-600">Email</label>
+                        <div class="position-relative">
+                            <input type="text" class="common-input common-input--bg common-input--withIcon" id="email" name="username" value="" placeholder="infoname@mail.com">
+                            <span class="input-icon"><img src="https://loggsplug.com/assets/assets2/images/icons/envelope-icon.svg" alt=""></span>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <label for="your-password" class="form-label mb-2 font-18 font-heading fw-600">Password</label>
+                        <div class="position-relative">
+                            <input type="password" name="password"  class="common-input common-input--bg common-input--withIcon" id="your-password" placeholder="6+ characters, 1 Capital letter">
+                            <span class="input-icon toggle-password cursor-pointer" id="#your-password"><img src="https://loggsplug.com/assets/assets2/images/icons/lock-icon.svg" alt=""></span>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="flx-between gap-1">
+                            <div class="common-check my-2">
+                                <input class="form-check-input" type="checkbox" name="checkbox" id="keepMe">
+                                <label class="form-check-label mb-0 fw-400 font-14 text-body" for="keepMe">Keep me signed in</label>
+                            </div>
+                            <a href="/user/reset-password/" class="forgot-password text-decoration-underline text-main text-poppins font-14">Forgot password?</a>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-main btn-lg w-100 pill"> Sign In</button>
+                    </div>
+
+                    <div class="col-sm-12 mb-0">
+                        <div class="have-account">
+                            <p class="text font-14">New to the Logsplace? <a class="link text-main text-decoration-underline fw-500" href="/user/signup">Register</a></p>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+<!-- ================================== Account Page End =========================== -->
+    {% endblock content %}
+</body>
+</html>
+

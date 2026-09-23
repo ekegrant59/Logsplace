@@ -1,0 +1,308 @@
+{% extends 'partials/backend.html' %} {% load static %} {% load humanize %} 
+{% block content %}
+
+<main class="app-content">
+  <style>
+    .order_btn_group .list-inline-item a.btn {
+      font-size: 0.9rem;
+      font-weight: 400;
+    }
+  </style>
+  <div class="page-title m-b-20">
+    <div class="row justify-content-between">
+      <div class="col-md-2">
+        <h1 class="page-title"><span class="fe fe-list-ul"></span> Orders</h1>
+      </div>
+
+      <div class="col-md-12">
+        <div class="row justify-content-between">
+          <!--<div class="col-md-8">-->
+          <!--  <ul class="list-inline mb-0 order_btn_group">-->
+          <!--    <li class="list-inline-item">-->
+          <!--      <a class="btn btn-primary" href="/admin/order?status=all"-->
+          <!--        >All-->
+          <!--      </a>-->
+          <!--    </li>-->
+          <!--    <li class="list-inline-item">-->
+          <!--      <a class="btn" href="/admin/order?status=processing"-->
+          <!--        >Processing-->
+          <!--      </a>-->
+          <!--    </li>-->
+          <!--    <li class="list-inline-item">-->
+          <!--      <a class="btn" href="/admin/order?status=inprogress"-->
+          <!--        >In progress-->
+          <!--      </a>-->
+          <!--    </li>-->
+          <!--    <li class="list-inline-item">-->
+          <!--      <a class="btn" href="/admin/order?status=pending">Pending </a>-->
+          <!--    </li>-->
+          <!--    <li class="list-inline-item">-->
+          <!--      <a class="btn" href="/admin/order?status=completed"-->
+          <!--        >Completed-->
+          <!--      </a>-->
+          <!--    </li>-->
+          <!--    <li class="list-inline-item">-->
+          <!--      <a class="btn" href="/admin/order?status=partial">Partial </a>-->
+          <!--    </li>-->
+          <!--    <li class="list-inline-item">-->
+          <!--      <a class="btn" href="/admin/order?status=canceled">Canceled </a>-->
+          <!--    </li>-->
+          <!--    <li class="list-inline-item">-->
+          <!--      <a class="btn" href="/admin/order?status=error">Error </a>-->
+          <!--    </li>-->
+          <!--    <li class="list-inline-item">-->
+          <!--      <a class="btn" href="/admin/order?status=fail">Fail </a>-->
+          <!--    </li>-->
+          <!--  </ul>-->
+          <!--</div>-->
+          <div class="col-md-4 search-area">
+            <div class="form-group">
+              <div class="input-group">
+                <input
+                  type="text"
+                  name="query"
+                  class="form-control"
+                  placeholder="Search for…"
+                  value=""
+                />
+                <select name="field" class="form-control" id="">
+                  <option value="id">ID</option>
+                  <!--<option value="api_order_id">API Order id</option>-->
+                  <!--<option value="link">Link</option>-->
+                  <option value="email">Email</option>
+                  <!--<option value="service_id">Service id</option>-->
+                </select>
+                <button
+                  class="btn btn-primary btn-square btn-search"
+                  type="button"
+                >
+                  <span class="fe fe-search"></span>
+                </button>
+                <button
+                  class="btn btn-outline-danger btn-square btn-clear d-none"
+                  data-toggle="tooltip"
+                  data-placement="bottom"
+                  title=""
+                  data-original-title="Clear"
+                  type="button"
+                >
+                  <span class="fe fe-x"></span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12 col-xl-12">
+      <div class="card">
+        <!-- Card headers -->
+        <div class="card-header massAction">
+          <h3 class="card-title">Lists</h3>
+          <div
+            class="btnActions d-none btn-group"
+            role="group"
+            aria-label="Basic example"
+          >
+            <span class="btn btn-primary m-r-2 number-items-selected">
+              00 items selected</span
+            >
+            <div class="item-action dropdown action-options">
+              <button
+                type="button"
+                class="btn btn-outline-primary dropdown-toggle"
+                data-toggle="dropdown"
+              >
+                Actions <span class="fe fe-chevrons-down"></span>
+              </button>
+              <div class="dropdown-menu dropdown-menu-right">
+                <a
+                  href="/admin/order/bulk_action/delete"
+                  data-type="completed"
+                  class="dropdown-item ajaxActionOptions"
+                  ><i class="dropdown-icon fe fe-trash"></i> Delete</a
+                >
+              </div>
+            </div>
+          </div>
+          <div class="card-options">
+            <a
+              href="#"
+              class="card-options-collapse"
+              data-toggle="card-collapse"
+              ><i class="fe fe-chevron-up"></i
+            ></a>
+            <a href="#" class="card-options-remove" data-toggle="card-remove"
+              ><i class="fe fe-x"></i
+            ></a>
+          </div>
+        </div>
+        <div class="table-responsive">
+          <table
+            class="table table-hover table-bordered table-vcenter card-table"
+          >
+            <thead>
+              <tr>
+                <th class="text-center w-1">
+                  <div class="custom-controls-stacked">
+                    <label class="form-check"
+                      ><input
+                        type="checkbox"
+                        class="form-check-input check-items check-all"
+                        data-name="check_1"
+                      /><span class="custom-control-label"></span>
+                    </label>
+                  </div>
+                </th>
+                <th class="">Order ID</th>
+                <th class="">user</th>
+                <th class="text-center">Order Details</th>
+                <th class="text-center">Created</th>
+                <th class="text-center">API Response</th>
+                <th class="text-center">Status</th>
+                <th class="text-center">action</th>
+              </tr>
+            </thead>
+            <tbody>
+                {% for o in orders %}
+              <tr class="tr_8782f0eda24a9a9f25bcf6bb5ddaa2a2">
+                <th class="text-center w-1">
+                  <div class="custom-controls-stacked">
+                    <label class="form-check"
+                      ><input
+                        type="checkbox"
+                        class="form-check-input check-item check_1"
+                        name="ids[]"
+                        value="{{ o.id }}"
+                      /><span class="custom-control-label"></span>
+                    </label>
+                  </div>
+                </th>
+                <td class="w-5p">
+                  {{ forloop.counter }}
+                  <div class="text-muted small"></div>
+                </td>
+                <td class="text-muted w-10p">{{ o.user.email }}
+                <br>
+                {{ o.user.username }}
+                </td>
+                <td>
+                  <div class="title">
+                    <div class="title">
+                      <h6>
+                        {{ o.name }}
+                      </h6>
+                    </div>
+                    <div>
+                      <ul style="margin: 0px">
+                        <li>Log: {{ o.log }}</li>
+                        <li>
+                          Category:
+                          <a
+                            class="link-word-break"
+                            target="_blank"
+                            >{{ o.category }}</a
+                          >
+                        </li>
+                        <li>Quantity: {{ o.qty }}</li>
+                        <!--<li>-->
+                        <!--  Charge: ₦{{ o.price|floatformat:2|intcomma }} (0.1584 /-->
+                        <!--  <span class="text-info">{{ o.price|floatformat:2|intcomma }}</span>)-->
+                        <!--</li>-->
+                        <!--<li>Start counter: {{ o.start_count }} </li>-->
+                        <!--<li>Remain: {{ o.remain }}</li>-->
+                      </ul>
+                    </div>
+                  </div>
+                </td>
+                <td class="text-center w-10p text-muted">
+                  {{ o.date }}
+                </td>
+                <td class="text-center w-10p text-danger"></td>
+                <td class="text-center w-10p">
+                  <span class="badge bg-indogo" style="background: #6574cd;">Purchased</span>
+                </td>
+                <td class="text-center w-5p">
+                  <div class="item-action dropdown">
+                    <a
+                      href="javascript:void(0)"
+                      data-toggle="dropdown"
+                      class="icon"
+                      ><i class="fe fe-more-vertical"></i
+                    ></a>
+                    <div class="dropdown-menu">
+                      <a
+                        href="/admin/order/view/{{ o.id }}"
+                        class="dropdown-item ajaxModal"
+                        data-confirm_ms=""
+                        ><i class="dropdown-icon fe fe-edit"></i> View Logs</a
+                      >
+                      <a
+                        href="/admin/order/delete/{{ o.id }}"
+                        class="dropdown-item ajaxDeleteItem"
+                        data-confirm_ms="Are you sure you want to delete this item"
+                        ><i class="dropdown-icon fe fe-trash-2"></i> Delete</a
+                      >
+                    </div>
+                  </div>
+                </td>
+              </tr>              
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-12">
+      <div class="float-right">
+        <nav class="page-navigation" aria-label="navigation">
+          <ul class="pagination">
+  {# Previous Page Link #}
+  {% if page_obj.has_previous %}
+    <li class="page-item">
+      <a class="page-link" href="?{% if status %}status={{ status }}&amp;{% endif %}{% if query %}query={{ query }}&amp;field={{ field }}&amp;{% endif %}page=1">
+        <i class="fe fe-chevrons-left"></i>
+      </a>
+    </li>
+    <li class="page-item">
+      <a class="page-link" href="?{% if status %}status={{ status }}&amp;{% endif %}{% if query %}query={{ query }}&amp;field={{ field }}&amp;{% endif %}page={{ page_obj.previous_page_number }}">
+        <i class="fe fe-chevron-left"></i>
+      </a>
+    </li>
+  {% endif %}
+
+  {# Page Numbers #}
+  {% for num in page_obj.paginator.page_range %}
+    {% if num >= page_obj.number|add:'-2' and num <= page_obj.number|add:'2' %}
+      <li class="page-item {% if page_obj.number == num %}active{% endif %}">
+        <a class="page-link" href="?{% if status %}status={{ status }}&amp;{% endif %}{% if query %}query={{ query }}&amp;field={{ field }}&amp;{% endif %}page={{ num }}">
+          {{ num }}
+        </a>
+      </li>
+    {% endif %}
+  {% endfor %}
+
+  {# Next Page Link #}
+  {% if page_obj.has_next %}
+    <li class="page-item">
+      <a class="page-link" href="?{% if status %}status={{ status }}&amp;{% endif %}{% if query %}query={{ query }}&amp;field={{ field }}&amp;{% endif %}page={{ page_obj.next_page_number }}">
+        <i class="fe fe-chevron-right"></i>
+      </a>
+    </li>
+    <li class="page-item">
+      <a class="page-link" href="?{% if status %}status={{ status }}&amp;{% endif %}{% if query %}query={{ query }}&amp;field={{ field }}&amp;{% endif %}page={{ page_obj.paginator.num_pages }}">
+        <i class="fe fe-chevrons-right"></i>
+      </a>
+    </li>
+  {% endif %}
+</ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+</main>
+
+{% endblock content %}

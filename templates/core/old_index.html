@@ -1,0 +1,941 @@
+{% extends 'partials/new_base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block content %}
+
+<!--<style>-->
+
+<!--html {-->
+<!--    scroll-behavior: smooth;-->
+<!--}-->
+<!--    .buy-button {-->
+<!--    padding: 10px 20px;-->
+<!--    background-color: #007BFF;-->
+<!--    color: #fff;-->
+<!--    border: none;-->
+<!--    border-radius: 5px;-->
+<!--    cursor: pointer;-->
+<!--    font-size: 16px;-->
+<!--}-->
+
+<!--.buy-button:hover {-->
+<!--    background-color: #0056b3;-->
+<!--}-->
+<!--.popup-container {-->
+<!--        position: fixed;-->
+<!--        top: 0;-->
+<!--        left: 0;-->
+<!--        width: 100%;-->
+<!--        height: 100%;-->
+<!--        background: rgba(0, 0, 0, 0.5);-->
+<!--        justify-content: center;-->
+<!--        align-items: center;-->
+<!--        z-index: 1;-->
+<!--    }-->
+
+<!--    .popup-content {-->
+<!--        background: #fff;-->
+<!--        width: 300px;-->
+<!--        border-radius: 10px;-->
+<!--        overflow: hidden;-->
+<!--        box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);-->
+<!--    }-->
+
+<!--    .popup-header {-->
+<!--        background: #007BFF;-->
+<!--        padding: 15px;-->
+<!--        color: #fff;-->
+<!--        display: flex;-->
+<!--        justify-content: space-between;-->
+<!--        align-items: center;-->
+<!--    }-->
+
+<!--    .popup-header h2 {-->
+<!--        margin: 0;-->
+<!--    }-->
+
+<!--    .close-button {-->
+<!--        cursor: pointer;-->
+<!--    }-->
+
+<!--    .popup-body {-->
+<!--        padding: 20px;-->
+<!--    }-->
+
+<!--    .popup-row {-->
+<!--        display: flex;-->
+<!--        justify-content: space-between;-->
+<!--        margin-bottom: 15px;-->
+<!--    }-->
+
+<!--    #gateway-select {-->
+<!--        width: 100%;-->
+<!--        padding: 10px;-->
+<!--        margin-top: 5px;-->
+<!--        border-radius: 5px;-->
+<!--        border: 1px solid #ccc;-->
+<!--    }-->
+
+<!--    .popup-footer {-->
+<!--        padding: 15px;-->
+<!--        background: #007BFF;-->
+<!--        text-align: center;-->
+<!--    }-->
+
+<!--    .payment-button {-->
+<!--        background: #fff;-->
+<!--        color: #007BFF;-->
+<!--        padding: 10px 20px;-->
+<!--        border: none;-->
+<!--        cursor: pointer;-->
+<!--        font-size: 16px;-->
+<!--        border-radius: 5px;-->
+<!--    }-->
+
+<!--    .payment-button:hover {-->
+<!--        background: #f1f1f1;-->
+<!--    }-->
+    
+<!--    .popup-rowu p {-->
+<!--        padding: 0px;-->
+<!--        margin-top: 0px;-->
+<!--        margin-bottom: 5px;-->
+<!--        font-size: 15px;-->
+<!--    }-->
+<!--</style>-->
+
+<!--{% if request.user.is_authenticated %}-->
+<!--<div class="popup-container" id="popup" style="display: flex;">-->
+<!--    <div id="popup" class="popup-content">-->
+<!--        <div class="popup-header">-->
+<!--            <h4>Notice! Notice!! Notice!!!</h4>-->
+<!--            <span id="jsclosetag" class="close-button" onclick="closePopup()">&times;</span>-->
+<!--        </div>-->
+<!--        <div class="popup-body" style="line-height: 20px;">-->
+<!--            <div class="popup-rowu" style="justify-content: center; align-content: center;">-->
+<!--                <p style="text-align: center; font-weight: 300;">All logs are 95% sure, they might have issues sometimes, the only logs we do replace is:</p>-->
+<!--                <br>-->
+<!--                <p style="text-align: center; font-weight: 300;">Logs that were disabled before ordering.</p>-->
+<!--                <br>-->
+<!--                <p style="text-align: center; font-weight: 300;">Logs that password was incorrect before ordering.</p>-->
+<!--                <p style="text-align: center; font-weight: 300;">If any log stay more than two hours in your hand before bringing a complaint, no replacement for that log.</p>-->
+<!--                <p style="text-align: center; font-weight: 300;">Meaning Don't order log if you are not ready to use!!! To avoid self loss</p>-->
+<!--                <p style="text-align: center; font-weight: 300;">We will not be responsible for any mistake that comes from you.</p>-->
+<!--                <p style="text-align: center; font-weight: 300;">If you have any complaint about your logs or any product you buy click <a style="text-decoration: none;" href="https://t.me/Thesuftlogteam">here</a> & message us on telegram</p>-->
+<!--                <p style="text-align: center; font-weight: 300;">Join our Whatsapp community group, click <a style="text-decoration: none;" href="https://chat.whatsapp.com/H1bT358w0cc5arxepIoeD5">here</a></p>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div class="popup-footer">-->
+<!--            <button id="jsclosetag" class="payment-button" onclick="closePopup()">I Agree</button>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+<!--{% else %}-->
+<!--<div class="popup-container" id="popup" style="display: flex;">-->
+<!--    <div id="popup" class="popup-content">-->
+<!--        <div class="popup-header">-->
+<!--            <h4>Notice! Notice!! Notice!!!</h4>-->
+<!--            <span id="jsclosetag" class="close-button" onclick="closePopup()">&times;</span>-->
+<!--        </div>-->
+<!--        <div class="popup-body" style="line-height: 20px;">-->
+<!--            <div class="popup-rowu" style="justify-content: center; align-content: center;">-->
+<!--                <p style="text-align: center; font-weight: 300;">You need to login before purchasing any log</p>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div class="popup-footer">-->
+<!--            <a id="jsclosetag" style="text-decoration: none;" class="payment-button" href="/user/signin/">Login</a>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+<!--{% endif %}-->
+
+<!--<div class="content">-->
+<!--    <div>-->
+<!--        <section id="1"><div class="top-card">Instagram</div></section>-->
+<!--        {% for p in ig %}-->
+<!--        <div class="card">-->
+<!--            <div class="all" style="display: flex;">-->
+<!--                <div class="imghere" style="margin-right: 10px;">-->
+<!--                    <img src="{{ p.image.url }}" alt="Instagram Logo"> -->
+<!--                </div>-->
+<!--                <div class="here">-->
+<!--                    <h1 style="text-align: left;">{{ p.name }}</h1>-->
+<!--                <div class="thethig" style="display: flex; justify-content: space-between;">-->
+<!--                    <div class="stock-info" style="text-align: left;">-->
+                        <!-- <span>This is ter {{ ter }}</span> -->
+<!--                        {% if p.qty > "0" %}-->
+<!--                        <span>In Stock:</span> {{ p.qty }} qty.-->
+<!--                        {% else %}-->
+<!--                        <span>In Stock:</span> 0 qty.-->
+<!--                        {% endif %}-->
+<!--                        <br>-->
+<!--                        <span>Per Quantity:</span> ₦{{ p.price|intcomma }}-->
+<!--                    </div>-->
+<!--                    {% if p.qty > "0" %}-->
+                        
+                    
+                    <!-- Buy Button -->
+<!--                    <button data-id="{{ p.id }}" class="buy-button" onclick="showPopup()">Buy</button>-->
+                    
+    
+<!--                    {% else %}-->
+<!--                    <button class="out-of-stock">Out Of Stock</button>-->
+<!--                    {% endif %}-->
+<!--                </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        {% endfor %}-->
+<!--    </div>-->
+    
+<!--    <div>-->
+<!--        <section id="2"></section>-->
+<!--        <div class="top-card">Facebook (Below 50 Friends)</div>-->
+<!--        {% for p in fb_50 %}-->
+<!--        <div class="card">-->
+<!--            <div class="all" style="display: flex;">-->
+<!--                <div class="imghere" style="margin-right: 10px;">-->
+<!--                    <img src="{{ p.image.url }}" alt="Instagram Logo"> -->
+<!--                </div>-->
+<!--                <div class="here">-->
+<!--                    <h1 style="text-align: left;">{{ p.name }}</h1>-->
+<!--                <div class="thethig" style="display: flex; justify-content: space-between;">-->
+<!--                    <div class="stock-info" style="text-align: left;">-->
+<!--                        {% if p.qty > "0" %}-->
+<!--                        <span>In Stock:</span> {{ p.qty }} qty.-->
+<!--                        {% else %}-->
+<!--                        <span>In Stock:</span> 0 qty.-->
+<!--                        {% endif %}-->
+<!--                        <br>-->
+<!--                        <span>Per Quantity:</span> ₦{{ p.price|intcomma }}-->
+<!--                    </div>-->
+<!--                    {% if p.qty > "0" %}-->
+<!--                    <button data-id="{{ p.id }}" class="buy-button" onclick="showPopup()">Buy</button>-->
+<!--                    {% else %}-->
+<!--                    <button class="out-of-stock">Out Of Stock</button>-->
+<!--                    {% endif %}-->
+<!--                </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        {% endfor %}-->
+<!--    </div>-->
+    
+<!--    <div>-->
+<!--        <section id="3"></section>-->
+<!--        <div class="top-card">Facebook (Other Countries)</div>-->
+<!--        {% for p in fb_other %}-->
+<!--        <div class="card">-->
+<!--            <div class="all" style="display: flex;">-->
+<!--                <div class="imghere" style="margin-right: 10px;">-->
+<!--                    <img src="{{ p.image.url }}" alt="Instagram Logo"> -->
+<!--                </div>-->
+<!--                <div class="here">-->
+<!--                    <h1 style="text-align: left;">{{ p.name }}</h1>-->
+<!--                <div class="thethig" style="display: flex; justify-content: space-between;">-->
+<!--                    <div class="stock-info" style="text-align: left;">-->
+<!--                        {% if p.qty > "0" %}-->
+<!--                        <span>In Stock:</span> {{ p.qty }} qty.-->
+<!--                        {% else %}-->
+<!--                        <span>In Stock:</span> 0 qty.-->
+<!--                        {% endif %}-->
+<!--                        <br>-->
+<!--                        <span>Per Quantity:</span> ₦{{ p.price|intcomma }}-->
+<!--                    </div>-->
+<!--                    {% if p.qty > "0" %}-->
+<!--                    <button data-id="{{ p.id }}" class="buy-button" onclick="showPopup()">Buy</button>-->
+<!--                    {% else %}-->
+<!--                    <button class="out-of-stock">Out Of Stock</button>-->
+<!--                    {% endif %}-->
+<!--                </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        {% endfor %}-->
+<!--    </div>-->
+    
+<!--    <div>-->
+<!--        <section id="4"></section>-->
+<!--        <div class="top-card">Facebook Dating</div>-->
+<!--        {% for p in fb_dating %}-->
+<!--        <div class="card">-->
+<!--            <div class="all" style="display: flex;">-->
+<!--                <div class="imghere" style="margin-right: 10px;">-->
+<!--                    <img src="{{ p.image.url }}" alt="Instagram Logo"> -->
+<!--                </div>-->
+<!--                <div class="here">-->
+<!--                    <h1 style="text-align: left;">{{ p.name }}</h1>-->
+<!--                <div class="thethig" style="display: flex; justify-content: space-between;">-->
+<!--                    <div class="stock-info" style="text-align: left;">-->
+<!--                        {% if p.qty > "0" %}-->
+<!--                        <span>In Stock:</span> {{ p.qty }} qty.-->
+<!--                        {% else %}-->
+<!--                        <span>In Stock:</span> 0 qty.-->
+<!--                        {% endif %}-->
+<!--                        <br>-->
+<!--                        <span>Per Quantity:</span> ₦{{ p.price|intcomma }}-->
+<!--                    </div>-->
+<!--                    {% if p.qty > "0" %}-->
+<!--                    <button data-id="{{ p.id }}" class="buy-button" onclick="showPopup()">Buy</button>-->
+<!--                    {% else %}-->
+<!--                    <button class="out-of-stock">Out Of Stock</button>-->
+<!--                    {% endif %}-->
+<!--                </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        {% endfor %}-->
+<!--    </div>-->
+    
+<!--    <div>-->
+<!--        <section id="5"></section>-->
+<!--        <div class="top-card">Facebook USA</div>-->
+<!--        {% for p in fb_usa %}-->
+<!--        <div class="card">-->
+<!--            <div class="all" style="display: flex;">-->
+<!--                <div class="imghere" style="margin-right: 10px;">-->
+<!--                    <img src="{{ p.image.url }}" alt="Instagram Logo"> -->
+<!--                </div>-->
+<!--                <div class="here">-->
+<!--                    <h1 style="text-align: left;">{{ p.name }}</h1>-->
+<!--                <div class="thethig" style="display: flex; justify-content: space-between;">-->
+<!--                    <div class="stock-info" style="text-align: left;">-->
+<!--                        {% if p.qty > "0" %}-->
+<!--                        <span>In Stock:</span> {{ p.qty }} qty.-->
+<!--                        {% else %}-->
+<!--                        <span>In Stock:</span> 0 qty.-->
+<!--                        {% endif %}-->
+<!--                        <br>-->
+<!--                        <span>Per Quantity:</span> ₦{{ p.price|intcomma }}-->
+<!--                    </div>-->
+<!--                    {% if p.qty > "0" %}-->
+<!--                    <button data-id="{{ p.id }}" class="buy-button" onclick="showPopup()">Buy</button>-->
+<!--                    {% else %}-->
+<!--                    <button class="out-of-stock">Out Of Stock</button>-->
+<!--                    {% endif %}-->
+<!--                </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        {% endfor %}-->
+<!--    </div>-->
+    
+<!--    <div>-->
+<!--        <section id="6"></section>-->
+<!--        <div class="top-card">Texting Numbers</div>-->
+<!--        {% for p in text %}-->
+<!--        <div class="card">-->
+<!--            <div class="all" style="display: flex;">-->
+<!--                <div class="imghere" style="margin-right: 10px;">-->
+<!--                    <img src="{{ p.image.url }}" alt="Instagram Logo"> -->
+<!--                </div>-->
+<!--                <div class="here">-->
+<!--                    <h1 style="text-align: left;">{{ p.name }}</h1>-->
+<!--                <div class="thethig" style="display: flex; justify-content: space-between;">-->
+<!--                    <div class="stock-info" style="text-align: left;">-->
+<!--                        {% if p.qty > "0" %}-->
+<!--                        <span>In Stock:</span> {{ p.qty }} qty.-->
+<!--                        {% else %}-->
+<!--                        <span>In Stock:</span> 0 qty.-->
+<!--                        {% endif %}-->
+<!--                        <br>-->
+<!--                        <span>Per Quantity:</span> ₦{{ p.price|intcomma }}-->
+<!--                    </div>-->
+<!--                    {% if p.qty > "0" %}-->
+<!--                    <button data-id="{{ p.id }}" class="buy-button" onclick="showPopup()">Buy</button>-->
+<!--                    {% else %}-->
+<!--                    <button class="out-of-stock">Out Of Stock</button>-->
+<!--                    {% endif %}-->
+<!--                </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        {% endfor %}-->
+<!--    </div>-->
+    
+<!--    <div>-->
+<!--        <section id="7"></section>-->
+<!--        <div class="top-card">Tools</div>-->
+<!--        {% for p in tools %}-->
+<!--        <div class="card">-->
+<!--            <div class="all" style="display: flex;">-->
+<!--                <div class="imghere" style="margin-right: 10px;">-->
+<!--                    <img src="{{ p.image.url }}" alt="Instagram Logo"> -->
+<!--                </div>-->
+<!--                <div class="here">-->
+<!--                    <h1 style="text-align: left;">{{ p.name }}</h1>-->
+<!--                <div class="thethig" style="display: flex; justify-content: space-between;">-->
+<!--                    <div class="stock-info" style="text-align: left;">-->
+<!--                        {% if p.qty > "0" %}-->
+<!--                        <span>In Stock:</span> {{ p.qty }} qty.-->
+<!--                        {% else %}-->
+<!--                        <span>In Stock:</span> 0 qty.-->
+<!--                        {% endif %}-->
+<!--                        <br>-->
+<!--                        <span>Per Quantity:</span> ₦{{ p.price|intcomma }}-->
+<!--                    </div>-->
+<!--                    {% if p.qty > "0" %}-->
+<!--                    <button data-id="{{ p.id }}" class="buy-button" onclick="showPopup()">Buy</button>-->
+<!--                    {% else %}-->
+<!--                    <button class="out-of-stock">Out Of Stock</button>-->
+<!--                    {% endif %}-->
+<!--                </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        {% endfor %}-->
+<!--    </div>-->
+    
+<!--    <div>-->
+<!--        <section id="8"></section>-->
+<!--        <div class="top-card">Twitter</div>-->
+<!--        {% for p in twitter %}-->
+<!--        <div class="card">-->
+<!--            <div class="all" style="display: flex;">-->
+<!--                <div class="imghere" style="margin-right: 10px;">-->
+<!--                    <img src="{{ p.image.url }}" alt="Instagram Logo"> -->
+<!--                </div>-->
+<!--                <div class="here">-->
+<!--                    <h1 style="text-align: left;">{{ p.name }}</h1>-->
+<!--                <div class="thethig" style="display: flex; justify-content: space-between;">-->
+<!--                    <div class="stock-info" style="text-align: left;">-->
+<!--                        {% if p.qty > "0" %}-->
+<!--                        <span>In Stock:</span> {{ p.qty }} qty.-->
+<!--                        {% else %}-->
+<!--                        <span>In Stock:</span> 0 qty.-->
+<!--                        {% endif %}-->
+<!--                        <br>-->
+<!--                        <span>Per Quantity:</span> ₦{{ p.price|intcomma }}-->
+<!--                    </div>-->
+<!--                    {% if p.qty > "0" %}-->
+<!--                    <button data-id="{{ p.id }}" class="buy-button" onclick="showPopup()">Buy</button>-->
+<!--                    {% else %}-->
+<!--                    <button class="out-of-stock">Out Of Stock</button>-->
+<!--                    {% endif %}-->
+<!--                </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        {% endfor %}-->
+<!--    </div>-->
+    
+<!--    <div>-->
+<!--        <section id="9"></section>-->
+<!--        <div class="top-card">VPN</div>-->
+<!--        {% for p in vpn %}-->
+<!--        <div class="card">-->
+<!--            <div class="all" style="display: flex;">-->
+<!--                <div class="imghere" style="margin-right: 10px;">-->
+<!--                    <img src="{{ p.image.url }}" alt="Instagram Logo"> -->
+<!--                </div>-->
+<!--                <div class="here">-->
+<!--                    <h1 style="text-align: left;">{{ p.name }}</h1>-->
+<!--                <div class="thethig" style="display: flex; justify-content: space-between;">-->
+<!--                    <div class="stock-info" style="text-align: left;">-->
+<!--                        {% if p.qty > "0" %}-->
+<!--                        <span>In Stock:</span> {{ p.qty }} qty.-->
+<!--                        {% else %}-->
+<!--                        <span>In Stock:</span> 0 qty.-->
+<!--                        {% endif %}-->
+<!--                        <br>-->
+<!--                        <span>Per Quantity:</span> ₦{{ p.price|intcomma }}-->
+<!--                    </div>-->
+<!--                    {% if p.qty > "0" %}-->
+<!--                    <button data-id="{{ p.id }}" class="buy-button" onclick="showPopup()">Buy</button>-->
+<!--                    {% else %}-->
+<!--                    <button class="out-of-stock">Out Of Stock</button>-->
+<!--                    {% endif %}-->
+<!--                </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        {% endfor %}-->
+<!--    </div>-->
+    
+<!--    <div>-->
+<!--        <section id="10"></section>-->
+<!--        <div class="top-card">Reddit</div>-->
+<!--        {% for p in reddit %}-->
+<!--        <div class="card">-->
+<!--            <div class="all" style="display: flex;">-->
+<!--                <div class="imghere" style="margin-right: 10px;">-->
+<!--                    <img src="{{ p.image.url }}" alt="Instagram Logo"> -->
+<!--                </div>-->
+<!--                <div class="here">-->
+<!--                    <h1 style="text-align: left;">{{ p.name }}</h1>-->
+<!--                <div class="thethig" style="display: flex; justify-content: space-between;">-->
+<!--                    <div class="stock-info" style="text-align: left;">-->
+<!--                        {% if p.qty > "0" %}-->
+<!--                        <span>In Stock:</span> {{ p.qty }} qty.-->
+<!--                        {% else %}-->
+<!--                        <span>In Stock:</span> 0 qty.-->
+<!--                        {% endif %}-->
+<!--                        <br>-->
+<!--                        <span>Per Quantity:</span> ₦{{ p.price|intcomma }}-->
+<!--                    </div>-->
+<!--                    {% if p.qty > "0" %}-->
+<!--                    <button data-id="{{ p.id }}" class="buy-button" onclick="showPopup()">Buy</button>-->
+<!--                    {% else %}-->
+<!--                    <button class="out-of-stock">Out Of Stock</button>-->
+<!--                    {% endif %}-->
+<!--                </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        {% endfor %}-->
+<!--    </div>-->
+    
+<!--    <div>-->
+<!--        <section id="11"></section>-->
+<!--        <div class="top-card">TikTok</div>-->
+<!--        {% for p in tiktok %}-->
+<!--        <div class="card">-->
+<!--            <div class="all" style="display: flex;">-->
+<!--                <div class="imghere" style="margin-right: 10px;">-->
+<!--                    <img src="{{ p.image.url }}" alt="Instagram Logo"> -->
+<!--                </div>-->
+<!--                <div class="here">-->
+<!--                    <h1 style="text-align: left;">{{ p.name }}</h1>-->
+<!--                <div class="thethig" style="display: flex; justify-content: space-between;">-->
+<!--                    <div class="stock-info" style="text-align: left;">-->
+<!--                        {% if p.qty > "0" %}-->
+<!--                        <span>In Stock:</span> {{ p.qty }} qty.-->
+<!--                        {% else %}-->
+<!--                        <span>In Stock:</span> 0 qty.-->
+<!--                        {% endif %}-->
+<!--                        <br>-->
+<!--                        <span>Per Quantity:</span> ₦{{ p.price|intcomma }}-->
+<!--                    </div>-->
+<!--                    {% if p.qty > "0" %}-->
+<!--                    <button data-id="{{ p.id }}" class="buy-button" onclick="showPopup()">Buy</button>-->
+<!--                    {% else %}-->
+<!--                    <button class="out-of-stock">Out Of Stock</button>-->
+<!--                    {% endif %}-->
+<!--                </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        {% endfor %}-->
+<!--    </div>-->
+    
+<!--    <div>-->
+<!--        <section id="12"></section>-->
+<!--        <div class="top-card">Mails</div>-->
+<!--        {% for p in mails %}-->
+<!--        <div class="card">-->
+<!--            <div class="all" style="display: flex;">-->
+<!--                <div class="imghere" style="margin-right: 10px;">-->
+<!--                    <img src="{{ p.image.url }}" alt="Instagram Logo"> -->
+<!--                </div>-->
+<!--                <div class="here">-->
+<!--                    <h1 style="text-align: left;">{{ p.name }}</h1>-->
+<!--                <div class="thethig" style="display: flex; justify-content: space-between;">-->
+<!--                    <div class="stock-info" style="text-align: left;">-->
+<!--                        {% if p.qty > "0" %}-->
+<!--                        <span>In Stock:</span> {{ p.qty }} qty.-->
+<!--                        {% else %}-->
+<!--                        <span>In Stock:</span> 0 qty.-->
+<!--                        {% endif %}-->
+<!--                        <br>-->
+<!--                        <span>Per Quantity:</span> ₦{{ p.price|intcomma }}-->
+<!--                    </div>-->
+<!--                    {% if p.qty > "0" %}-->
+<!--                    <button data-id="{{ p.id }}" class="buy-button" onclick="showPopup()">Buy</button>-->
+<!--                    {% else %}-->
+<!--                    <button class="out-of-stock">Out Of Stock</button>-->
+<!--                    {% endif %}-->
+<!--                </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        {% endfor %}-->
+<!--    </div>-->
+    
+<!--    {% for a in all_cat %}-->
+<!--    <div>-->
+<!--    <section id="{{ a.name}}"></section>-->
+<!--    <div class="top-card">{{ a.name }}</div>-->
+    
+<!--    {% for p in a.thelogs.all %}-->
+<!--        <div class="card">-->
+<!--            <div class="all" style="display: flex;">-->
+<!--                <div class="imghere" style="margin-right: 10px;">-->
+<!--                    <img src="{{ p.image.url }}" alt="Instagram Logo"> -->
+<!--                </div>-->
+<!--                <div class="here">-->
+<!--                    <h1 style="text-align: left;">{{ p.name }}</h1>-->
+<!--                <div class="thethig" style="display: flex; justify-content: space-between;">-->
+<!--                    <div class="stock-info" style="text-align: left;">-->
+<!--                        {% if p.qty > "0" %}-->
+<!--                        <span>In Stock:</span> {{ p.qty }} qty.-->
+<!--                        {% else %}-->
+<!--                        <span>In Stock:</span> 0 qty.-->
+<!--                        {% endif %}-->
+<!--                        <br>-->
+<!--                        <span>Per Quantity:</span> ₦{{ p.price|intcomma }}-->
+<!--                    </div>-->
+<!--                    {% if p.qty > "0" %}-->
+<!--                    <button data-id="{{ p.id }}" class="buy-button" onclick="showPopup()">Buy</button>-->
+<!--                    {% else %}-->
+<!--                    <button class="out-of-stock">Out Of Stock</button>-->
+<!--                    {% endif %}-->
+<!--                </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        {% endfor %}-->
+<!--    </div>-->
+<!--    {% endfor %}-->
+    
+    
+    
+<!--</div>-->
+
+<!--<script>-->
+    <!--// Function to show the popup-->
+<!--    function showPopup() {-->
+<!--        document.getElementById('popup').style.display = 'flex';-->
+<!--    }-->
+
+    <!--// Function to close the popup-->
+<!--    function closePopup() {-->
+<!--        document.getElementById('popup').style.display = 'none';-->
+<!--    }-->
+<!--</script>-->
+
+<!--<script src="{% static 'js/function.js' %}"></script>-->
+<!--<script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>-->
+<!--<script src="{% static 'js/jquery-ui.min.js' %}"></script>-->
+
+
+    <!-- Recent -->
+    <div class="m-b1">
+        <div class="swiper-btn-center-lr">
+            <div class="swiper-container tag-group mt-4 demo-swiper">
+                <div class="swiper-wrapper">
+
+
+                    <div class="swiper-slide">
+                        <a href="https://Wa.me/+2348084924825">
+                            <div class="card">
+                                <img src="{% static 'img/slider6.png' %}" alt="wallet-image">
+                            </div>
+                        </a>
+                    </div>
+
+
+                    <div class="swiper-slide">
+                        <a href="#">
+                            <div class="card">
+                                <img src="{% static 'img/slider8.png' %}" alt="wallet-image">
+                            </div>
+                        </a>
+                    </div>
+
+
+                    <div class="swiper-slide">
+                        <a href="https://thesuftboost.com/">
+                            <div class="card">
+                                <img src="{% static 'img/slider9.png' %}" alt="wallet-image">
+                            </div>
+                        </a>
+                    </div>
+
+
+                    <div class="swiper-slide">
+                        <a href="#">
+                            <div class="card">
+                                <img src="{% static 'img/slider7.jpg' %}" alt="wallet-image">
+                            </div>
+                        </a>
+                    </div>
+
+
+
+
+
+
+
+                    <div class="swiper-slide">
+                        <a href="https://chat.whatsapp.com/H1bT358w0cc5arxepIoeD5">
+                            <div class="card">
+                                <img src="{% static 'img/slide1.png' %}" alt="wallet-image">
+                            </div>
+                        </a>
+                    </div>
+
+
+                    <div class="swiper-slide">
+                        <a href="https://t.me/Logsplaceteam">
+                            <div class="card">
+                                <img src="{% static 'img/slide2.png' %}" alt="wallet-image">
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="swiper-slide ">
+                        <a href="https://t.me/Logsplace">
+                            <div class="card">
+                                <img src="{% static 'img/slide3.png' %}" alt="wallet-image">
+                            </div>
+                        </a>
+                    </div>
+                    <div class="swiper-slide">
+                        <a href="#">
+                            <div class="card">
+                                <img src="{% static 'img/slide4.png' %}" alt="wallet-image">
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="swiper-slide">
+                        <a href="#">
+                            <div class="card">
+                                <img src="{% static 'img/slider5.png' %}" alt="wallet-image">
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recent -->
+    <div class="dashboard-body__content">
+
+        <!-- welcome balance Content Start -->
+        <div class="welcome-balance mt-2 mb-5">
+
+            <div class="row">
+
+                <div class="col-9 d-flex justify-content-start">
+
+                    <h4 class="mb-0" style=" background: linear-gradient(270deg, #D0CCA1 9.16%, #DD553E 42.99%, #3219E3 87.83%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-fill-color: transparent;">
+                        HI ,</h4>
+
+                </div>
+
+                <div class="col-3 d-flex justify-content-end">
+                    <select id="urlSelect" onchange="redirectToUrl()" class="btn btn-sm btn-dark">
+                        <option value="">Categories</option>
+                        {% for a in cat %}
+                        <option value="{% url 'product-category' a.cid %}">
+                            {{ a.name }}
+                        </option>
+                        {% endfor %}
+                                            </select>
+
+                    <script>
+                        function redirectToUrl() {
+                            var selectElement = document.getElementById("urlSelect");
+                            var selectedUrl = selectElement.options[selectElement.selectedIndex].value;
+                            if (selectedUrl !== "") {
+                                window.location.href = selectedUrl;
+                            }
+                        }
+                    </script>
+
+                </div>
+
+            </div>
+
+
+        </div>
+        <!-- welcome balance Content End -->
+
+        <div class="dashboard-body__item-wrapper">
+
+            <div class="">
+                <div>
+                    <h5 class="d-flex justify-content-start">Explore Product 👌</h5>
+                </div>
+
+                <div class="col-12">
+                                                                    <div class="catalog-item-wrapper mb-2">
+                            {% for a in all_cat %}
+                            <div class="d-grid gap-2 mb-2">
+                                <strong>
+                                    <p style="font-size: 11px; background: linear-gradient(90deg, #020c49 0%, #4855a6 100%); border-radius:10px; color: white" class="p-2">{{ a.name }}</p>
+                                </strong>
+                            </div>
+                            <div style="font-size: 11px; border-radius: 10px; padding: 4px; background: #020000;color: #ffffff;">
+
+                                <div class="row">
+                                    <div class="col-2"></div>
+                                    <div class="col-5">Product</div>
+                                    <div class="col-3">Price</div>
+                                    <div class="col-2">Stock</div>
+                                </div>
+                            </div>
+                            
+                            {% for p in a.thelogs.all %}
+            <div class="dashboard-widget">
+                <div class="row">
+                    <div class="col-2">
+                        <a href="#" data-help="Click to read detailed description">
+                            <img src="{{ p.image.url }}" height="50" width="50">
+                        </a>
+                    </div>
+
+
+                    <div class="col-5" style="font-size: 10px;">
+                        {% if request.user.is_authenticated %}
+                        <a class="text-small text-black" href="{% url 'product' p.id %}" style="text-size-adjust: 8px;">
+                        {{ p.name }}
+                        </a>
+                        {% else %}
+                        <a class="text-small text-black" href="/user/signin/" style="text-size-adjust: 8px;">
+                        {{ p.name }}
+                    </a>
+                        {% endif %}
+                    
+
+                    </div>
+
+                    <div class="col-3">
+                        <a class="text-black" style="font-size: 10px;">₦{{ p.price }}</a>
+                    </div>
+
+                    <div class="col-2">
+
+                                                    
+                                <div class="d-flex justify-content-center row">
+
+                                    <div class="col-12">
+                                        <span class="text-small col-sm-12 badge bg-dark mb-1">{{ p.qty }} pcs</span>
+
+                                    </div>
+
+                                    <div class="col-12 d-flex justify-content-center">
+                                        {% if request.user.is_authenticated %}
+                                        <a href="{% url 'product' p.id %}" style="font-size: 10px" class="btn btn-sm">   <svg width="20" height="20" viewBox="0 0 94 91" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M86.7692 21.84H68.6923C68.6923 16.0477 66.4069 10.4926 62.3388 6.39679C58.2707 2.30099 52.7532 0 47 0C41.2468 0 35.7293 2.30099 31.6612 6.39679C27.5931 10.4926 25.3077 16.0477 25.3077 21.84H7.23077C5.31305 21.84 3.47388 22.607 2.11784 23.9723C0.761811 25.3375 0 27.1892 0 29.12V83.72C0 85.6508 0.761811 87.5025 2.11784 88.8677C3.47388 90.233 5.31305 91 7.23077 91H86.7692C88.6869 91 90.5261 90.233 91.8822 88.8677C93.2382 87.5025 94 85.6508 94 83.72V29.12C94 27.1892 93.2382 25.3375 91.8822 23.9723C90.5261 22.607 88.6869 21.84 86.7692 21.84ZM32.5385 40.04C32.5385 41.0054 32.1576 41.9312 31.4795 42.6139C30.8015 43.2965 29.8819 43.68 28.9231 43.68C27.9642 43.68 27.0446 43.2965 26.3666 42.6139C25.6886 41.9312 25.3077 41.0054 25.3077 40.04V32.76C25.3077 31.7946 25.6886 30.8688 26.3666 30.1861C27.0446 29.5035 27.9642 29.12 28.9231 29.12C29.8819 29.12 30.8015 29.5035 31.4795 30.1861C32.1576 30.8688 32.5385 31.7946 32.5385 32.76V40.04ZM47 7.28C50.8354 7.28 54.5138 8.814 57.2258 11.5445C59.9379 14.2751 61.4615 17.9784 61.4615 21.84H32.5385C32.5385 17.9784 34.0621 14.2751 36.7741 11.5445C39.4862 8.814 43.1646 7.28 47 7.28ZM68.6923 40.04C68.6923 41.0054 68.3114 41.9312 67.6334 42.6139C66.9554 43.2965 66.0358 43.68 65.0769 43.68C64.1181 43.68 63.1985 43.2965 62.5205 42.6139C61.8424 41.9312 61.4615 41.0054 61.4615 40.04V32.76C61.4615 31.7946 61.8424 30.8688 62.5205 30.1861C63.1985 29.5035 64.1181 29.12 65.0769 29.12C66.0358 29.12 66.9554 29.5035 67.6334 30.1861C68.3114 30.8688 68.6923 31.7946 68.6923 32.76V40.04Z" fill="#0601B4"></path>
+                                            </svg>
+                                            </a>
+                                        <!--<a href="{% url 'product' p.id %}" style="font-size: 8px" class="btn btn-sm btn-dark"> <i class="fa fa-lock"> </i></a>-->
+                                        {% else %}
+                                        <a href="/user/signin" style="font-size: 8px" class="btn btn-sm btn-dark"> <i class="fa fa-lock"> </i></a>
+                                        {% endif %}
+                                    </div>
+
+
+                                </div>
+
+
+                                                    
+                    </div>
+                </div>
+
+            </div>
+            {% endfor %}
+            <div class="col-12 d-flex justify-content-end mb-4">
+                    <a style="background: linear-gradient(90deg, #020c49 0%, #4855a6 100%); border-radius:10px; color: white" href="{% url 'product-category' a.cid %}" class="btn btn-main btn-lg w-100 pill">
+                        View All                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8"></path>
+                        </svg>
+                    </a>
+                </div>
+                            {% endfor %}
+
+
+
+                        </div>
+                </div>
+
+
+                <div class="col-12">
+
+                                            <div class="dashboard-body__item my-2">
+    <div class="row gy-4">
+        <div class="col-xl-12 col-sm-12">
+            {% for p in a.thelogs.all %}
+            <div class="dashboard-widget">
+                <div class="row">
+                    <div class="col-2">
+                        <a href="#" data-help="Click to read detailed description">
+                            <img src="{{ p.image.url }}" height="50" width="50">
+                        </a>
+                    </div>
+
+
+                    <div class="col-5" style="font-size: 10px;">                          <a class="text-small text-black" href="https://loggsplug.com/product/details/115" style="text-size-adjust: 8px;">
+                        {{ p.name }}
+                    </a>
+
+                    </div>
+
+                    <div class="col-3">
+                        <a class="text-black" style="font-size: 10px;"> ₦5,000.00 </a>
+                    </div>
+
+                    <div class="col-2">
+
+                                                    
+                                <div class="d-flex justify-content-center row">
+
+                                    <div class="col-12">
+                                        <span class="text-small col-sm-12 badge bg-dark mb-1">1232 pcs</span>
+
+                                    </div>
+
+                                    <div class="col-12 d-flex justify-content-center">
+                                        <a href="/user/login" style="font-size: 8px" class="btn btn-sm btn-dark"> <i class="fa fa-lock"> </i></a>
+                                    </div>
+
+
+                                </div>
+
+
+                                                    
+                    </div>
+                </div>
+
+            </div>
+            {% endfor %}
+        </div>
+        {% if request.user.is_authenticated %}
+        <div class="col-12 my-4">
+            
+                <div class="card-title mt-3 text-center">
+                    <h6 style="background: #565656; padding: 10px; border-radius: 10px; color: white" class="text-left">RECENT ORDER</h6>
+                </div>
+
+
+                <div style="height:400px; width:100%; overflow-y: scroll;" class="card">
+                    <div class="card-body">
+
+
+                        <div class="dashboard-body__item">
+                            <div class="table-responsive">
+                                <table class="table style-two">
+                                    <thead>
+                                    <tr>
+                                        <th>Item</th>
+                                        <th>Time</th>
+
+                                    </tr>
+                                    {% for order in order %}
+                                            <tr>
+                                                <td>{{ order.user.username }}, <span style="color: #f10054">just purchase</span><br>{{ order.log }}<span style="color: #000000">₦{{ order.amount|intcomma }}</span></td>
+                                                <td>{{ order.date }}</td>
+                                            </tr>
+                                    {% endfor %}
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+
+
+
+
+
+                    </div>
+                </div>
+            
+        </div>
+        {% endif %}
+    </div>
+</div></div></div></div></div>
+
+{% endblock content %}

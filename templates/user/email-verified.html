@@ -1,0 +1,17 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+{% block content %}
+<div class="dep_con">
+    <div class="container">
+        {% if bool == True %}
+        <p class="dep_p">
+            Thank You for your time your account has been verified
+        </p>
+        {% else %}
+        <p class="dep_p">
+            Error in verifying your account
+        </p>
+        {% endif %}
+    </div>
+</div>
+{% endblock content %}

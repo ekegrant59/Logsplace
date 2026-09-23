@@ -1,0 +1,177 @@
+{% extends 'partials/backend.html' %}
+{% block content %}
+
+
+<main class="app-content">
+          
+<div class="page-title m-b-20">
+                <div class="row justify-content-between">
+                    <div class="col-md-6">
+                        <h1 class="page-title">
+                            <span class="fe fe-settings"></span> Settings
+                        </h1>
+                    </div>
+                    <div class="col-md-6">
+                        
+                    </div>
+                </div>
+            </div><div class="row settings justify-content-center">
+  <div class="col-md-12 col-lg-12">
+    <div class="row">
+      <div class="col-md-2 col-lg-2">
+        <div class="sidebar o-auto">
+        <div class="list-group list-group-transparent mb-0 mt-5">
+          <h5><span class="icon mr-3"><i class="fe fe-disc"></i></span>General setting</h5>
+        </div><div class="list-group list-group-transparent mb-0"><a href="/admin/settings/website_setting" class="list-group-item list-group-item-action "><span class="icon mr-3"><i class="fe fe-globe"></i></span>Website setting</a><a href="/admin/settings/website_logo" class="list-group-item list-group-item-action "><span class="icon mr-3"><i class="fe fe-image"></i></span>Website logo</a><a href="/admin/settings/default" class="list-group-item list-group-item-action "><span class="icon mr-3"><i class="fe fe-box"></i></span>Default setting</a><a href="/admin/settings/template" class="list-group-item list-group-item-action "><span class="icon mr-3"><i class="fe fe-layout"></i></span>Template</a><a href="/admin/settings/cookie_policy" class="list-group-item list-group-item-action "><span class="icon mr-3"><i class="fe fe-bookmark"></i></span>Cookie policy</a><a href="/admin/settings/terms_policy" class="list-group-item list-group-item-action "><span class="icon mr-3"><i class="fe fe-award"></i></span>Terms policy</a><a href="/admin/settings/currency" class="list-group-item list-group-item-action "><span class="icon mr-3"><i class="fe fe-dollar-sign"></i></span>Currency</a><a href="/admin/settings/other" class="list-group-item list-group-item-action active"><span class="icon mr-3"><i class="fe fe-command"></i></span>Other</a></div>
+        <div class="list-group list-group-transparent mb-0 mt-5">
+          <h5><span class="icon mr-3"><i class="fe fe-disc"></i></span>Email</h5>
+        </div><div class="list-group list-group-transparent mb-0"><a href="/admin/settings/email_setting" class="list-group-item list-group-item-action "><span class="icon mr-3"><i class="fe fe-mail"></i></span>Email setting</a><a href="/admin/settings/email_template" class="list-group-item list-group-item-action "><span class="icon mr-3"><i class="fe fe-file-text"></i></span>Email template</a></div>
+        <div class="list-group list-group-transparent mb-0 mt-5">
+          <h5><span class="icon mr-3"><i class="fe fe-disc"></i></span>Integrations</h5>
+        </div><div class="list-group list-group-transparent mb-0"><a href="/admin/settings/payment" class="list-group-item list-group-item-action "><span class="icon mr-3"><i class="fe fe-file-text"></i></span>Manual payments</a></div></div>      </div>
+      <div class="col-md-10 col-lg-10">
+        <div class="card content">
+  <div class="card-header">
+    <h3 class="card-title"><i class="fe fe-sliders"></i> Other settings</h3>
+  </div>
+  <form action="/admin/settings/store/" class="form actionForm" data-redirect="/admin/settings/other" method="POST" accept-charset="utf-8">
+                         <input type="hidden" name="token" value="c676cee0a3250778e41d52227c4bdcb1">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-12 col-lg-12">
+
+          <h5 class="text-info"><i class="fe fe-link"></i> Enable HTTPS</h5>
+          <div class="form-group">
+            <div class="form-label">Status</div>
+            <label class="custom-switch">
+              <input type="hidden" name="enable_https" value="0">
+              <input type="checkbox" name="enable_https" class="custom-switch-input" value="1">
+              <span class="custom-switch-indicator"></span>
+              <span class="custom-switch-description">Active</span>
+            </label>
+            <br>
+            <small class="text-danger"><strong>Note:</strong> Note: Please make sure the SSL certificate has the 'Active' status in your hosting before  you activate.</small>
+          </div>
+          
+          <h5 class="text-info"><i class="fe fe-link"></i> Emded Code </h5>
+          <small class="text-danger">Put in the <strong> &lt;head&gt;</strong> tag of the page. Using for Google Analytics, Facebook pixel code etc</small>
+          <div class="form-group">
+            <textarea rows="5" name="embed_head_javascript" id="embed_head_javascript" style="display: none;"></textarea><div class="CodeMirror cm-s-monokai"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 4px; left: 33px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-vscrollbar" tabindex="-1" cm-not-content="true"><div style="min-width: 1px; height: 0px;"></div></div><div class="CodeMirror-hscrollbar" tabindex="-1" cm-not-content="true"><div style="height: 100%; min-height: 1px; width: 0px;"></div></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 29px; margin-bottom: -6px; border-right-width: 24px; min-height: 27px; min-width: 7px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre class="CodeMirror-line-like"><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-cursors"><div class="CodeMirror-cursor" style="left: 4px; top: 0px; height: 19.25px;">&nbsp;</div></div><div class="CodeMirror-code" role="presentation"><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -29px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">1</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">&ZeroWidthSpace;</span></span></pre></div></div></div></div></div></div><div style="position: absolute; height: 24px; width: 1px; border-bottom: 0px solid transparent; top: 27px;"></div><div class="CodeMirror-gutters" style="height: 51px;"><div class="CodeMirror-gutter CodeMirror-linenumbers" style="width: 29px;"></div></div></div></div>
+            <small class="text-danger">Note: Only supports Javascript code</small>
+          </div>
+
+          <h5 class="text-info"><i class="fe fe-link"></i> Emded Code</h5>
+          <small class="text-danger">Be placed immediately before the closing <strong> &lt;/body&gt;</strong> tag of the page. Using for Chat plugin etc</small>
+          <div class="form-group">
+            <textarea rows="5" name="embed_javascript" id="embed_javascript" style="display: none;"></textarea><div class="CodeMirror cm-s-monokai"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 4px; left: 33px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-vscrollbar" tabindex="-1" cm-not-content="true"><div style="min-width: 1px; height: 0px;"></div></div><div class="CodeMirror-hscrollbar" tabindex="-1" cm-not-content="true"><div style="height: 100%; min-height: 1px; width: 0px;"></div></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 29px; margin-bottom: -6px; border-right-width: 24px; min-height: 27px; min-width: 7px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre class="CodeMirror-line-like"><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-cursors"><div class="CodeMirror-cursor" style="left: 4px; top: 0px; height: 19.25px;">&nbsp;</div></div><div class="CodeMirror-code" role="presentation"><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -29px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">1</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">&ZeroWidthSpace;</span></span></pre></div></div></div></div></div></div><div style="position: absolute; height: 24px; width: 1px; border-bottom: 0px solid transparent; top: 27px;"></div><div class="CodeMirror-gutters" style="height: 51px;"><div class="CodeMirror-gutter CodeMirror-linenumbers" style="width: 29px;"></div></div></div></div>
+            <small class="text-danger">Note: Only supports Javascript code</small>
+          </div>
+
+          <h5 class="text-info"><i class="fe fe-link"></i> Social Media links</h5>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="form-label">Facebook</label>
+                <input class="form-control" name="social_facebook_link" value="">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="form-label">Instagram</label>
+                <input class="form-control" name="social_instagram_link" value="">
+              </div> 
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="form-label">Pinterest</label>
+                <input class="form-control" name="social_pinterest_link" value="">
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="form-label">Twitter</label>
+                <input class="form-control" name="social_twitter_link" value="">
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="form-label">Tumblr</label>
+                <input class="form-control" name="social_tumblr_link" value="">
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="form-label">Youtube</label>
+                <input class="form-control" name="social_youtube_link" value="">
+              </div>
+            </div>
+
+          </div>
+
+          <h5 class="text-info"><i class="fe fe-link"></i> Contact Informations</h5>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="form-label">Tel</label>
+                <input class="form-control" name="contact_tel" value="+12345678">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="form-label">E-mail</label>
+                <input class="form-control" name="contact_email" value="do-not-reply@smartpanel.com">
+              </div> 
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="form-label">Working Hour</label>
+                <input class="form-control" name="contact_work_hour" value="Mon - Sat 09 am - 10 pm">
+              </div>
+            </div>
+          </div>
+          <h5 class="text-info"><i class="fe fe-link"></i> CopyRight </h5>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label class="form-label">Content</label>
+                <input class="form-control" name="copy_right_content" value="Copyright © 2023 - SmartPanel">
+              </div>
+            </div>
+          </div>
+        </div> 
+      </div>
+    </div>
+    <div class="card-footer text-end">
+      <button class="btn btn-primary btn-min-width text-uppercase">Save</button>
+    </div>
+  </form></div>
+
+<!-- codemirror -->
+<link rel="stylesheet" type="text/css" href="/assets/plugins/codemirror/lib/codemirror.css">
+<link rel="stylesheet" type="text/css" href="/assets/plugins/codemirror/theme/monokai.css">
+<script src="/assets/plugins/codemirror/lib/codemirror.js" type="text/javascript" charset="utf-8"></script>
+<script src="/assets/plugins/codemirror/mode/css/css.js" type="text/javascript" charset="utf-8"></script>
+<script>
+  setTimeout(function(){
+
+    var editor = CodeMirror.fromTextArea(document.getElementById("embed_head_javascript"), {
+      lineNumbers: true,
+      theme: "monokai",
+    });
+
+    var editor = CodeMirror.fromTextArea(document.getElementById("embed_javascript"), {
+      lineNumbers: true,
+      theme: "monokai",
+    });
+
+  }, 200);
+</script>      </div>
+    </div>
+  </div>
+</div>
+        </main>
+        
+{% endblock content %}

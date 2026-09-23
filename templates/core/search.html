@@ -1,0 +1,83 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block content %}
+
+<style>
+    .buy-button {
+    padding: 10px 20px;
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.buy-button:hover {
+    background-color: #0056b3;
+}
+</style>
+
+<div class="content">
+    <div>
+        {% for p in log %}
+        <div class="card">
+            <div class="all" style="display: flex;">
+                <div class="imghere" style="margin-right: 10px;">
+                    <img src="{{ p.image.url }}" alt="Instagram Logo"> 
+                </div>
+                <div class="here">
+                    <h1 style="text-align: left;">{{ p.name }}</h1>
+                <div class="thethig" style="display: flex; justify-content: space-between;">
+                    <div class="stock-info" style="text-align: left;">
+                        <!-- <span>This is ter {{ ter }}</span> -->
+                        {% if p.qty > "0" %}
+                        <span>In Stock:</span> {{ p.qty }} qty.
+                        {% else %}
+                        <span>In Stock:</span> 0 qty.
+                        {% endif %}
+                        <br>
+                        <span>Per Quantity:</span> ₦{{ p.price|intcomma }}
+                    </div>
+                    {% if p.qty > "0" %}
+                        
+                    
+                    <!-- Buy Button -->
+                    <button data-id="{{ p.id }}" class="buy-button" onclick="showPopup()">Buy</button>
+                    
+    
+                    {% else %}
+                    <button class="out-of-stock">Out Of Stock</button>
+                    {% endif %}
+                </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    
+    <div id="popup" class="popup-container">
+        
+    </div>
+</div>
+
+<script>
+    // Function to show the popup
+    function showPopup() {
+        document.getElementById('popup').style.display = 'flex';
+    }
+
+    // Function to close the popup
+    function closePopup() {
+        document.getElementById('popup').style.display = 'none';
+    }
+</script>
+
+
+<script src="{% static 'js/function.js' %}"></script>
+<script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+<script src="{% static 'js/jquery-ui.min.js' %}"></script>
+
+{% endblock content %}

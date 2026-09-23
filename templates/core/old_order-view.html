@@ -1,0 +1,85 @@
+{% extends 'partials/new_base.html' %}
+{% load static %}
+{% load humanize %}
+{% block content %}
+
+<div class="container">
+    <div class="row gy-4 mt-3">
+        <div class="col-xl-12 col-sm-12">
+            <div class="row align-items-end mb-4">
+                <div class="col-xl-8 col-md-9">
+                    <div class="card border-0 p-2">
+                        <div class="card-body">
+                            <div class="account-info">
+                                <span class="fw-bold">Product:</span> {{ log.log }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row my-3">
+                <div class="col d-flex justify-content-end">
+                </div>
+            </div>
+
+            <div class="col-xl-12 col-sm-12 p-2">
+                <div class="dashboard-widget">
+                    <h5 class="mt-4 mb-4">Latest Order History</h5>
+
+                    <div class="dashboard-body__item">
+                        <div class="table-responsive">
+                            <table class="table style-two">
+                                <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Copy</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for p in logs %}
+                                <tr>
+                                    <td>
+                                        <input type="text" id="logs-{{ p.id }}" class="form-control text-small" style="font-size: smaller; border: none" value="{{ p.log }}">
+                                    </td>
+                                    <td>
+                                        <i class="fa fa-copy copyButton" data-id="{{ p.id }}"></i>
+                                        <button class="copyButton" data-id="{{ p.id }}">Test</button>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col d-flex justify-content-center my-3">
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+$(document).ready(function() {
+    $('.copyButton').click(function() {
+        var which_id = $(this).attr("data-id");
+        var logContent = $('#logs-' + which_id).val(); // Get the value of the corresponding input field
+
+        console.log("This is the ID:", which_id);
+        console.log("Copied content:", logContent);
+        
+        // Create a temporary element to copy the content to clipboard
+        var tempElement = $('<textarea>');
+        $('body').append(tempElement);
+        tempElement.val(logContent).select();
+        document.execCommand('copy');
+        tempElement.remove();
+        
+        alert("Content copied to clipboard");
+    });
+});
+</script>
+
+{% endblock content %}

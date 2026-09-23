@@ -1,0 +1,847 @@
+{% extends 'partials/sms-base.html' %} {% load static %} {% load humanize %} {% block content %}
+
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/toastify-js/1.6.1/toastify.css"
+  integrity="sha512-VSD3lcSci0foeRFRHWdYX4FaLvec89irh5+QAGc00j5AOdow2r5MFPhoPEYBUQdyarXwbzyJEO7Iko7+PnPuBw=="
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer"
+/>
+<script
+  src="https://cdnjs.cloudflare.com/ajax/libs/toastify-js/1.6.1/toastify.js"
+  integrity="sha512-MnKz2SbnWiXJ/e0lSfSzjaz9JjJXQNb2iykcZkEY2WOzgJIWVqJBFIIPidlCjak0iTH2bt2u1fHQ4pvKvBYy6Q=="
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer"
+></script>
+
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="https://ebucesmsverify.ng/theam/otpbus/assets/css/nice-select2.css"
+/>
+
+<style>
+  .nice-select.open .list {
+    width: 100%;
+  }
+  #card-container {
+    padding: 1.5rem;
+    margin-top: -35px;
+  }
+  .main-container {
+    overflow: hidden !important;
+  }
+</style>
+
+<div class="jff">
+  <div class="p-6 animate__animated" :class="[$store.app.animation]">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+      integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/boxicons/2.1.0/css/animations.min.css"
+      integrity="sha512-GKHaATMc7acW6/GDGVyBhKV3rST+5rMjokVip0uTikmZHhdqFWC7fGBaq6+lf+DOS5BIO8eK6NcyBYUBCHUBXA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/notiflix@3.2.6/dist/notiflix-3.2.6.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      textarea {
+        display: block;
+        resize: none;
+        padding-top: 5px;
+        padding-left: 15px;
+        border-radius: 10px;
+      }
+
+      .loadernum {
+        position: relative;
+        width: auto;
+        height: 180px;
+        margin-bottom: 10px;
+        border: 1px solid #d3d3d3;
+        padding: 15px;
+        background-color: #e3e3e3;
+        overflow: hidden;
+      }
+
+      .loadernum:after {
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        background: linear-gradient(
+          110deg,
+          rgba(227, 227, 227, 0) 0%,
+          rgba(227, 227, 227, 0) 40%,
+          rgba(227, 227, 227, 0.5) 50%,
+          rgba(227, 227, 227, 0) 60%,
+          rgba(227, 227, 227, 0) 100%
+        );
+        animation: gradient-animation_2 1.2s linear infinite;
+      }
+
+      .loadernum .wrapper {
+        width: 100%;
+        height: 100%;
+        position: relative;
+      }
+
+      .loadernum .wrapper > div {
+        background-color: #cacaca;
+      }
+
+      .loadernum .circlenum {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+      }
+
+      .loadernum .buttonnum {
+        display: inline-block;
+        height: 32px;
+        width: 75px;
+      }
+
+      .loadernum .line-1 {
+        position: absolute;
+        top: 11px;
+        left: 58px;
+        height: 10px;
+        width: 100px;
+      }
+
+      .loadernum .line-2 {
+        position: absolute;
+        top: 34px;
+        left: 58px;
+        height: 10px;
+        width: 150px;
+      }
+
+      .loadernum .line-3 {
+        position: absolute;
+        top: 57px;
+        left: 0px;
+        height: 10px;
+        width: 100%;
+      }
+
+      .loadernum .line-4 {
+        position: absolute;
+        top: 80px;
+        left: 0px;
+        height: 10px;
+        width: 92%;
+      }
+
+      .services-loader {
+        display: block;
+        margin: 0 auto;
+        width: 60px;
+        aspect-ratio: 4;
+        --_g: no-repeat radial-gradient(circle closest-side, #496fd9 90%, #0000);
+        background: var(--_g) 0% 50%, var(--_g) 50% 50%, var(--_g) 100% 50%;
+        background-size: calc(100% / 3) 100%;
+        animation: l7 1s infinite linear;
+      }
+
+      @keyframes l7 {
+        33% {
+          background-size: calc(100% / 3) 0%, calc(100% / 3) 100%,
+            calc(100% / 3) 100%;
+        }
+        50% {
+          background-size: calc(100% / 3) 100%, calc(100% / 3) 0%,
+            calc(100% / 3) 100%;
+        }
+        66% {
+          background-size: calc(100% / 3) 100%, calc(100% / 3) 100%,
+            calc(100% / 3) 0%;
+        }
+      }
+
+      .number-count-loader {
+        width: 20px;
+        padding: 8px;
+        aspect-ratio: 1;
+        border-radius: 50%;
+        background: #496fd9;
+        --_m: conic-gradient(#0000 10%, #000),
+          linear-gradient(#000 0 0) content-box;
+        -webkit-mask: var(--_m);
+        mask: var(--_m);
+        -webkit-mask-composite: source-out;
+        mask-composite: subtract;
+        animation: l3 1s infinite linear;
+      }
+      @keyframes l3 {
+        to {
+          transform: rotate(1turn);
+        }
+      }
+
+      .service-price-loader {
+        width: 20px;
+        padding: 8px;
+        aspect-ratio: 1;
+        border-radius: 50%;
+        background: #496fd9;
+        --_m: conic-gradient(#0000 10%, #000),
+          linear-gradient(#000 0 0) content-box;
+        -webkit-mask: var(--_m);
+        mask: var(--_m);
+        -webkit-mask-composite: source-out;
+        mask-composite: subtract;
+        animation: l3 1s infinite linear;
+      }
+    </style>
+    <wc-toast
+      id="tt"
+      position="top-right"
+      role="status"
+      aria-live="polite"
+      style="
+        --wc-toast-factor: 1;
+        --wc-toast-position: flex-end;
+        --wc-toast-direction: column-reverse;
+      "
+    >
+    </wc-toast>
+
+    <script
+      defer=""
+      src="https://ebucesmsverify.ng/theam/otpbus/assets/js/apexcharts.js"
+    ></script>
+    <!--    <div class="panel p-3 flex items-center text-primary overflow-x-auto whitespace-nowrap mt-3">
+            <div class="ring-2 ring-primary/30 rounded-full bg-primary text-white p-1.5 ltr:mr-3 rtl:ml-3">
+
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5">
+                    <path d="M19.0001 9.7041V9C19.0001 5.13401 15.8661 2 12.0001 2C8.13407 2 5.00006 5.13401 5.00006 9V9.7041C5.00006 10.5491 4.74995 11.3752 4.28123 12.0783L3.13263 13.8012C2.08349 15.3749 2.88442 17.5139 4.70913 18.0116C9.48258 19.3134 14.5175 19.3134 19.291 18.0116C21.1157 17.5139 21.9166 15.3749 20.8675 13.8012L19.7189 12.0783C19.2502 11.3752 19.0001 10.5491 19.0001 9.7041Z" stroke="currentColor" stroke-width="1.5" />
+                    <path opacity="0.5" d="M7.5 19C8.15503 20.7478 9.92246 22 12 22C14.0775 22 15.845 20.7478 16.5 19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                </svg>
+            </div>
+            <span class="ltr:mr-3 rtl:ml-3">Join Telegram For Latest Updates </span><a href="https://telegram.dog/singh67859" target="_blank"><button type="button" class="btn btn-primary btn-sm">Join Now</button></a>
+        </div> -->
+    <!-- Searchable -->
+    <!--//social-->
+    <div
+      class="border bg-white rounded dark:bg-[#1b2e4b] dark:border-0 shadow-sm"
+    >
+      <div class="flex items-center justify-around p-4 py-2">
+        <!-- WhatsApp -->
+
+        <!-- Telegram -->
+        <a
+          href="https://t.me/"
+          target="_blank"
+          class="p-2 text-center"
+          style="width: 100%"
+        >
+          <!-- <div class="text-4xl grid place-content-center w-16 h-16 rounded-md bg-blue-100 text-blue-600 dark:bg-blue-800 dark:text-blue-200">
+                <i class="bi bi-telegram text-primary"></i>
+            </div>-->
+          <small
+            style="font-weight: 800"
+            class="text-sm text-primary block mt-2"
+            >Join us on Telegram</small
+          >
+        </a>
+      </div>
+    </div>
+    <div class="panel buy-number-panel mt-2 dark:bg-[#1b2e4b] dark:border-0">
+      <div class="flex items-center justify-between mb-5">
+        <h5 class="font-semibold text-lg dark:text-white-light">
+          Buy Countries Numbers
+        </h5>
+      </div>
+      <input type="hidden" id="server_no" value="" />
+      <input type="hidden" id="token" value="qIrFbLvYft5yovFRt5YJAmI3Y4ds6P" />
+      <div class="mb-5">
+        <select id="country-id" class="selectize" style="display: none">
+          <option value="" selected="">Select Server</option>
+          {% for c in country %}
+          <option value="{{ c.cid }}">{{ c.name }} {{ c.flag }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div id="services-loader" class="my-3 text-center hidden">
+        <span class="services-loader"></span>
+      </div>
+      <div id="services-container" class="mb-3" style="display: none">
+        <select id="service-id" style="display: none">
+          <option value="" selected="" disabled="">Select Service</option>
+          {% for s in service %}
+          <option value="{{ s.sid }}">{{ s.name }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div
+        id="service-price-loader"
+        class="my-1 service-price-loader hidden"
+      ></div>
+      <!--<p id="pricing-information-view" class="dark:text-white-light hidden">The price of <span style="display: none;" class="ser-name"></span> <span class="theis" style="display: none;"> is â‚¦</span><span style="display: none;" id="ser-price"></span></p>-->
+      <!--<br>-->
+      <!--<p id="stock-information-view" class="dark:text-white-light hidden">The stock of <span style="display: none;" class="ser-name"></span> <span class="theis" style="display: none;"> is </span><span style="display: none;" id="ser-stock"></span></p>-->
+
+      <p id="pricing-information-view" class="dark:text-white-light hidden">
+        Price: <span style="display: none" id="ser-price"></span>
+        <input type="hidden" id="idserprice" value="" />
+      </p>
+      <br />
+      <!-- <p id="stock-information-view" class="dark:text-white-light hidden">
+        Stock: <span style="display: none" id="ser-stock"></span>
+      </p> -->
+
+      <div
+        id="number-count-loader"
+        class="my-1 number-count-loader hidden"
+      ></div>
+      <p id="available-numbers-count" class="dark:text-white-light"></p>
+      <div class="">
+        <button
+          style="background: #2d0033"
+          type="button"
+          id="buy-numbers"
+          class="btn btn-primary w-full"
+        >
+          <!--<i class='bx bx-sm bx-cart-add mr-2'></i>-->🚀 Purchase Number
+        </button>
+      </div>
+    </div>
+
+    <br />
+    <!--<div id="card-container" class="mt-3 rounded-lg">-->
+    <div class="panel">
+      <center>
+        <h6 style="color: red">
+          Don't Use WhatsApp Business For Any Of Our Number!!!
+        </h6>
+      </center>
+    </div>
+  </div>
+
+  {% if not o %}
+  <div id="card-container" class="mt-3 rounded-lg forpuchase">
+    <div class="panel dark:bg-[#1b2e4b]">
+      <center>
+        <img
+          src="https://cdn-icons-png.flaticon.com/512/5089/5089767.png"
+          height="100"
+          width="100"
+        />
+      </center>
+      <div class="flex items-center justify-center mt-2">
+        <h5 class="font-bold text-lg dark:text-white-light">
+          No Active Numbers
+        </h5>
+      </div>
+    </div>
+  </div>
+  {% else %} {% for o in o %}
+  <div id="card-container" class="mt-3 rounded-lg forpuchase">
+    <div class="card shadow-white col-md-12" style="border-radius: 18px">
+      <div
+        class="panel shadow dark:bg-[#1b2e4b] dark:border-0 flex flex-col p-4 mt-3 mb-2"
+      >
+        <div class="unique-content">
+          <span class="order_get" style="font-size: 12px; display: none"
+            >{{ o.number_id }}</span
+          >
+          <span class="order_get_id" style="font-size: 12px; display: none"
+            >{{ o.id }}</span
+          >
+        </div>
+        <div class="card-text space-y-3">
+          <div class="flex items-center mb-0">
+            <img
+              id="flag_O9s4ThYbiDfkCdJJnIFC"
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_u8bkK6j3_AQyAuoynuI2f1opZBlc4vKjCg&amp;usqp=CAU"
+              height="45"
+              width="45"
+              class="me-2"
+            />
+            <div class="flex-grow-1 mb-0">
+              <div class="flex items-center">
+                <p id="num" class="ml-2">{{ o.phone_number }}</p>
+                <span
+                  id="copy"
+                  onclick="copyToClipboard('{{ o.phone_number }}')"
+                  class="copy-icon ml-2 cursor-pointer"
+                  ><i class="far fa-copy me-2"></i
+                ></span>
+              </div>
+              <p id="service-name" class="inline-block text-sm mb-0 ml-2">
+                {{ o.service }} - ₦{{ o.amount|floatformat:2|intcomma }}
+              </p>
+            </div>
+          </div>
+          <div class="relative">
+            <textarea
+              id="respond"
+              class="dark:bg-[#0e1726] form-control shadow w-full mt-0"
+              placeholder="Searching for otp"
+              rows="4"
+              disabled=""
+            >
+Waiting for sms</textarea
+            >
+            <p
+              id="timer"
+              class="dark:text-[#0e1726]"
+              style="
+                position: absolute;
+                bottom: 10px;
+                right: 10px;
+                border-radius: 20px;
+                background: #e1e3e5;
+                padding-right: 10px;
+                padding-left: 10px;
+                padding-top: 5px;
+                padding-bottom: 5px;
+              "
+            >
+              <i class="fa fa-clock"></i> {{ o.get_dynamic_duration }}
+            </p>
+          </div>
+
+          <div class="text-center mt-2">
+            <div class="flex">
+              <!--<button id="buy_O9s4ThYbiDfkCdJJnIFC" onclick="buy('O9s4ThYbiDfkCdJJnIFC', 'buy_O9s4ThYbiDfkCdJJnIFC','15043250255')" class="btn btn-rounded color-primary btn-outline-primary mr-2"><span class="fa fa-history mr-2"></span>Buy New</button>-->
+              <button
+                id="copy"
+                onclick="copyToClipboard('{{ o.info }}')"
+                class="btn btn-rounded color-primary btn-outline-primary mr-2"
+              >
+                <span class="copy-icon mr-2 cursor-pointer"></span>Copy OTP
+              </button>
+              <button
+                id="cancel_{{ o.id }}"
+                onclick="model_cancle('{{ o.id }}', 'cancel_{{ o.id }}','{{ o.phone_number }}')"
+                class="btn btn-rounded color-danger btn-outline-danger lh-normal mb-0"
+              >
+                <span class="fa fa-trash-alt" style="margin-right: 8px"></span
+                >Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    $(document).ready(function () {
+      let countdownTime = {{ o.get_dynamic_duration }};
+
+      const timerElement = $('#timer');
+
+      const interval = setInterval(() => {
+        if (countdownTime > 0) {
+          timerElement.html(`<i class="fa fa-clock"></i> ${countdownTime}`);
+          countdownTime--;
+        } else {
+          clearInterval(interval);
+          timerElement.html(`<i class="fa fa-clock"></i> 0`);
+
+          let order_id = $(".order_get_id").text();
+
+          $.ajax({
+              url: "/cancel-all-number/",
+              data: {
+                  "order_id": order_id,
+                  // "id": id,
+              },
+              success: function (res) {
+                  if (res.bool === true) {
+                      window.location.reload()
+                  } else {
+                      // $(".delete_number_all").prop("disabled", false).html('<span></span>Cancel');
+
+                      Toastify({
+                        text: "You can't cancel Yet",
+                        duration: 1000,
+                        gravity: "top",
+                        position: 'center',
+                      }).showToast();
+                  }
+              }
+          })
+        }
+      }, 1000);
+    });
+  </script>
+
+  <script>
+    $(document).ready(function () {
+      let previousPin = 3;
+
+      let intervalId;
+
+      console.log("From HTML Get SMS");
+      let order_id = $(".order_get").text();
+      let id = $(".order_get_id").text();
+      let api_key = $(".api_key").text();
+      let api_url = $(".api_url").text();
+      let num = "&number=38";
+
+      // $("#respond").val("Teniteno1");
+
+      // console.log("This is the Order ID to check SMS:", order_id);
+      // console.log("This is the API Key:", api_key);
+      // console.log("This is the API URL:", api_url);
+
+      // let url = api_url + order_id + num
+
+      // console.log("Full URL:", url);
+
+      // Function to make the AJAX request
+      function fetchMessageHistory() {
+        $.ajax({
+          url: "/check-code/",
+          data: {
+            order_id: order_id,
+          },
+          success: function (response) {
+            console.log(response);
+            console.log("This is the message:", response.error);
+
+            if (response.status === true) {
+              let pin = response.sms;
+              console.log("Pin has changed from null:", pin);
+
+              clearInterval(intervalId);
+
+              $("#respond").val(pin);
+              $("#timer").hide();
+
+              $.ajax({
+                url: "/change-otp/",
+                data: {
+                  order_id: id,
+                  pin: pin,
+                },
+              });
+            }
+            previousPin = response.sms;
+          },
+          error: function (xhr, status, error) {
+            console.error("Error:", status, error);
+          },
+        });
+      }
+
+      // Run the function every 2 seconds (2000 milliseconds)
+      intervalId = setInterval(fetchMessageHistory, 2000);
+    });
+  </script>
+  {% endfor %} {% endif %}
+
+  <div id="my_model" class=""></div>
+
+  <script>
+    function copyOtpToClipboard(textareaId) {
+      // Convert to string and ensure it's not null or undefined
+      // Get textarea from dom
+      var textareaWithSms = document.getElementById(textareaId);
+
+      var text = String(textareaWithSms.innerHTML);
+      if (!text) {
+        return;
+      }
+
+      // Extract the first two characters
+      var copy = text;
+
+      // Create a textarea element to hold the text
+      var textarea = document.createElement("textarea");
+      textarea.textContent = copy;
+
+      // Make the textarea invisible
+      textarea.style.position = "absolute";
+      textarea.style.left = "-9999px";
+
+      // Add the textarea to the document
+      document.body.appendChild(textarea);
+
+      // Select and copy the text
+      textarea.select();
+      document.execCommand("copy");
+
+      // Remove the textarea from the document
+      document.body.removeChild(textarea);
+
+      // Show toast message
+      Toastify({
+        text: "Copied: " + copy,
+        duration: 1000,
+        gravity: "top",
+        position: "center",
+      }).showToast();
+    }
+
+    function model_cancle(ids, element, number) {
+      var cardContainer = document.getElementById("my_model");
+      cardContainer.classList.remove("hidden");
+
+      cardContainer.innerHTML = "";
+
+      cardContainer.innerHTML = `    <div class="fixed inset-0 bg-[black]/60 z-[999] px-4 overflow-y-auto">
+        <div class="flex items-center justify-center min-h-screen">
+            <div x-transition x-transition.duration.300 class="panel border-0 p-0 rounded-lg overflow-hidden md:w-full max-w-lg w-[90%] my-8">
+                <button type="button" onclick="close_btn()" class="absolute top-4 ltr:right-4 rtl:left-4 text-white-dark hover:text-dark" @click="isDeleteNoteModal = false">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+                <div class="text-lg font-medium bg-[#fbfbfb] dark:bg-[#121c2c] ltr:pl-5 rtl:pr-5 py-3 ltr:pr-[50px] rtl:pl-[50px]">Number Delete Request</div>
+                <div class="p-5 text-center">
+                    <div class="text-white bg-danger ring-4 ring-danger/30 p-4 rounded-full w-fit mx-auto">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 mx-auto">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 mx-auto">
+                                    <path d="M20.5001 6H3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
+                                    <path d="M18.8334 8.5L18.3735 15.3991C18.1965 18.054 18.108 19.3815 17.243 20.1907C16.378 21 15.0476 21 12.3868 21H11.6134C8.9526 21 7.6222 21 6.75719 20.1907C5.89218 19.3815 5.80368 18.054 5.62669 15.3991L5.16675 8.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
+                                    <path opacity="0.5" d="M9.5 11L10 16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
+                                    <path opacity="0.5" d="M14.5 11L14 16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
+                                    <path opacity="0.5" d="M6.5 6C6.55588 6 6.58382 6 6.60915 5.99936C7.43259 5.97849 8.15902 5.45491 8.43922 4.68032C8.44784 4.65649 8.45667 4.62999 8.47434 4.57697L8.57143 4.28571C8.65431 4.03708 8.69575 3.91276 8.75071 3.8072C8.97001 3.38607 9.37574 3.09364 9.84461 3.01877C9.96213 3 10.0932 3 10.3553 3H13.6447C13.9068 3 14.0379 3 14.1554 3.01877C14.6243 3.09364 15.03 3.38607 15.2493 3.8072C15.3043 3.91276 15.3457 4.03708 15.4286 4.28571L15.5257 4.57697C15.5433 4.62992 15.5522 4.65651 15.5608 4.68032C15.841 5.45491 16.5674 5.97849 17.3909 5.99936C17.4162 6 17.4441 6 17.5 6" stroke="currentColor" stroke-width="1.5"></path>
+                                </svg>
+                        </svg>
+                    </div>
+                    <div class="sm:w-3/4 mx-auto mt-5">Are you sure you want to delete this Number ${number}</div>
+                    <div class="flex justify-center items-center mt-8">
+                        <button type="button" class="btn btn-outline-danger" onclick="close_btn()">Cancel</button>
+                        <button type="button" data-key="${ids}" id="" class="delete_number_all btn btn-primary ltr:ml-4 rtl:mr-4">Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>`;
+    }
+    function close_btn() {
+      var modals = document.getElementById("my_model");
+      modals.classList.add("hidden");
+    }
+
+
+    $(document).on("click", ".delete_number_all", function() {
+        let order_id = $(this).attr("data-key")
+        let id = $(this).attr("data-real")
+        $(this).prop("disabled", true).html('<span class="animate-spin border-2 border-white border-l-transparent rounded-full w-4 h-4 ltr:mr-1 rtl:ml-1 inline-block align-middle"></span>Cancel');
+
+        console.log("This is the Order ID:", order_id);
+        console.log("This is the ID:", id);
+
+        $.ajax({
+            url: "/cancel-all-number/",
+            data: {
+                "order_id": order_id,
+                // "id": id,
+            },
+            success: function (res) {
+                if (res.bool === true) {
+                    window.location.reload()
+                } else {
+                    $(".delete_number_all").prop("disabled", false).html('<span></span>Cancel');
+                    
+                    Toastify({
+                      text: "You can't cancel Yet",
+                      duration: 1000,
+                      gravity: "top",
+                      position: 'center',
+                    }).showToast();
+                }
+            }
+        })
+        
+    })
+  </script>
+</div>
+
+<script src="https://ebucesmsverify.ng/theam/otpbus/assets/js/nice-select2.js"></script>
+
+<script>
+  var options1 = {
+    searchable: true,
+    placeholder: "Select Country",
+  };
+  var op1 = NiceSelect.bind(document.getElementById("country-id"), options1);
+  var options2 = {
+    searchable: true,
+    placeholder: "Select Service",
+  };
+  var op2 = NiceSelect.bind(document.getElementById("service-id"), options2);
+</script>
+
+<script type="module">
+  import { toast } from "https://cdn.skypack.dev/wc-toast";
+
+  $(document).ready(function () {
+    $("#buy-numbers").click(function () {
+      var server = $("#country-id option:selected").val();
+      var service = $("#service-id option:selected").val();
+      var price = $("#idserprice").val();
+      //  var token = $("#token").val();
+      if (server === "") {
+        toast.error("Please Select Server");
+        return;
+      }
+
+      if (service === "") {
+        toast.error("Select Service");
+        return; // Stop execution if email or password is blank
+      }
+
+      $("#buy-numbers").prop("disabled", true);
+      $("#buy-numbers").html(
+        '<span class="animate-spin border-2 border-white border-l-transparent rounded-full w-4 h-4 ltr:mr-1 rtl:ml-1 inline-block align-middle"></span> Finding Number...'
+      );
+
+      // var params = {
+      //     key: service,
+      // };
+      $.ajax({
+        type: "GET",
+        url: "/order-all/",
+        data: {
+          service: service,
+          country: server,
+          price: price,
+        },
+        error: function (e) {
+          console.log(e);
+          toast.error("An error occurred .");
+          $("#buy-numbers").html(
+            "<span class='fa fa-cart-plus' style='margin-right: 8px;'></span>Buy Number"
+          );
+          $("#buy-numbers").prop("disabled", false);
+        },
+        success: function (data) {
+          $("#buy-numbers").html(
+            "<span class='fa fa-cart-plus' style='margin-right: 8px;'></span>Buy Number"
+          );
+          $("#buy-numbers").prop("disabled", false);
+          if (data.bool === true) {
+            $.ajax({
+              url: "/all_get_new_order/",
+              type: "GET",
+              success: function (res) {
+                $(".forpuchase").html(res);
+              },
+            });
+            toast.success(data.message);
+            // checkOrder();
+            //  user_balance(token);
+          } else {
+            toast.error(data.message);
+          }
+        },
+      });
+    });
+  });
+
+  $(document).ready(function () {
+    var selectedValue = "";
+    var selectedService = "";
+    $("#country-id").on("change", function () {
+      selectedValue = $(this).val();
+      if (selectedValue) {
+        $("#services-loader").hide();
+        $("#services-loader").show();
+        setTimeout(function () {
+          $("#services-loader").hide();
+          $("#services-container").hide();
+          $("#services-container").show();
+        }, 2000);
+      }
+      console.log("Selected value: " + selectedValue);
+      triggerAjaxs();
+    });
+
+    $("#service-id").on("change", function () {
+      selectedService = $(this).val();
+      // if (selectedService) {
+      //     $("#service-price-loader").show()
+      // }
+      console.log("Selected Service: " + selectedService);
+      triggerAjaxs();
+    });
+
+    function triggerAjaxs() {
+      if (selectedValue && selectedService) {
+        $("#service-price-loader").show();
+        console.log("Ajax working");
+        $.ajax({
+          url: "/check-av-ajax/",
+          data: {
+            service: selectedService,
+            country: selectedValue,
+          },
+          beforeSend: function () {
+            $("#conloaddetailsBox").show();
+            $("#cdetailsBox").hide();
+          },
+          success: function (res) {
+            $("#service-price-loader").hide();
+            $(".ser-name").text(res.service);
+            $("#ser-price").text(`₦${res.price}`);
+            $("#ser-price").show();
+            $("#idserprice").val(res.price);
+            $(".ser-name").show();
+            $(".theis").show();
+            $("#pricing-information-view").css("display", "flex");
+            $("#pricing-information-view").css(
+              "justify-content",
+              "space-between"
+            );
+            $("#pricing-information-view").css("font-weight", "700");
+            //   $("#pricing-information-view").show()
+            $("#ser-stock").text(res.stock);
+            $("#ser-stock").show();
+            $("#stock-information-view").css("display", "flex");
+            $("#stock-information-view").css(
+              "justify-content",
+              "space-between"
+            );
+            $("#stock-information-view").css("font-weight", "700");
+            //   $("#stock-information-view").show()
+            $("#cdetailsBox").show();
+            $("#conloaddetailsBox").hide();
+            $(".loader-container-outta").hide();
+            console.log("This is stock", res.stock);
+            console.log("This is buy", res.buy);
+            $("#crestock").text(res.stock);
+            $("#creprice").text(res.price);
+            $("#cheap_pool").val(res.pool);
+
+            if (res.can === true) {
+              $("#outof").hide();
+              $("#showof").show();
+            } else {
+              $("#showof").hide();
+              $("#outof").show();
+            }
+
+            if (res.buy === true) {
+              $("#cbuy-numbers").prop("disabled", false);
+            } else {
+              $("#cbuy-numbers").prop("disabled", true);
+            }
+          },
+        });
+      }
+    }
+  });
+</script>
+
+{% endblock content %}

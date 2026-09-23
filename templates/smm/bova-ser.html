@@ -1,0 +1,11 @@
+{% if ser %}
+{% for s in ser %}
+<option value="{{ s.id }}" data-id="{{ s.id }}" data-price="1.900000">
+     {{ s.name }}
+</option>
+{% endfor %}
+{% else %}
+<option value="0" data-id="0" data-price="0">
+     This service is not available for now
+</option>
+{% endif %}

@@ -1,0 +1,693 @@
+{% load static %}
+{% load humanize %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Logsplace - SMM Page</title>
+    <meta name="keywords" content="{{ web.keywords }}">
+    <meta name="description" content="{{ web.description }}">
+	<meta name="robots" content="{{ web.title }}">
+        <link rel="shortcut icon" type="image/ico" href="{{ web.favicon.url }}"/>
+    
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <meta name="google-site-verification" content="_w178oKBfP0f8CrefvoSLR9jIBn8RhDkX7j5Vh1l0zKA-B1_qE" />
+
+<script src="https://browser.sentry-cdn.com/5.6.2/bundle.min.js" integrity="sha384-H4chu/XQ3ztniOYTpWo+kwec6yx3KQutpNkHiKyeY05XCZwCSap7KSwahg16pzJo" crossorigin="anonymous"></script>
+
+<script>Sentry.init({ dsn: 'https://294a44a1147a468c88270ee2dd6ecde9@sentry.io/4504813329711104' });</script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-QGHEMKH68F"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-QGHEMKH68F');
+</script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+<!--<script type="text/javascript">window.$crisp=[];window.CRISP_WEBSITE_ID="79fbbd94-9c75-4c34-8ae9-8accb6437a7f";(function(){d=document;s=d.createElement("script");s.src="https://client.crisp.chat/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);})();</script>-->
+
+        <!-- Include CSS for authenticated users -->
+    <link rel="stylesheet" type="text/css" href="https://storage.perfectcdn.com/770smr/t03wlyi94oclmrxf.css">
+    <!--<link rel="stylesheet" type="text/css" href="https://cdn.fexpink.com/growfollows/css/style.css">-->
+    <link rel="stylesheet" type="text/css" href="{% static '/smm-styles/smmstyle.css' %}">
+    <link rel="stylesheet" type="text/css" href="https://storage.perfectcdn.com/770smr/mx6qbdprr2atwn3z.css">
+    <link rel="stylesheet" type="text/css" href="https://storage.perfectcdn.com/770smr/3zn183sm4bbl8y3e.css">
+    <link rel="stylesheet" type="text/css" href="https://storage.perfectcdn.com/770smr/g6qkxn4q15xwddbd.css">
+    <!-- Font Awesome icons -->
+    <link rel="stylesheet" type="text/css" href="https://storage.perfectcdn.com/css/font-awesome/css/all.min.css">
+    <!-- Font Family: Poppins and Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+    <!-- IconifyIcon -->
+    <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
+
+    
+    <script>
+      window.modules = {};
+    </script>
+  </head>
+
+  <style>
+    @media only screen and (max-width: 992px) {
+      .img-fluisd {
+        width: 95px;
+        height: 81px;
+      }
+    }
+  </style>
+
+  <body class="auth">
+        <header>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="top_navigations_menu">
+              <div class="top_left">
+                <div class="top_nav_logo">
+                  <a href="/">
+                    <img src="/static/images/logo.png" height="100px" class="img-fluisd" alt="Logsplace" />
+                  </a>
+                </div>
+              </div>
+              <div class="top_right">
+                <div class="currency-menu dropdown">
+
+                  <button class="btn btn-secondary dropsdown-toggle" type="button" data-bs-toggle="drbopdown"
+                          aria-expanded="false">
+                    <!-- <div class="icon">
+                      <iconify-icon icon="hugeicons:money-bag-02"></iconify-icon>
+                    </div> -->
+                    <div class="text">₦{{ balance|floatformat:2|intcomma }}</div>
+                  </button>
+
+
+                </div>
+                <div class="user__menu">
+                  <!-- <div class="user_menu_dropdown">
+                      <a href="/addfunds" class="user_menu_item money_item" id="money_item">
+                        <div class="icon">
+                          <iconify-icon icon="healthicons:money-bag"></iconify-icon>
+                        </div>
+                      </a>
+                    </div> -->
+
+                  <!-- <div class="user_menu_dropdown">
+                      <a href="javascript:void(0)" class="user_menu_item">
+                          <div class="icon">
+                              <iconify-icon icon="ion:sync-circle"></iconify-icon>
+                          </div>
+                      </a>
+                      <ul class="custom-dropdown dropdown-menu">
+                          <li><a class="custom-dropdown-item" id="dropdown-item" href="#">My Account</a></li>
+                          <li>
+                              <a class="custom-dropdown-item" id="dropdown-item" href="#">
+                                Notifications
+                              </a>
+                          </li>
+                          <li>
+                              <a class="custom-dropdown-item" id="dropdown-item" href="#">
+                                Dashboard
+                              </a>
+                          </li>
+                          <li>
+                              <a class="custom-dropdown-item" id="dropdown-item" href="#">
+                                Logout
+                              </a>
+                          </li>
+                      </ul>
+                  </div> -->
+                  <!--  <div class="user_menu_dropdown">
+                    <a href="/addfunds" class="user_menu_item">
+                      <div class="icon">
+                        <iconify-icon icon="flowbite:wallet-solid"></iconify-icon>
+                      </div>
+                    </a>
+                       <ul class="custom-dropdown dropdown-menu">
+                        <li><a class="custom-dropdown-item" id="dropdown-item" href="#">Action</a></li>
+                        <li>
+                            <a class="custom-dropdown-item" id="dropdown-item" href="#">Another action</a>
+                        </li>
+                        <li>
+                            <a class="custom-dropdown-item" id="dropdown-item" href="#">Something else here</a>
+                        </li>
+                    </ul> 
+                   </div>-->
+                  <div class="user_menu_dropdown">
+                    <a href="javascript:void(0)" class="user_menu_item">
+                      <div class="icon">
+                        <iconify-icon icon="heroicons:user-20-solid"></iconify-icon>
+                      </div>
+                    </a>
+
+                    <ul class="custom-dropdown dropdown-menu">
+                      <li>
+                        <a class="custom-dropdown-item" id="dropdown-item" href="/buy-number">
+                          <span class="icon">
+                            <iconify-icon icon="hugeicons:user"></iconify-icon>
+                          </span>
+                          <span class="text">
+                            Buy Number
+                          </span>
+                        </a>
+                      </li>
+                       <li>
+                        <a class="custom-dropdown-item" id="dropdown-item" href="/marketplace">
+                          <span class="icon">
+                            <iconify-icon icon="flowbite:bell-ring-outline"></iconify-icon>
+                          </span>
+                          <span class="text">
+                            Marketplace
+                          </span>
+                        </a>
+                      </li>
+                      <li>
+                        <a class="custom-dropdown-item" id="dropdown-item" href="/dashboard">
+                          <span class="icon">
+                            <iconify-icon icon="mage:dashboard-2"></iconify-icon>
+                          </span>
+                          <span class="text">
+                            Dashboard
+                          </span>
+                        </a>
+                      </li>
+                      <li>
+                        <a class="custom-dropdown-item" id="dropdown-item" href="/user/signout">
+                          <span class="icon">
+                            <iconify-icon icon="hugeicons:logout-03"></iconify-icon>
+                          </span>
+                          <span class="text">
+                            Logout
+                          </span>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                  <a href="/user/signout" class="user_menu_item">
+                    <div class="icon logout_icon">
+                      <iconify-icon icon="basil:logout-solid"></iconify-icon>
+                    </div>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="mobile_menu_box">
+              <div class="mobile_menu_icon" id="menuIcon">
+                <iconify-icon icon="ic:sharp-menu-open"></iconify-icon>
+              </div>
+              <!-- mobile menu  -->
+              <div class="mobile_menu_wrapper">
+                <div class="mobile_menu">
+                  <!-- heading  -->
+                  <div class="menu_heading">
+                    <h4>Welcome to Logsplace</h4>
+                    <div class="cancel_icon" id="mobSidebarCloseBtn">
+                      <iconify-icon icon="mdi:times"></iconify-icon>
+                    </div>
+                  </div>
+                  <!-- user  -->
+                  <div class="logged_user">
+                    <div class="user_profile">
+                      <img src="https://storage.perfectcdn.com/770smr/3huo9rec5amxbk77.png" alt="user_profile">
+                    </div>
+                    <div class="user_info">
+                      <h4>{{ request.user.username }}</h4>
+                      <p>Balance ₦{{ balance|floatformat:2|intcomma }}</p>
+
+                    </div>
+                  </div>
+                  <div class="menu_list">
+                                                            <a class="mobile_menu_btn  btn_active " href="/" >
+                      <div class="btn_img">
+                                                <img src="https://storage.perfectcdn.com/770smr/jumh1jfcleqn3xpk.png">
+                                              </div>
+                      <div class="btn_text">
+                        <h3>
+                          New order
+                        </h3>
+                      </div>
+                    </a>
+                                                                                <a class="mobile_menu_btn " href="/smm-orders" >
+                      <div class="btn_img">
+                                                <img src="https://storage.perfectcdn.com/770smr/d5ipo6a2igfb5wps.png" alt="Shop menu">
+                                              </div>
+                      <div class="btn_text">
+                        <h3>
+                          Orders
+                        </h3>
+                      </div>
+                    </a>
+                                                                                <a class="mobile_menu_btn " href="/wallet" >
+                      <div class="btn_img">
+                                                <img src="https://storage.perfectcdn.com/770smr/a00kz4t50t603ah5.png" alt="Shop menu">
+                                              </div>
+                      <div class="btn_text">
+                        <h3>
+                          Deposit
+                        </h3>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+        </header>
+
+      <header id="header_bottom">
+
+        <div class="container">
+          <div class="row"> <div class="col-lg-12">
+            <div class="bottom_user_nav">
+                                          <div class="nav_item">
+                <a href="/smm" class="nav-link active " > 
+
+                  SMM
+                </a>
+              </div>
+                                                                                    <div class="nav_item">
+                <a href="/smm-orders" class="nav-link " > 
+
+                  Orders
+                </a>
+              </div>
+              
+              <div class="nav_item">
+                <a href="/buy-number" class="nav-link " > 
+
+                  Buy Number
+                </a>
+              </div>
+              
+              <div class="nav_item">
+                <a href="/marketplace" class="nav-link " > 
+
+                  Marketplace
+                </a>
+              </div>
+                                                        <div class="nav_item">
+                <a href="/wallet" class="nav-link " > 
+
+                  Deposit
+                </a>
+              </div>
+                                                        <div class="nav_item">
+                <a href="/dashboard" class="nav-link " > 
+
+                  Dashboard
+                </a>
+              </div>
+
+                                                                                                                                                                                                                                
+            </div>
+
+            </div>
+          </div>
+          </header>
+        <!-- Main variables *content* -->
+        <style>
+  #order_average_time {
+    display: none !important;
+  }
+</style>
+
+{% block content %}
+{% endblock content %}
+<!-- Main content here -->
+
+<div id="notify-wrapper" class="alert alert-success hidden" style="display: none;"></div>
+
+        <a href="https://t.me/basedasfuck247" target="_blank">
+          <div id="myAliceWebChat"><div style="background: rgb(42, 171, 238); box-sizing: border-box; display: inline-flex; padding: 10px 14px; justify-content: center; align-items: center; color: rgb(255, 255, 255); cursor: pointer; border-radius: 20px; position: fixed; box-shadow: none; left: 20px; right: auto; bottom: 26px; z-index: 99999;"><svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill="#fff" d="M18.384,22.779c0.322,0.228 0.737,0.285 1.107,0.145c0.37,-0.141 0.642,-0.457 0.724,-0.84c0.869,-4.084 2.977,-14.421 3.768,-18.136c0.06,-0.28 -0.04,-0.571 -0.26,-0.758c-0.22,-0.187 -0.525,-0.241 -0.797,-0.14c-4.193,1.552 -17.106,6.397 -22.384,8.35c-0.335,0.124 -0.553,0.446 -0.542,0.799c0.012,0.354 0.25,0.661 0.593,0.764c2.367,0.708 5.474,1.693 5.474,1.693c0,0 1.452,4.385 2.209,6.615c0.095,0.28 0.314,0.5 0.603,0.576c0.288,0.075 0.596,-0.004 0.811,-0.207c1.216,-1.148 3.096,-2.923 3.096,-2.923c0,0 3.572,2.619 5.598,4.062Zm-11.01,-8.677l1.679,5.538l0.373,-3.507c0,0 6.487,-5.851 10.185,-9.186c0.108,-0.098 0.123,-0.262 0.033,-0.377c-0.089,-0.115 -0.253,-0.142 -0.376,-0.064c-4.286,2.737 -11.894,7.596 -11.894,7.596Z"></path></svg><span style="margin-left: 8px; font-style: normal; font-size: 14px; font-weight: 600; line-height: 20px;">Join</span></div></div>
+        </a>
+
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-body">
+          <div class="row">
+            <div class="col-xs-8 col-md-4"><span style="color:purple;"><h6>Notification Center</h6></span></div>
+            <div class="col-xs-8 col-md-4 pull-right"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button></div>
+          </div>
+        <hr>
+          <div class="main-notification">
+
+
+<h2 class="heading bordered c-b" style="font-family: Poppins, sans-serif; font-weight: 600; line-height: 1.2; color: rgb(54, 38, 130); margin: 0px 0px 30px; font-size: 49px; padding: 0px 0px 35px; text-align: center; position: relative; background-color: rgb(247, 247, 247);">What We Offer Now</h2><p><span style="background-color: rgb(247, 247, 247); color: rgb(63, 59, 80); font-family: Poppins, sans-serif; font-size: 18px; text-align: center;">?Date: 7 June 2021
+ID:51 - Facebook Page Likes + Followers [Bangladesh] [Non Drop] R30 ✅ 1000/1.84$
+ID:52 - Facebook Fanpage Likes + Followers [Bangladesh] [5K-10K / Day] R45 ✅ 1000/2.28$
+ID:53 - Facebook Fanpage Likes + Followers [Bangladesh] [10K-15K / Day] R60✅ 1000/2.63$
+ID:54 - Facebook Fanpage Likes + Followers [Bangladesh] [10K-15K / Day] LIFETIME Refill✅ 1000/3$
+
+                   </span><img src="https://storage.perfectcdn.com/770smr/7ztdb2bb3ep6oboi.png" style="display: inline-block; width: 275px; max-width: 100%;" class="img-responsive"><b><br></b></p><p><br></p>
+
+
+          </div>
+        </div>
+
+    </div>
+  </div>
+</div>
+
+
+
+        <!-- Scripts -->
+                <!-- <script type="text/javascript"  src="https://storage.perfectcdn.com/libs/jquery/1.12.4/jquery.min.js" > -->
+                <!--<script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>-->
+                <!-- jQuery (Load First) -->
+                
+                <!-- Select2 CSS -->
+                <!--<link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />-->
+                
+                <!-- Select2 JS -->
+                <!--<script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.full.min.js"></script>-->
+                <script type="text/javascript"  src="https://storage.perfectcdn.com/global/xx1pjazll6rkdn33.js" >
+                  </script>
+                <script type="text/javascript"  src="https://storage.perfectcdn.com/global/02ou42xtpx6boaea.js" >
+                  </script>
+                <script type="text/javascript"  src="https://storage.perfectcdn.com/global/7gunsx8o4lyb4y43.js" >
+                  </script>
+                <script type="text/javascript"  src="https://storage.perfectcdn.com/global/u6gf0sjdoc5hw054.js" >
+                  </script>
+                <script type="text/javascript"  src="https://storage.perfectcdn.com/770smr/pmatqe3x6ynsukw1.js" >
+                  </script>
+                <script type="text/javascript"  src="https://storage.perfectcdn.com/770smr/gbtxhbljb7wa5xe9.js" >
+                  </script>                            
+        
+                <!-- Authenticated user specific scripts -->
+        <!-- <script src="https://i.23robo.info/projects/Logsplace/JS/jquery-min.js"></script> -->
+        <!-- <script src="https://i.23robo.info/projects/Logsplace/JS/qno66tx3dltp8wll.js"></script> -->
+        <!-- <script src="https://i.23robo.info/projects/Logsplace/JS/y5xe0mtlojb620eq.js"></script> -->
+        <!-- <script src="https://i.23robo.info/projects/Logsplace/JS/b7fbkf8bl6xhp4kq.js"></script> -->
+        <!-- <script src="https://i.23robo.info/projects/Logsplace/JS/pzqx8jsb3iduj46l.js"></script> -->
+        <script src="https://storage.perfectcdn.com/770smr/or03zukmdt3a7851.js"></script>
+        <!-- <script src="https://i.23robo.info/projects/Logsplace/JS/7lge0s9m63qe1f50.js"></script> -->
+                <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+        <script>
+          $('.social-slider').slick({
+            dots: false,
+            arrows: false,
+            infinite: false,
+            speed: 300,
+            slidesToShow: 7,
+            slidesToScroll: 1,
+            responsive: [
+              {
+                breakpoint: 1024,
+                settings: {
+                  slidesToShow: 4,
+                  slidesToScroll: 4,
+                }
+              },
+              {
+                breakpoint: 600,
+                settings: {
+                  slidesToShow: 2,
+                  slidesToScroll: 2
+                }
+              },
+              {
+                breakpoint: 480,
+                settings: {
+                  slidesToShow: 2,
+                  slidesToScroll: 2
+                }
+              }
+            ]
+          });
+          $('.country-slider').slick({
+            dots: false,
+            arrows: true,
+            infinite: true,
+            speed: 300,
+            slidesToShow: 3,
+            slidesToScroll: 1,
+            appendArrows: $('.country-slider-nav'),
+            prevArrow:'<button type="button" class="slick-prev" aria-label="Prev"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3.8284 6.9999L9.1924 1.63589L7.7782 0.22168L0 7.9999L7.7782 15.778L9.1924 14.3638L3.8284 8.9999H16V6.9999H3.8284Z" fill="white"/><path d="M3.8284 7.4999H2.62129L3.47485 6.64635L8.48529 1.63589L7.7782 0.928788L0.707108 7.9999L7.7782 15.0709L8.48529 14.3638L3.47485 9.35346L2.62128 8.4999H3.8284H15.5V7.4999H3.8284Z" stroke="white" stroke-opacity="0.07"/></svg></button>',
+            nextArrow:'<button type="button" class="slick-next" aria-label="Next"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M12.1716 6.9999L6.8076 1.63589L8.2218 0.22168L16 7.9999L8.2218 15.778L6.8076 14.3638L12.1716 8.9999H0V6.9999H12.1716Z" fill="white"/><path d="M12.1716 7.4999H13.3787L12.5252 6.64635L7.51471 1.63589L8.2218 0.928788L15.2929 7.9999L8.2218 15.0709L7.51471 14.3638L12.5252 9.35346L13.3787 8.4999H12.1716H0.5V7.4999H12.1716Z" stroke="white" stroke-opacity="0.07"/></svg></button>',
+            responsive: [
+              {
+                breakpoint: 1024,
+                settings: {
+                  slidesToShow: 3,
+                  slidesToScroll: 3,
+                }
+              },
+              {
+                breakpoint: 600,
+                settings: {
+                  slidesToShow: 2,
+                  slidesToScroll: 2
+                }
+              },
+              {
+                breakpoint: 480,
+                settings: {
+                  slidesToShow: 1,
+                  slidesToScroll: 1
+                }
+              }
+            ]
+          });
+          $('.advantage-slider').slick({
+            dots: false,
+            arrows: true,
+            infinite: false,
+            speed: 300,
+            slidesToShow: 3,
+            slidesToScroll: 1,
+            appendArrows: $('.advantage-slider-nav'),
+            prevArrow:'<button type="button" class="slick-prev" aria-label="Prev"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3.8284 6.9999L9.1924 1.63589L7.7782 0.22168L0 7.9999L7.7782 15.778L9.1924 14.3638L3.8284 8.9999H16V6.9999H3.8284Z" fill="white"/><path d="M3.8284 7.4999H2.62129L3.47485 6.64635L8.48529 1.63589L7.7782 0.928788L0.707108 7.9999L7.7782 15.0709L8.48529 14.3638L3.47485 9.35346L2.62128 8.4999H3.8284H15.5V7.4999H3.8284Z" stroke="white" stroke-opacity="0.07"/></svg></button>',
+            nextArrow:'<button type="button" class="slick-next" aria-label="Next"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M12.1716 6.9999L6.8076 1.63589L8.2218 0.22168L16 7.9999L8.2218 15.778L6.8076 14.3638L12.1716 8.9999H0V6.9999H12.1716Z" fill="white"/><path d="M12.1716 7.4999H13.3787L12.5252 6.64635L7.51471 1.63589L8.2218 0.928788L15.2929 7.9999L8.2218 15.0709L7.51471 14.3638L12.5252 9.35346L13.3787 8.4999H12.1716H0.5V7.4999H12.1716Z" stroke="white" stroke-opacity="0.07"/></svg></button>',
+            responsive: [
+              {
+                breakpoint: 1024,
+                settings: {
+                  slidesToShow: 3,
+                  slidesToScroll: 3,
+                }
+              },
+              {
+                breakpoint: 600,
+                settings: {
+                  slidesToShow: 2,
+                  slidesToScroll: 2
+                }
+              },
+              {
+                breakpoint: 480,
+                settings: {
+                  slidesToShow: 1,
+                  slidesToScroll: 1
+                }
+              }
+            ]
+          });
+          $('.video_testimonials').slick({
+            dots: false,
+            infinite: true,
+            speed: 300,
+            arrows: false,
+            autoplay: true,
+            autoplaySpeed: 2500,
+            slidesToShow: 6.5,
+            slidesToScroll:1,
+            responsive: [
+              {
+                breakpoint: 1024,
+                settings: {
+                  slidesToShow: 6.5,
+                  slidesToScroll: 1,
+                  infinite: true,
+                  dots: true
+                }
+              },
+              {
+                breakpoint: 768,
+                settings: {
+                  slidesToShow: 2.3,
+                  slidesToScroll: 1
+                }
+              },
+              {
+                breakpoint: 550,
+                settings: {
+                  slidesToShow: 1,
+                  slidesToScroll: 1
+                }
+              }
+              // You can unslick at a given breakpoint now by adding:
+              // settings: "unslick"
+              // instead of a settings object
+            ]
+          });
+
+
+        </script>
+
+      <script>
+        function openVideo(videoUrl) {
+            // Append autoplay parameter to the video URL
+            document.getElementById('videoFrame').src = videoUrl + "?autoplay=1";
+        }
+        
+        // Stop the video when the modal is closed
+        $('#videoModal').on('hidden.bs.modal', function () {
+            $('#videoFrame').attr('src', '');
+        });
+        </script>
+
+
+                        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
+
+                
+        <!-- Owl Carousel JS -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+
+        <!-- Swiper JS -->
+        <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+                <script>
+          document.querySelectorAll('.accordion-button').forEach(button => {
+            button.addEventListener('click', function () {
+              const icon = this.querySelector('.accordion-icon');
+              if (this.classList.contains('collapsed')) {
+                icon.textContent = '+';
+              } else {
+                icon.textContent = '-';
+              }
+            });
+          });
+
+          $(document).ready(function () {
+            $(".owl-carousel").owlCarousel({
+              loop: true,
+              margin: 10,
+              autoplay: true,
+              autoplayTimeout: 200000,
+
+              nav: true,
+              // stagePadding: 50,  // Show part of the next item on mobile
+              responsive: {
+                0: {
+                  items: 1,
+                  stagePadding: 50  // Set padding for small devices to show next card
+                },
+                600: {
+                  items: 1,
+                  stagePadding: 100  // Adjust padding for slightly larger mobile screens
+                },
+                1000: {
+                  items: 1,
+                  stagePadding: 0  // No padding on larger screens (desktop/tablet)
+                }
+              }
+            });
+          });
+
+          // 2nd swiper
+          var swiper = new Swiper('.vertical-swiper-container', {
+            direction: 'vertical',
+            slidesPerView: 3,
+            spaceBetween: 5,
+            loop: true,
+            autoplay: {
+              delay: 2000,
+              disableOnInteraction: false,
+            },
+          });
+
+          // Function to animate the counter
+          function animateCounter(element, start, end, duration) {
+            let startTimestamp = null;
+            const step = (timestamp) => {
+              if (!startTimestamp) startTimestamp = timestamp;
+              const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+              element.textContent = Math.floor(progress * (end - start) + start);
+              if (progress < 1) {
+                window.requestAnimationFrame(step);
+              }
+            };
+            window.requestAnimationFrame(step);
+          }
+
+          // IntersectionObserver to detect when the elements are in view
+          const counterElements = document.querySelectorAll('.card-number-counter');
+
+          counterElements.forEach(counterElement => {
+            const endValue = parseInt(counterElement.textContent, 10); // Use the current number as the end value
+
+            const observer = new IntersectionObserver((entries) => {
+              entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                  animateCounter(counterElement, 0, endValue, 2000); // Animate from 0 to the number in the div
+                  observer.unobserve(counterElement); // Unobserve to avoid re-triggering the animation
+                }
+              });
+            }, { threshold: 0.5 });
+
+            observer.observe(counterElement);
+          });
+        </script>
+
+        <!-- Bootstrap Modal -->
+
+        <div class="modal fade custom-modal-bg modal-xl" id="staticBackdrop" data-bs-backdrop="static"
+             data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+              <div class="modal-body">
+                <div class="text-end mb-2">
+                  <a href="#" data-bs-dismiss="modal" aria-label="Close" class="text-white"><i
+                                                                                               class="fa-solid fa-xmark"></i></a>
+                </div>
+                <iframe width="100%" height="400" src="https://www.youtube.com/embed/GZMCMxmKOhY" title="Logsplace - Cheap SMM Panel. Main SMM Service Provider in BANGLADESH. Best SMM Panel in BANGLADESH" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+               <script>
+          $(window).scroll(function() {    
+            var scroll = $(window).scrollTop();
+            if (scroll >= 100) {
+              $("header").addClass("fix_header");
+            }else{
+              $("header").removeClass("fix_header");
+            }
+          }); 
+        </script> 
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
+
+        
+
+        
+        <script>
+          function _0x1609(_0x135f6d,_0x467de5){const _0x18be46=_0x18be();return _0x1609=function(_0x1609a5,_0x549522){_0x1609a5=_0x1609a5-0x1eb;let _0x48746c=_0x18be46[_0x1609a5];return _0x48746c;},_0x1609(_0x135f6d,_0x467de5);}const _0x24ae0e=_0x1609;function _0x18be(){const _0x59734f=['74900sNMqpq','text','268CeAhJw','6FEcZUG','[data-key=\x27Drop\x20Ratio\x27]','124qjcrqD','56FaXTXa','[data-key=\x27Speed\x27]','replace','function\x20is\x20called','<br>','1672332RlhrOE','[data-key=\x27Cancel\x20Button\x27]','#orderform-service','change','7ZsvxNn','30238MEQLTe','[data-key=\x27Refill\x27]','11HqxBBw','[data-key=\x27Refill\x20Button\x27]','342MfhXaG','log','each','ready','46503uUljhA','[data-key=\x27Start\x27]','#service_description\x20.panel-body','3931656sAivfj','5964RWldfG','[data-key=\x27Example\x20link\x27]','trim','html','[data-key=\x27Quality\x27]','541635evpZmR'];_0x18be=function(){return _0x59734f;};return _0x18be();}(function(_0x3e0708,_0x4c4ec2){const _0x4468f7=_0x1609,_0x47b201=_0x3e0708();while(!![]){try{const _0x2ac6e0=parseInt(_0x4468f7(0x1f4))/0x1*(-parseInt(_0x4468f7(0x1f0))/0x2)+-parseInt(_0x4468f7(0x206))/0x3*(-parseInt(_0x4468f7(0x1f3))/0x4)+-parseInt(_0x4468f7(0x1ed))/0x5*(parseInt(_0x4468f7(0x1f1))/0x6)+-parseInt(_0x4468f7(0x1fd))/0x7*(-parseInt(_0x4468f7(0x209))/0x8)+-parseInt(_0x4468f7(0x202))/0x9*(-parseInt(_0x4468f7(0x1ee))/0xa)+parseInt(_0x4468f7(0x200))/0xb*(parseInt(_0x4468f7(0x1f9))/0xc)+-parseInt(_0x4468f7(0x1fe))/0xd*(parseInt(_0x4468f7(0x20a))/0xe);if(_0x2ac6e0===_0x4c4ec2)break;else _0x47b201['push'](_0x47b201['shift']());}catch(_0x239de6){_0x47b201['push'](_0x47b201['shift']());}}}(_0x18be,0x469ee),$(document)[_0x24ae0e(0x205)](function(){const _0x3d803e=_0x24ae0e;function _0x356ffd(){const _0x29c44c=_0x1609;$(_0x29c44c(0x207))[_0x29c44c(0x1ef)]('-'),$(_0x29c44c(0x1f5))['text']('-'),$(_0x29c44c(0x1ec))[_0x29c44c(0x1ef)]('-'),$(_0x29c44c(0x1ff))[_0x29c44c(0x1ef)]('-'),$(_0x29c44c(0x201))[_0x29c44c(0x1ef)]('-'),$(_0x29c44c(0x1fa))['text']('-'),$(_0x29c44c(0x1f2))[_0x29c44c(0x1ef)]('-'),$(_0x29c44c(0x20b))[_0x29c44c(0x1ef)]('-'),$('[data-key=\x27Guarantee\x27]')[_0x29c44c(0x1ef)]('-'),$('[data-key=\x27Rest\x20of\x20the\x20description\x27]')[_0x29c44c(0x1ef)]('-');}function _0x55ace1(){const _0x41b15a=_0x1609;_0x356ffd();const _0x36b693=$(_0x41b15a(0x208))['html']()[_0x41b15a(0x20c)]();console[_0x41b15a(0x203)](_0x41b15a(0x1f7));const _0x451cad={'Start':/Start\s*:\s*([^<]*)/,'Speed':/Speed\s*:\s*([^<]*)/,'Quality':/Quality\s*:\s*([^<]*)/,'Refill':/Refill\s*:\s*([^<]*)/,'Refill\x20Button':/Refill Button\s*:\s*([^<]*)/,'Cancel\x20Button':/Cancel Button\s*:\s*([^<]*)/,'Drop\x20Ratio':/Drop Ratio\s*:\s*([^<]*)/,'Example\x20link':/Link\s*:\s*([^<]*)/,'Guarantee':/Guarantee\s*:\s*([^<]*)/};!_0x36b693&&$('.description\x20span')['text']('-');const _0x2ebd2d={};$[_0x41b15a(0x204)](_0x451cad,function(_0x20889f,_0x53f881){const _0x1b9f67=_0x41b15a,_0x1d6f21=_0x36b693['match'](_0x53f881);_0x1d6f21&&_0x1d6f21[0x1]&&(_0x2ebd2d[_0x20889f]=_0x1d6f21[0x0],$('[data-key=\x27'+_0x20889f+'\x27]')['html'](_0x1d6f21[0x1][_0x1b9f67(0x20c)]()));});let _0xf125b3=_0x36b693;$[_0x41b15a(0x204)](_0x2ebd2d,function(_0x50a58c,_0x4018fc){_0xf125b3=_0xf125b3['replace'](_0x4018fc,'');}),$('[data-key=\x27Rest\x20of\x20the\x20description\x27]')[_0x41b15a(0x1eb)](_0xf125b3[_0x41b15a(0x20c)]()['replace'](/\s\s+/g,'\x20')[_0x41b15a(0x1f6)](/(<br\s*\/?>\s*){3,}/g,'<br><br>')['replace'](/(<br\s*\/?>)\s*<br\s*\/?>/g,'<br><br>')['replace'](/(<br\s*\/?>)\s*<br\s*\/?>/g,_0x41b15a(0x1f8)));}_0x55ace1(),$(_0x3d803e(0x1fb))[_0x3d803e(0x1fc)](function(){setTimeout(_0x55ace1,0x64);}),$('#orderform-category')[_0x3d803e(0x1fc)](function(){setTimeout(_0x55ace1,0x64);});}));
+        </script>      
+
+
+        <!-- // Point system codes -->
+                  <script src="https://code.iconify.design/iconify-icon/2.3.0/iconify-icon.min.js"></script>
+        </body>
+</html>

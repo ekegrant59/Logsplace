@@ -1,0 +1,40 @@
+<div id="main-modal-content">
+  <div class="modal-dialog modal-md" role="document">
+    <div class="modal-content">
+        <div class="modal-header bg-pantone">
+          <h4 class="modal-title"><i class="fa fa-edit"></i>Edit (Shopviaclonne22)</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form action="/admin/provider/store/" class="form actionForm" data-redirect="/admin/provider" method="POST" accept-charset="utf-8">
+<input type="hidden" name="id" value="1" />
+<input type="hidden" name="token" value="8bedbdd9cd9e51e20d379c5503ea337e" />                                                     
+        <div class="modal-body">
+          <div class="row justify-content-md-center">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+              <div class="form-group">
+                <!--<small class="text-danger">Note: This script supports most of all API Providers (API v2) like: vinasmm.com, hqsmartpanel.com etc. So it doesn't support another API provider which have different API Parameters</small>-->
+              </div>
+            </div>
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="form-group">
+                        <label>Percentage</label>
+                        <input type="text" name="per" value="{{ api.percentage }}" class="form-control"  />
+
+                    </div>
+                </div> 
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="form-group">
+                        <label>Dollar Rate</label>
+                        <input type="text" name="rate" value="{{ d.rate }}" class="form-control"  />
+
+                    </div>
+                </div> 
+                </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary btn-min-width mr-1 mb-1">Save</button>
+          <button type="button" class="btn btn-dark" data-dismiss="modal">Close</button>
+        </div>
+        </form>    </div>
+  </div>
+</div>

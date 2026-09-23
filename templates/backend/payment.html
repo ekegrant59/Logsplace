@@ -1,0 +1,191 @@
+{% extends 'partials/backend.html' %} {% load static %} {% load humanize %} {% block content %}
+
+<main class="app-content">
+  <div class="page-title m-b-20">
+    <div class="row justify-content-between">
+      <div class="col-md-6">
+        <h1 class="page-title">
+          <span class="fe fe-dollar-sign"></span> Payments
+        </h1>
+      </div>
+      <div class="col-md-6"></div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">Filter</h3>
+          <div class="card-options">
+            <a
+              href="#"
+              class="card-options-collapse"
+              data-toggle="card-collapse"
+              ><i class="fe fe-chevron-up"></i
+            ></a>
+            <a href="#" class="card-options-remove" data-toggle="card-remove"
+              ><i class="fe fe-x"></i
+            ></a>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-8">
+              <div class="btn-group w-30 m-b-10">
+                <a href="/admin/payments?status=3" class="btn"
+                  >All <span class="badge badge-pill bg-azure">{{ pay.count }}</span></a
+                >
+              </div>
+            </div>
+            <div class="col-md-4 search-area">
+              <div class="form-group">
+                <div class="input-group">
+                  <input
+                    type="text"
+                    name="query"
+                    class="form-control"
+                    placeholder="Search for…"
+                    value=""
+                  />
+                  <select name="field" class="form-control" id="">
+                    <option value="name">Name</option>
+                  </select>
+                  <button
+                    class="btn btn-primary btn-square btn-search"
+                    type="button"
+                  >
+                    <span class="fe fe-search"></span>
+                  </button>
+                  <button
+                    class="btn btn-outline-danger btn-square btn-clear d-none"
+                    data-toggle="tooltip"
+                    data-placement="bottom"
+                    title=""
+                    data-original-title="Clear"
+                    type="button"
+                  >
+                    <span class="fe fe-x"></span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <!-- Card headers -->
+        <div class="card-header ">
+          <h3 class="card-title">Lists</h3>
+          <div class="card-options">
+            <a
+              href="#"
+              class="card-options-collapse"
+              data-toggle="card-collapse"
+              ><i class="fe fe-chevron-up"></i
+            ></a>
+            <a href="#" class="card-options-remove" data-toggle="card-remove"
+              ><i class="fe fe-x"></i
+            ></a>
+          </div>
+        </div>
+        <div class="table-responsive sortable-content">
+          <table
+            class="table table-hover table-bordered table-vcenter card-table"
+            data-sort_table_url="/admin/payments/sort_table"
+          >
+            <thead>
+              <tr>
+                <th class="text-center w-1"><i class="fe fe-move"></i></th>
+                <th class="text-center w-1">
+                  <div class="custom-controls-stacked">
+                    <label class="form-check"
+                      ><input
+                        type="checkbox"
+                        class="form-check-input check-items check-all"
+                        data-name="check_1"
+                      /><span class="custom-control-label"></span>
+                    </label>
+                  </div>
+                </th>
+                <th class="">Payment Method</th>
+                <th class="">Name</th>
+                <th class="text-center">Min</th>
+                <th class="text-center">Max</th>
+                <!--<th class="text-center">New users</th>-->
+                <!--<th class="text-center">Status</th>-->
+                <th class="text-center">action</th>
+              </tr>
+            </thead>
+            <tbody class="ui-sortable">
+                {% for p in pay %}
+              <tr class="tr_{{ p.id }}" data-id="{{ p.id }}">
+                <td class="sort-handler w-1p ui-sortable-handle">
+                  <i class="fe fe-grid"></i>
+                </td>
+                <th class="text-center">
+                  <div class="custom-controls-stacked">
+                    <label class="form-check"
+                      ><input
+                        type="checkbox"
+                        class="form-check-input check-item check_1"
+                        name="ids[]"
+                        value="14"
+                      /><span class="custom-control-label"></span>
+                    </label>
+                  </div>
+                </th>
+                <td class="text-muted w-5p">{{ p.name }}</td>
+                <td>
+                  <div class="title">{{ p.name }} Checkout</div>
+                </td>
+                <td class="text-center w-5p">{{ p.min }}</td>
+                <td class="text-center w-5p">{{ p.max }}</td>
+                <!--<td class="text-center w-5p">-->
+                <!--  <span class="badge bg-orange-lt">Deactive</span>-->
+                <!--</td>-->
+                <!--<td class="text-center w-5p">-->
+                <!--  <label class="custom-switch">-->
+                <!--    <input-->
+                <!--      type="checkbox"-->
+                <!--      name="item_status"-->
+                <!--      data-id="14"-->
+                <!--      data-status="0"-->
+                <!--      data-action="/admin/payments/change_status/"-->
+                <!--      class="custom-switch-input ajaxToggleItemStatus"-->
+                <!--    />-->
+                <!--    <span class="custom-switch-indicator"></span>-->
+                <!--  </label>-->
+                <!--</td>-->
+                <td class="text-center w-5p">
+                  <div class="item-action dropdown">
+                    <a
+                      href="javascript:void(0)"
+                      data-toggle="dropdown"
+                      class="icon"
+                      ><i class="fe fe-more-vertical"></i
+                    ></a>
+                    <div class="dropdown-menu">
+                      <a
+                        href="/admin/payments/update/{{ p.id }}"
+                        class="dropdown-item ajaxModal"
+                        data-confirm_ms=""
+                        ><i class="dropdown-icon fe fe-edit"></i> Edit</a
+                      >
+                    </div>
+                  </div>
+                </td>
+              </tr>              
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+{% endblock content %}

@@ -1,0 +1,443 @@
+{% extends 'partials/backend.html' %}
+{% block content %}
+
+<main class="app-content">
+          
+<div class="page-title m-b-20">
+                <div class="row justify-content-between">
+                    <div class="col-md-6">
+                        <h1 class="page-title">
+                            <span class="fe fe-settings"></span> Settings
+                        </h1>
+                    </div>
+                    <div class="col-md-6">
+                        
+                    </div>
+                </div>
+            </div><div class="row settings justify-content-center">
+  <div class="col-md-12 col-lg-12">
+    <div class="row">
+      <div class="col-md-2 col-lg-2">
+        <div class="sidebar o-auto">
+        <div class="list-group list-group-transparent mb-0 mt-5">
+          <h5><span class="icon mr-3"><i class="fe fe-disc"></i></span>General setting</h5>
+        </div><div class="list-group list-group-transparent mb-0"><a href="/admin/settings/website_setting" class="list-group-item list-group-item-action "><span class="icon mr-3"><i class="fe fe-globe"></i></span>Website setting</a><a href="/admin/settings/website_logo" class="list-group-item list-group-item-action "><span class="icon mr-3"><i class="fe fe-image"></i></span>Website logo</a><a href="/admin/settings/default" class="list-group-item list-group-item-action active"><span class="icon mr-3"><i class="fe fe-box"></i></span>Default setting</a><a href="/admin/settings/template" class="list-group-item list-group-item-action "><span class="icon mr-3"><i class="fe fe-layout"></i></span>Template</a><a href="/admin/settings/cookie_policy" class="list-group-item list-group-item-action "><span class="icon mr-3"><i class="fe fe-bookmark"></i></span>Cookie policy</a><a href="/admin/settings/terms_policy" class="list-group-item list-group-item-action "><span class="icon mr-3"><i class="fe fe-award"></i></span>Terms policy</a><a href="/admin/settings/currency" class="list-group-item list-group-item-action "><span class="icon mr-3"><i class="fe fe-dollar-sign"></i></span>Currency</a><a href="/admin/settings/other" class="list-group-item list-group-item-action "><span class="icon mr-3"><i class="fe fe-command"></i></span>Other</a></div>
+        <div class="list-group list-group-transparent mb-0 mt-5">
+          <h5><span class="icon mr-3"><i class="fe fe-disc"></i></span>Email</h5>
+        </div><div class="list-group list-group-transparent mb-0"><a href="/admin/settings/email_setting" class="list-group-item list-group-item-action "><span class="icon mr-3"><i class="fe fe-mail"></i></span>Email setting</a><a href="/admin/settings/email_template" class="list-group-item list-group-item-action "><span class="icon mr-3"><i class="fe fe-file-text"></i></span>Email template</a></div>
+        <div class="list-group list-group-transparent mb-0 mt-5">
+          <h5><span class="icon mr-3"><i class="fe fe-disc"></i></span>Integrations</h5>
+        </div><div class="list-group list-group-transparent mb-0"><a href="/admin/settings/payment" class="list-group-item list-group-item-action "><span class="icon mr-3"><i class="fe fe-file-text"></i></span>Manual payments</a></div></div>      </div>
+      <div class="col-md-10 col-lg-10">
+        <div class="card content">
+  <div class="card-header">
+    <h3 class="card-title"><i class="fe fe-settings"></i> Default Setting</h3>
+  </div>
+  <form action="/admin/settings/store/" class="form actionForm" data-redirect="/admin/settings/default" method="POST" accept-charset="utf-8">
+                                                                                                                 <input type="hidden" name="token" value="c676cee0a3250778e41d52227c4bdcb1">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-12 col-lg-12">
+
+          <div class="form-group">
+            <div class="form-label"><i class="fe fe-link"></i> Admin Account</div>
+            <label class="custom-switch">
+              <input type="hidden" name="admin_auto_logout_when_change_ip" value="0">
+              <input type="checkbox" name="admin_auto_logout_when_change_ip" class="custom-switch-input" value="1">
+              <span class="custom-switch-indicator"></span>
+              <span class="custom-switch-description">Active</span>
+            </label>
+            <br>
+            <small class="text-danger"><strong>Note:</strong> Log admin out when there is a change of IP address</small>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-md-6">
+              <h5 class="text-info"><i class="fe fe-link"></i> Pagination</h5>
+              <div class="form-group">
+                <label>Limit the Maximum Number of Rows per Page</label>
+                <select name="default_limit_per_page" class="form-control square">
+                                    <option value="5">5</option>
+                                    <option value="10" selected="">10</option>
+                                    <option value="15">15</option>
+                                    <option value="20">20</option>
+                                    <option value="25">25</option>
+                                    <option value="30">30</option>
+                                    <option value="35">35</option>
+                                    <option value="40">40</option>
+                                    <option value="45">45</option>
+                                    <option value="50">50</option>
+                                    <option value="55">55</option>
+                                    <option value="60">60</option>
+                                    <option value="65">65</option>
+                                    <option value="70">70</option>
+                                    <option value="75">75</option>
+                                    <option value="80">80</option>
+                                    <option value="85">85</option>
+                                    <option value="90">90</option>
+                                    <option value="95">95</option>
+                                    <option value="100">100</option>
+                                  </select>
+              </div>
+            </div> 
+                
+          </div>
+          
+          <div class="form-group">
+            <div class="form-label"><i class="fe fe-link"></i> Tickets log (Auto clear ticket lists)</div>
+            <label class="custom-switch">
+              <input type="hidden" name="is_clear_ticket" value="0">
+              <input type="checkbox" name="is_clear_ticket" class="custom-switch-input" value="1">
+              <span class="custom-switch-indicator"></span>
+              <span class="custom-switch-description">Active</span>
+            </label>
+          </div>
+          <div class="form-group">
+            <label>Clear Ticket lists (after X days) without any response from user</label>
+            <select name="default_clear_ticket_days" class="form-control square">
+                            <option value="1"> 1</option>
+                            <option value="2"> 2</option>
+                            <option value="3"> 3</option>
+                            <option value="4"> 4</option>
+                            <option value="5"> 5</option>
+                            <option value="6"> 6</option>
+                            <option value="7"> 7</option>
+                            <option value="8"> 8</option>
+                            <option value="9"> 9</option>
+                            <option value="10"> 10</option>
+                            <option value="11"> 11</option>
+                            <option value="12"> 12</option>
+                            <option value="13"> 13</option>
+                            <option value="14"> 14</option>
+                            <option value="15"> 15</option>
+                            <option value="16"> 16</option>
+                            <option value="17"> 17</option>
+                            <option value="18"> 18</option>
+                            <option value="19"> 19</option>
+                            <option value="20"> 20</option>
+                            <option value="21"> 21</option>
+                            <option value="22"> 22</option>
+                            <option value="23"> 23</option>
+                            <option value="24"> 24</option>
+                            <option value="25"> 25</option>
+                            <option value="26"> 26</option>
+                            <option value="27"> 27</option>
+                            <option value="28"> 28</option>
+                            <option value="29"> 29</option>
+                            <option value="30" selected=""> 30</option>
+                            <option value="31"> 31</option>
+                            <option value="32"> 32</option>
+                            <option value="33"> 33</option>
+                            <option value="34"> 34</option>
+                            <option value="35"> 35</option>
+                            <option value="36"> 36</option>
+                            <option value="37"> 37</option>
+                            <option value="38"> 38</option>
+                            <option value="39"> 39</option>
+                            <option value="40"> 40</option>
+                            <option value="41"> 41</option>
+                            <option value="42"> 42</option>
+                            <option value="43"> 43</option>
+                            <option value="44"> 44</option>
+                            <option value="45"> 45</option>
+                            <option value="46"> 46</option>
+                            <option value="47"> 47</option>
+                            <option value="48"> 48</option>
+                            <option value="49"> 49</option>
+                            <option value="50"> 50</option>
+                            <option value="51"> 51</option>
+                            <option value="52"> 52</option>
+                            <option value="53"> 53</option>
+                            <option value="54"> 54</option>
+                            <option value="55"> 55</option>
+                            <option value="56"> 56</option>
+                            <option value="57"> 57</option>
+                            <option value="58"> 58</option>
+                            <option value="59"> 59</option>
+                            <option value="60"> 60</option>
+                            <option value="61"> 61</option>
+                            <option value="62"> 62</option>
+                            <option value="63"> 63</option>
+                            <option value="64"> 64</option>
+                            <option value="65"> 65</option>
+                            <option value="66"> 66</option>
+                            <option value="67"> 67</option>
+                            <option value="68"> 68</option>
+                            <option value="69"> 69</option>
+                            <option value="70"> 70</option>
+                            <option value="71"> 71</option>
+                            <option value="72"> 72</option>
+                            <option value="73"> 73</option>
+                            <option value="74"> 74</option>
+                            <option value="75"> 75</option>
+                            <option value="76"> 76</option>
+                            <option value="77"> 77</option>
+                            <option value="78"> 78</option>
+                            <option value="79"> 79</option>
+                            <option value="80"> 80</option>
+                            <option value="81"> 81</option>
+                            <option value="82"> 82</option>
+                            <option value="83"> 83</option>
+                            <option value="84"> 84</option>
+                            <option value="85"> 85</option>
+                            <option value="86"> 86</option>
+                            <option value="87"> 87</option>
+                            <option value="88"> 88</option>
+                            <option value="89"> 89</option>
+                            <option value="90"> 90</option>
+                          </select>
+          </div>
+
+          <div class="form-group">
+            <label>Max pending tickets per user</label>
+            <select name="default_pending_ticket_per_user" class="form-control square">
+                            <option value="1"> 1 ticket</option>
+                            <option value="2" selected=""> 2 tickets</option>
+                            <option value="3"> 3 tickets</option>
+                            <option value="4"> 4 tickets</option>
+                            <option value="5"> 5 tickets</option>
+                            <option value="6"> 6 tickets</option>
+                            <option value="7"> 7 tickets</option>
+                            <option value="8"> 8 tickets</option>
+                            <option value="9"> 9 tickets</option>
+                            <option value="0"> Unlimited</option>
+            </select>
+          </div>
+
+          <h5><i class="fe fe-link"></i> Default Service</h5>
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <label>Default Min Order</label>
+                <input class="form-control" name="default_min_order" value="300">
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="form-group">
+                <label>Default Max Order</label>
+                <input class="form-control" name="default_max_order" value="5000">
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="form-group">
+                <label>Default Price per 1000</label>
+                <input class="form-control" name="default_price_per_1k" value="0.80">
+              </div>
+            </div>
+          </div>
+
+          <h5><i class="fe fe-link"></i> Drip-feed option</h5>
+          <div class="form-group">
+            <label class="custom-switch">
+              <input type="hidden" name="enable_drip_feed" value="0">
+              <input type="checkbox" name="enable_drip_feed" class="custom-switch-input" value="1">
+              <span class="custom-switch-indicator"></span>
+              <span class="custom-switch-description">Active</span>
+            </label>
+            <br>
+            <small class="text-danger"><strong>Note:</strong> Please make sure the Drip-feed feature has the 'Active' status in API provider before you activate.</small>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Default Runs </label>
+                <input class="form-control" name="default_drip_feed_runs" value="10">
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Default Interval (in minutes)</label>
+                <select name="default_drip_feed_interval" class="form-control square">
+                                    <option value="10">10</option>
+                                    <option value="20">20</option>
+                                    <option value="30" selected="">30</option>
+                                    <option value="40">40</option>
+                                    <option value="50">50</option>
+                                    <option value="60">60</option>
+                                  </select>
+              </div>
+            </div>    
+          </div>
+
+          <h5><i class="fe fe-link"></i> Notification popup at home page</h5>
+          <div class="form-group">
+            <label class="custom-switch">
+              <input type="hidden" name="enable_notification_popup" value="0">
+              <input type="checkbox" name="enable_notification_popup" class="custom-switch-input" value="1">
+              <span class="custom-switch-indicator"></span>
+              <span class="custom-switch-description">Active</span>
+            </label>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+              <label class="form-label">Content</label>
+              <div id="mceu_21" class="mce-tinymce mce-container mce-panel" hidefocus="1" tabindex="-1" role="application" style="visibility: hidden; border-width: 1px; width: 100%;"><div id="mceu_21-body" class="mce-container-body mce-stack-layout"><div id="mceu_22" class="mce-top-part mce-container mce-stack-layout-item mce-first"><div id="mceu_22-body" class="mce-container-body"><div id="mceu_23" class="mce-container mce-menubar mce-toolbar mce-first" role="menubar" style="border-width: 0px 0px 1px;"><div id="mceu_23-body" class="mce-container-body mce-flow-layout"><div id="mceu_24" class="mce-widget mce-btn mce-menubtn mce-flow-layout-item mce-first mce-btn-has-text" tabindex="-1" aria-labelledby="mceu_24" role="menuitem" aria-haspopup="true"><button id="mceu_24-open" role="presentation" type="button" tabindex="-1"><span class="mce-txt">File</span> <i class="mce-caret"></i></button></div><div id="mceu_25" class="mce-widget mce-btn mce-menubtn mce-flow-layout-item mce-btn-has-text" tabindex="-1" aria-labelledby="mceu_25" role="menuitem" aria-haspopup="true"><button id="mceu_25-open" role="presentation" type="button" tabindex="-1"><span class="mce-txt">Edit</span> <i class="mce-caret"></i></button></div><div id="mceu_26" class="mce-widget mce-btn mce-menubtn mce-flow-layout-item mce-btn-has-text" tabindex="-1" aria-labelledby="mceu_26" role="menuitem" aria-haspopup="true"><button id="mceu_26-open" role="presentation" type="button" tabindex="-1"><span class="mce-txt">View</span> <i class="mce-caret"></i></button></div><div id="mceu_27" class="mce-widget mce-btn mce-menubtn mce-flow-layout-item mce-btn-has-text" tabindex="-1" aria-labelledby="mceu_27" role="menuitem" aria-haspopup="true"><button id="mceu_27-open" role="presentation" type="button" tabindex="-1"><span class="mce-txt">Insert</span> <i class="mce-caret"></i></button></div><div id="mceu_28" class="mce-widget mce-btn mce-menubtn mce-flow-layout-item mce-btn-has-text" tabindex="-1" aria-labelledby="mceu_28" role="menuitem" aria-haspopup="true"><button id="mceu_28-open" role="presentation" type="button" tabindex="-1"><span class="mce-txt">Format</span> <i class="mce-caret"></i></button></div><div id="mceu_29" class="mce-widget mce-btn mce-menubtn mce-flow-layout-item mce-btn-has-text" tabindex="-1" aria-labelledby="mceu_29" role="menuitem" aria-haspopup="true"><button id="mceu_29-open" role="presentation" type="button" tabindex="-1"><span class="mce-txt">Tools</span> <i class="mce-caret"></i></button></div><div id="mceu_30" class="mce-widget mce-btn mce-menubtn mce-flow-layout-item mce-last mce-btn-has-text" tabindex="-1" aria-labelledby="mceu_30" role="menuitem" aria-haspopup="true"><button id="mceu_30-open" role="presentation" type="button" tabindex="-1"><span class="mce-txt">Table</span> <i class="mce-caret"></i></button></div></div></div><div id="mceu_31" class="mce-toolbar-grp mce-container mce-panel mce-last" hidefocus="1" tabindex="-1" role="group"><div id="mceu_31-body" class="mce-container-body mce-stack-layout"><div id="mceu_32" class="mce-container mce-toolbar mce-stack-layout-item mce-first mce-last" role="toolbar"><div id="mceu_32-body" class="mce-container-body mce-flow-layout"><div id="mceu_33" class="mce-container mce-flow-layout-item mce-first mce-btn-group" role="group"><div id="mceu_33-body"><div id="mceu_0" class="mce-widget mce-btn mce-first mce-disabled" tabindex="-1" role="button" aria-label="Undo" aria-disabled="true"><button id="mceu_0-button" role="presentation" type="button" tabindex="-1"><i class="mce-ico mce-i-undo"></i></button></div><div id="mceu_1" class="mce-widget mce-btn mce-disabled" tabindex="-1" role="button" aria-label="Redo" aria-disabled="true"><button id="mceu_1-button" role="presentation" type="button" tabindex="-1"><i class="mce-ico mce-i-redo"></i></button></div><div id="mceu_2" class="mce-widget mce-btn mce-menubtn mce-fixed-width mce-listbox mce-last mce-btn-has-text" tabindex="-1" aria-labelledby="mceu_2" role="button" aria-haspopup="true"><button id="mceu_2-open" role="presentation" type="button" tabindex="-1"><span class="mce-txt">Paragraph</span> <i class="mce-caret"></i></button></div></div></div><div id="mceu_34" class="mce-container mce-flow-layout-item mce-btn-group" role="group"><div id="mceu_34-body"><div id="mceu_3" class="mce-widget mce-btn mce-menubtn mce-fixed-width mce-listbox mce-first mce-btn-has-text" tabindex="-1" aria-labelledby="mceu_3" role="button" aria-label="Font Family" aria-haspopup="true"><button id="mceu_3-open" role="presentation" type="button" tabindex="-1"><span class="mce-txt">Verdana</span> <i class="mce-caret"></i></button></div><div id="mceu_4" class="mce-widget mce-btn mce-menubtn mce-fixed-width mce-listbox mce-last mce-btn-has-text" tabindex="-1" aria-labelledby="mceu_4" role="button" aria-label="Font Sizes" aria-haspopup="true"><button id="mceu_4-open" role="presentation" type="button" tabindex="-1"><span class="mce-txt">11pt</span> <i class="mce-caret"></i></button></div></div></div><div id="mceu_35" class="mce-container mce-flow-layout-item mce-btn-group" role="group"><div id="mceu_35-body"><div id="mceu_5" class="mce-widget mce-btn mce-splitbtn mce-colorbutton mce-first" role="button" tabindex="-1" aria-haspopup="true" aria-label="Text color"><button role="presentation" hidefocus="1" type="button" tabindex="-1"><i class="mce-ico mce-i-forecolor"></i><span id="mceu_5-preview" class="mce-preview"></span></button><button type="button" class="mce-open" hidefocus="1" tabindex="-1"> <i class="mce-caret"></i></button></div><div id="mceu_6" class="mce-widget mce-btn mce-splitbtn mce-colorbutton mce-last" role="button" tabindex="-1" aria-haspopup="true" aria-label="Background color"><button role="presentation" hidefocus="1" type="button" tabindex="-1"><i class="mce-ico mce-i-backcolor"></i><span id="mceu_6-preview" class="mce-preview"></span></button><button type="button" class="mce-open" hidefocus="1" tabindex="-1"> <i class="mce-caret"></i></button></div></div></div><div id="mceu_36" class="mce-container mce-flow-layout-item mce-btn-group" role="group"><div id="mceu_36-body"><div id="mceu_7" class="mce-widget mce-btn mce-first" tabindex="-1" aria-pressed="false" role="button" aria-label="Bold"><button id="mceu_7-button" role="presentation" type="button" tabindex="-1"><i class="mce-ico mce-i-bold"></i></button></div><div id="mceu_8" class="mce-widget mce-btn mce-last" tabindex="-1" aria-pressed="false" role="button" aria-label="Italic"><button id="mceu_8-button" role="presentation" type="button" tabindex="-1"><i class="mce-ico mce-i-italic"></i></button></div></div></div><div id="mceu_37" class="mce-container mce-flow-layout-item mce-btn-group" role="group"><div id="mceu_37-body"><div id="mceu_9" class="mce-widget mce-btn mce-first" tabindex="-1" aria-pressed="false" role="button" aria-label="Align left"><button id="mceu_9-button" role="presentation" type="button" tabindex="-1"><i class="mce-ico mce-i-alignleft"></i></button></div><div id="mceu_10" class="mce-widget mce-btn" tabindex="-1" aria-pressed="false" role="button" aria-label="Align center"><button id="mceu_10-button" role="presentation" type="button" tabindex="-1"><i class="mce-ico mce-i-aligncenter"></i></button></div><div id="mceu_11" class="mce-widget mce-btn" tabindex="-1" aria-pressed="false" role="button" aria-label="Align right"><button id="mceu_11-button" role="presentation" type="button" tabindex="-1"><i class="mce-ico mce-i-alignright"></i></button></div><div id="mceu_12" class="mce-widget mce-btn mce-last" tabindex="-1" aria-pressed="false" role="button" aria-label="Justify"><button id="mceu_12-button" role="presentation" type="button" tabindex="-1"><i class="mce-ico mce-i-alignjustify"></i></button></div></div></div><div id="mceu_38" class="mce-container mce-flow-layout-item mce-btn-group" role="group"><div id="mceu_38-body"><div id="mceu_13" class="mce-widget mce-btn mce-splitbtn mce-menubtn mce-first" role="button" aria-pressed="false" tabindex="-1" aria-label="Bullet list" aria-haspopup="true"><button type="button" hidefocus="1" tabindex="-1"><i class="mce-ico mce-i-bullist"></i></button><button type="button" class="mce-open" hidefocus="1" tabindex="-1"> <i class="mce-caret"></i></button></div><div id="mceu_14" class="mce-widget mce-btn mce-splitbtn mce-menubtn mce-last" role="button" aria-pressed="false" tabindex="-1" aria-label="Numbered list" aria-haspopup="true"><button type="button" hidefocus="1" tabindex="-1"><i class="mce-ico mce-i-numlist"></i></button><button type="button" class="mce-open" hidefocus="1" tabindex="-1"> <i class="mce-caret"></i></button></div></div></div><div id="mceu_39" class="mce-container mce-flow-layout-item mce-btn-group" role="group"><div id="mceu_39-body"><div id="mceu_15" class="mce-widget mce-btn mce-first mce-last" tabindex="-1" aria-pressed="false" role="button" aria-label="Insert/edit link"><button id="mceu_15-button" role="presentation" type="button" tabindex="-1"><i class="mce-ico mce-i-link"></i></button></div></div></div><div id="mceu_40" class="mce-container mce-flow-layout-item mce-btn-group" role="group"><div id="mceu_40-body"><div id="mceu_16" class="mce-widget mce-btn mce-first" tabindex="-1" role="button" aria-label="Print"><button id="mceu_16-button" role="presentation" type="button" tabindex="-1"><i class="mce-ico mce-i-print"></i></button></div><div id="mceu_17" class="mce-widget mce-btn" tabindex="-1" role="button" aria-label="Preview"><button id="mceu_17-button" role="presentation" type="button" tabindex="-1"><i class="mce-ico mce-i-preview"></i></button></div><div id="mceu_18" class="mce-widget mce-btn mce-last" tabindex="-1" role="button" aria-label="Emoticons" aria-haspopup="true"><button id="mceu_18-button" role="presentation" type="button" tabindex="-1"><i class="mce-ico mce-i-emoticons"></i></button></div></div></div><div id="mceu_41" class="mce-container mce-flow-layout-item mce-last mce-btn-group" role="group"><div id="mceu_41-body"><div id="mceu_19" class="mce-widget mce-btn mce-first" tabindex="-1" role="button" aria-label="Source code"><button id="mceu_19-button" role="presentation" type="button" tabindex="-1"><i class="mce-ico mce-i-code"></i></button></div><div id="mceu_20" class="mce-widget mce-btn mce-last" tabindex="-1" role="button" aria-label="Page break"><button id="mceu_20-button" role="presentation" type="button" tabindex="-1"><i class="mce-ico mce-i-pagebreak"></i></button></div></div></div></div></div></div></div></div></div><div id="mceu_42" class="mce-edit-area mce-container mce-panel mce-stack-layout-item" hidefocus="1" tabindex="-1" role="group" style="border-width: 1px 0px 0px;"><iframe id="notification_popup_content_ifr" frameborder="0" allowtransparency="true" title="Rich Text Area. Press ALT-F9 for menu. Press ALT-F10 for toolbar. Press ALT-0 for help" style="width: 100%; height: 200px; display: block;"></iframe></div><div id="mceu_43" class="mce-statusbar mce-container mce-panel mce-stack-layout-item mce-last" hidefocus="1" tabindex="-1" role="group" style="border-width: 1px 0px 0px;"><div id="mceu_43-body" class="mce-container-body mce-flow-layout"><div id="mceu_44" class="mce-path mce-flow-layout-item mce-first"><div class="mce-path-item">&nbsp;</div></div><span id="mceu_92" class="mce-wordcount mce-widget mce-label mce-flow-layout-item">0 words</span><div id="mceu_45" class="mce-flow-layout-item mce-resizehandle mce-last"><i class="mce-ico mce-i-resize"></i></div></div></div></div></div><textarea rows="3" name="notification_popup_content" id="notification_popup_content" class="form-control plugin_editor" aria-hidden="true" style="display: none;">              </textarea>
+            </div>
+            </div>
+          </div>
+
+          <hr>
+          <h5><i class="fe fe-link"></i> Note at User Order page</h5>
+          <div class="form-group">
+            <label>Title attentions at order page </label>
+            <input class="form-control" name="title_attentions_orderpage" value="Guides &amp; Descriptions">
+          </div>
+          <div class="form-group">
+            <label class="custom-switch">
+              <input type="hidden" name="enable_attentions_orderpage" value="0">
+              <input type="checkbox" name="enable_attentions_orderpage" class="custom-switch-input" value="1">
+              <span class="custom-switch-indicator"></span>
+              <span class="custom-switch-description">Active</span>
+            </label>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+              <label class="form-label">Content</label>
+              <div id="mceu_67" class="mce-tinymce mce-container mce-panel" hidefocus="1" tabindex="-1" role="application" style="visibility: hidden; border-width: 1px; width: 100%;"><div id="mceu_67-body" class="mce-container-body mce-stack-layout"><div id="mceu_68" class="mce-top-part mce-container mce-stack-layout-item mce-first"><div id="mceu_68-body" class="mce-container-body"><div id="mceu_69" class="mce-container mce-menubar mce-toolbar mce-first" role="menubar" style="border-width: 0px 0px 1px;"><div id="mceu_69-body" class="mce-container-body mce-flow-layout"><div id="mceu_70" class="mce-widget mce-btn mce-menubtn mce-flow-layout-item mce-first mce-btn-has-text" tabindex="-1" aria-labelledby="mceu_70" role="menuitem" aria-haspopup="true"><button id="mceu_70-open" role="presentation" type="button" tabindex="-1"><span class="mce-txt">File</span> <i class="mce-caret"></i></button></div><div id="mceu_71" class="mce-widget mce-btn mce-menubtn mce-flow-layout-item mce-btn-has-text" tabindex="-1" aria-labelledby="mceu_71" role="menuitem" aria-haspopup="true"><button id="mceu_71-open" role="presentation" type="button" tabindex="-1"><span class="mce-txt">Edit</span> <i class="mce-caret"></i></button></div><div id="mceu_72" class="mce-widget mce-btn mce-menubtn mce-flow-layout-item mce-btn-has-text" tabindex="-1" aria-labelledby="mceu_72" role="menuitem" aria-haspopup="true"><button id="mceu_72-open" role="presentation" type="button" tabindex="-1"><span class="mce-txt">View</span> <i class="mce-caret"></i></button></div><div id="mceu_73" class="mce-widget mce-btn mce-menubtn mce-flow-layout-item mce-btn-has-text" tabindex="-1" aria-labelledby="mceu_73" role="menuitem" aria-haspopup="true"><button id="mceu_73-open" role="presentation" type="button" tabindex="-1"><span class="mce-txt">Insert</span> <i class="mce-caret"></i></button></div><div id="mceu_74" class="mce-widget mce-btn mce-menubtn mce-flow-layout-item mce-btn-has-text" tabindex="-1" aria-labelledby="mceu_74" role="menuitem" aria-haspopup="true"><button id="mceu_74-open" role="presentation" type="button" tabindex="-1"><span class="mce-txt">Format</span> <i class="mce-caret"></i></button></div><div id="mceu_75" class="mce-widget mce-btn mce-menubtn mce-flow-layout-item mce-btn-has-text" tabindex="-1" aria-labelledby="mceu_75" role="menuitem" aria-haspopup="true"><button id="mceu_75-open" role="presentation" type="button" tabindex="-1"><span class="mce-txt">Tools</span> <i class="mce-caret"></i></button></div><div id="mceu_76" class="mce-widget mce-btn mce-menubtn mce-flow-layout-item mce-last mce-btn-has-text" tabindex="-1" aria-labelledby="mceu_76" role="menuitem" aria-haspopup="true"><button id="mceu_76-open" role="presentation" type="button" tabindex="-1"><span class="mce-txt">Table</span> <i class="mce-caret"></i></button></div></div></div><div id="mceu_77" class="mce-toolbar-grp mce-container mce-panel mce-last" hidefocus="1" tabindex="-1" role="group"><div id="mceu_77-body" class="mce-container-body mce-stack-layout"><div id="mceu_78" class="mce-container mce-toolbar mce-stack-layout-item mce-first mce-last" role="toolbar"><div id="mceu_78-body" class="mce-container-body mce-flow-layout"><div id="mceu_79" class="mce-container mce-flow-layout-item mce-first mce-btn-group" role="group"><div id="mceu_79-body"><div id="mceu_46" class="mce-widget mce-btn mce-first mce-disabled" tabindex="-1" role="button" aria-label="Undo" aria-disabled="true"><button id="mceu_46-button" role="presentation" type="button" tabindex="-1"><i class="mce-ico mce-i-undo"></i></button></div><div id="mceu_47" class="mce-widget mce-btn mce-disabled" tabindex="-1" role="button" aria-label="Redo" aria-disabled="true"><button id="mceu_47-button" role="presentation" type="button" tabindex="-1"><i class="mce-ico mce-i-redo"></i></button></div><div id="mceu_48" class="mce-widget mce-btn mce-menubtn mce-fixed-width mce-listbox mce-last mce-btn-has-text" tabindex="-1" aria-labelledby="mceu_48" role="button" aria-haspopup="true"><button id="mceu_48-open" role="presentation" type="button" tabindex="-1"><span class="mce-txt">Paragraph</span> <i class="mce-caret"></i></button></div></div></div><div id="mceu_80" class="mce-container mce-flow-layout-item mce-btn-group" role="group"><div id="mceu_80-body"><div id="mceu_49" class="mce-widget mce-btn mce-menubtn mce-fixed-width mce-listbox mce-first mce-btn-has-text" tabindex="-1" aria-labelledby="mceu_49" role="button" aria-label="Font Family" aria-haspopup="true"><button id="mceu_49-open" role="presentation" type="button" tabindex="-1"><span class="mce-txt">Verdana</span> <i class="mce-caret"></i></button></div><div id="mceu_50" class="mce-widget mce-btn mce-menubtn mce-fixed-width mce-listbox mce-last mce-btn-has-text" tabindex="-1" aria-labelledby="mceu_50" role="button" aria-label="Font Sizes" aria-haspopup="true"><button id="mceu_50-open" role="presentation" type="button" tabindex="-1"><span class="mce-txt">11pt</span> <i class="mce-caret"></i></button></div></div></div><div id="mceu_81" class="mce-container mce-flow-layout-item mce-btn-group" role="group"><div id="mceu_81-body"><div id="mceu_51" class="mce-widget mce-btn mce-splitbtn mce-colorbutton mce-first" role="button" tabindex="-1" aria-haspopup="true" aria-label="Text color"><button role="presentation" hidefocus="1" type="button" tabindex="-1"><i class="mce-ico mce-i-forecolor"></i><span id="mceu_51-preview" class="mce-preview"></span></button><button type="button" class="mce-open" hidefocus="1" tabindex="-1"> <i class="mce-caret"></i></button></div><div id="mceu_52" class="mce-widget mce-btn mce-splitbtn mce-colorbutton mce-last" role="button" tabindex="-1" aria-haspopup="true" aria-label="Background color"><button role="presentation" hidefocus="1" type="button" tabindex="-1"><i class="mce-ico mce-i-backcolor"></i><span id="mceu_52-preview" class="mce-preview"></span></button><button type="button" class="mce-open" hidefocus="1" tabindex="-1"> <i class="mce-caret"></i></button></div></div></div><div id="mceu_82" class="mce-container mce-flow-layout-item mce-btn-group" role="group"><div id="mceu_82-body"><div id="mceu_53" class="mce-widget mce-btn mce-first" tabindex="-1" aria-pressed="false" role="button" aria-label="Bold"><button id="mceu_53-button" role="presentation" type="button" tabindex="-1"><i class="mce-ico mce-i-bold"></i></button></div><div id="mceu_54" class="mce-widget mce-btn mce-last" tabindex="-1" aria-pressed="false" role="button" aria-label="Italic"><button id="mceu_54-button" role="presentation" type="button" tabindex="-1"><i class="mce-ico mce-i-italic"></i></button></div></div></div><div id="mceu_83" class="mce-container mce-flow-layout-item mce-btn-group" role="group"><div id="mceu_83-body"><div id="mceu_55" class="mce-widget mce-btn mce-first" tabindex="-1" aria-pressed="false" role="button" aria-label="Align left"><button id="mceu_55-button" role="presentation" type="button" tabindex="-1"><i class="mce-ico mce-i-alignleft"></i></button></div><div id="mceu_56" class="mce-widget mce-btn" tabindex="-1" aria-pressed="false" role="button" aria-label="Align center"><button id="mceu_56-button" role="presentation" type="button" tabindex="-1"><i class="mce-ico mce-i-aligncenter"></i></button></div><div id="mceu_57" class="mce-widget mce-btn" tabindex="-1" aria-pressed="false" role="button" aria-label="Align right"><button id="mceu_57-button" role="presentation" type="button" tabindex="-1"><i class="mce-ico mce-i-alignright"></i></button></div><div id="mceu_58" class="mce-widget mce-btn mce-last" tabindex="-1" aria-pressed="false" role="button" aria-label="Justify"><button id="mceu_58-button" role="presentation" type="button" tabindex="-1"><i class="mce-ico mce-i-alignjustify"></i></button></div></div></div><div id="mceu_84" class="mce-container mce-flow-layout-item mce-btn-group" role="group"><div id="mceu_84-body"><div id="mceu_59" class="mce-widget mce-btn mce-splitbtn mce-menubtn mce-first" role="button" aria-pressed="false" tabindex="-1" aria-label="Bullet list" aria-haspopup="true"><button type="button" hidefocus="1" tabindex="-1"><i class="mce-ico mce-i-bullist"></i></button><button type="button" class="mce-open" hidefocus="1" tabindex="-1"> <i class="mce-caret"></i></button></div><div id="mceu_60" class="mce-widget mce-btn mce-splitbtn mce-menubtn mce-last" role="button" aria-pressed="false" tabindex="-1" aria-label="Numbered list" aria-haspopup="true"><button type="button" hidefocus="1" tabindex="-1"><i class="mce-ico mce-i-numlist"></i></button><button type="button" class="mce-open" hidefocus="1" tabindex="-1"> <i class="mce-caret"></i></button></div></div></div><div id="mceu_85" class="mce-container mce-flow-layout-item mce-btn-group" role="group"><div id="mceu_85-body"><div id="mceu_61" class="mce-widget mce-btn mce-first mce-last" tabindex="-1" aria-pressed="false" role="button" aria-label="Insert/edit link"><button id="mceu_61-button" role="presentation" type="button" tabindex="-1"><i class="mce-ico mce-i-link"></i></button></div></div></div><div id="mceu_86" class="mce-container mce-flow-layout-item mce-btn-group" role="group"><div id="mceu_86-body"><div id="mceu_62" class="mce-widget mce-btn mce-first" tabindex="-1" role="button" aria-label="Print"><button id="mceu_62-button" role="presentation" type="button" tabindex="-1"><i class="mce-ico mce-i-print"></i></button></div><div id="mceu_63" class="mce-widget mce-btn" tabindex="-1" role="button" aria-label="Preview"><button id="mceu_63-button" role="presentation" type="button" tabindex="-1"><i class="mce-ico mce-i-preview"></i></button></div><div id="mceu_64" class="mce-widget mce-btn mce-last" tabindex="-1" role="button" aria-label="Emoticons" aria-haspopup="true"><button id="mceu_64-button" role="presentation" type="button" tabindex="-1"><i class="mce-ico mce-i-emoticons"></i></button></div></div></div><div id="mceu_87" class="mce-container mce-flow-layout-item mce-last mce-btn-group" role="group"><div id="mceu_87-body"><div id="mceu_65" class="mce-widget mce-btn mce-first" tabindex="-1" role="button" aria-label="Source code"><button id="mceu_65-button" role="presentation" type="button" tabindex="-1"><i class="mce-ico mce-i-code"></i></button></div><div id="mceu_66" class="mce-widget mce-btn mce-last" tabindex="-1" role="button" aria-label="Page break"><button id="mceu_66-button" role="presentation" type="button" tabindex="-1"><i class="mce-ico mce-i-pagebreak"></i></button></div></div></div></div></div></div></div></div></div><div id="mceu_88" class="mce-edit-area mce-container mce-panel mce-stack-layout-item" hidefocus="1" tabindex="-1" role="group" style="border-width: 1px 0px 0px;"><iframe id="guides_and_desc_ifr" frameborder="0" allowtransparency="true" title="Rich Text Area. Press ALT-F9 for menu. Press ALT-F10 for toolbar. Press ALT-0 for help" style="width: 100%; height: 200px; display: block;"></iframe></div><div id="mceu_89" class="mce-statusbar mce-container mce-panel mce-stack-layout-item mce-last" hidefocus="1" tabindex="-1" role="group" style="border-width: 1px 0px 0px;"><div id="mceu_89-body" class="mce-container-body mce-flow-layout"><div id="mceu_90" class="mce-path mce-flow-layout-item mce-first"><div class="mce-path-item">&nbsp;</div></div><span id="mceu_93" class="mce-wordcount mce-widget mce-label mce-flow-layout-item">95 words</span><div id="mceu_91" class="mce-flow-layout-item mce-resizehandle mce-last"><i class="mce-ico mce-i-resize"></i></div></div></div></div></div><textarea rows="3" name="guides_and_desc" class="form-control plugin_editor" id="guides_and_desc" aria-hidden="true" style="display: none;">&lt;p&gt;&lt;strong&gt;Lorem Ipsum&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Lorem ipsum dolor sit amet, in eam consetetur consectetuer. Vivendo eleifend postulant ut mei, vero maiestatis cu nam. Qui et facer mandamus, nullam regione lucilius eu has. Mei an vidisse facilis posidonium, eros minim deserunt per ne.&lt;/p&gt;&lt;p&gt;Duo quando tibique intellegam at. Nec error mucius in, ius in error legendos reformidans. Vidisse dolorum vulputate cu ius. Ei qui stet error consulatu.&lt;/p&gt;&lt;p&gt;Mei habeo prompta te. Ignota commodo nam ei. Te iudico definitionem sed, placerat oporteat tincidunt eu per, stet clita meliore usu ne. Facer debitis ponderum per no, agam corpora recteque at mel.&lt;/p&gt;              </textarea>
+            </div>
+            </div>
+          </div>
+
+          <hr>
+
+          <div class="row">
+            <div class="col-md-6">
+              <h5 class="m-t-10"><i class="fe fe-link"></i> Disable Home page (Langding page)</h5>
+              <div class="form-group">
+                <label class="custom-switch">
+                  <input type="hidden" name="enable_disable_homepage" value="0">
+                  <input type="checkbox" name="enable_disable_homepage" class="custom-switch-input" value="1">
+                  <span class="custom-switch-indicator"></span>
+                  <span class="custom-switch-description">Active</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <h5 class="m-t-10"><i class="fe fe-link"></i>  Disable Signup Page</h5>
+              <div class="form-group">
+                <label class="custom-switch">
+                  <input type="hidden" name="disable_signup_page" value="0">
+                  <input type="checkbox" name="disable_signup_page" class="custom-switch-input" value="1">
+                  <span class="custom-switch-indicator"></span>
+                  <span class="custom-switch-description">Active</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <h5 class="m-t-10"><i class="fe fe-link"></i> Explication of the service symbol</h5>
+              <div class="form-group">
+                <label class="custom-switch">
+                  <input type="hidden" name="enable_explication_service_symbol" value="0">
+                  <input type="checkbox" name="enable_explication_service_symbol" class="custom-switch-input" value="1">
+                  <span class="custom-switch-indicator"></span>
+                  <span class="custom-switch-description">Active</span>
+                </label>
+              </div>
+            </div>
+            
+            <div class="col-md-6">
+              <h5 class="m-t-10"><i class="fe fe-link"></i>  Displays the service lists without login or register</h5>
+              <div class="form-group">
+                <label class="custom-switch">
+                  <input type="hidden" name="enable_service_list_no_login" value="0">
+                  <input type="checkbox" name="enable_service_list_no_login" class="custom-switch-input" value="1">
+                  <span class="custom-switch-indicator"></span>
+                  <span class="custom-switch-description">Active</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <h5 class="m-t-10"><i class="fe fe-link"></i> Displays News &amp; Announcement feature</h5>
+              <div class="form-group">
+                <label class="custom-switch">
+                  <input type="hidden" name="enable_news_announcement" value="0">
+                  <input type="checkbox" name="enable_news_announcement" class="custom-switch-input" value="1">
+                  <span class="custom-switch-indicator"></span>
+                  <span class="custom-switch-description">Active</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <h5 class="m-t-10"><i class="fe fe-link"></i> Displays API tab in header</h5>
+              <div class="form-group">
+                <label class="custom-switch">
+                  <input type="hidden" name="enable_api_tab" value="0">
+                  <input type="checkbox" name="enable_api_tab" class="custom-switch-input" value="1">
+                  <span class="custom-switch-indicator"></span>
+                  <span class="custom-switch-description">Active</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <h5 class="m-t-10"><i class="fe fe-link"></i> Displays required SkypeID field in signup page</h5>
+              <div class="form-group">
+                <label class="custom-switch">
+                  <input type="hidden" name="enable_signup_skype_field" value="0">
+                  <input type="checkbox" name="enable_signup_skype_field" class="custom-switch-input" value="1">
+                  <span class="custom-switch-indicator"></span>
+                  <span class="custom-switch-description">Active</span>
+                </label>
+              </div>
+            </div>
+          </div>
+          <hr>
+          <h5 class="m-t-10"><i class="fe fe-link"></i> Displays Google reCAPTCHA</h5>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label class="custom-switch">
+                  <input type="hidden" name="enable_goolge_recapcha" value="0">
+                  <input type="checkbox" name="enable_goolge_recapcha" class="custom-switch-input" value="1">
+                  <span class="custom-switch-indicator"></span>
+                  <span class="custom-switch-description">Active</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="col-md-12">
+              <div class="form-group">
+                <label>Google reCAPTCHA site key</label>
+                <input class="form-control" name="google_capcha_site_key" value="">
+              </div>
+            </div>
+
+            <div class="col-md-12">
+              <div class="form-group">
+                <label>Google reCAPTCHA serect key</label>
+                <input class="form-control" name="google_capcha_secret_key" value="">
+              </div>
+            </div>
+
+          </div>
+          
+        </div> 
+      </div>
+    </div>
+    <div class="card-footer text-end">
+      <button class="btn btn-primary btn-min-width text-uppercase">Save</button>
+    </div>
+  </form></div>
+
+<script>
+  $(document).ready(function() {
+    plugin_editor('.plugin_editor', {height: 200});
+  });
+</script>      </div>
+    </div>
+  </div>
+</div>
+        </main>
+        
+        
+{% endblock content %}

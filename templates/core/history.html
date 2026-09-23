@@ -1,0 +1,191 @@
+{% extends 'partials/base.html' %}
+{% load humanize %}
+{% block content %}
+
+<style>
+    #history {
+    --tw-text-opacity: 1;
+    color: rgb(234 88 12 / var(--tw-text-opacity, 1));
+}
+</style>
+
+<div class="p-3 sm:p-4 lg:p-6 pb-32 overflow-y-auto h-full text-xs sm:text-sm">
+    <div class="min-h-screen bg-white dark:bg-gray-900">
+    
+    <!-- Header Section -->
+    <div class="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 sticky top-0 z-10 shadow-sm">
+        <div class=" mx-auto px-2 sm:px-6 lg:px-8 py-4">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                <div>
+                    <h1 class="text-xl sm:text-2xl lg:text-3xl font-bold text-orange-900 dark:text-orange-300">My Orders</h1>
+                    <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-400 mt-1">Track and manage your order history</p>
+                </div>
+                
+                <!-- Search Bar -->
+                <div class="w-full sm:w-auto sm:max-w-xs">
+                    <div class="relative">
+                        <input type="text" placeholder="Search orders..." class="w-full pl-8 pr-3 py-2 text-xs sm:text-sm bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent placeholder-gray-400 dark:placeholder-gray-500">
+                        <div class="absolute inset-y-0 left-0 pl-2 flex items-center pointer-events-none">
+                            <svg class="w-3 h-3 sm:w-4 sm:h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Alert -->
+    
+    <!-- Main Content -->
+    <div class=" mx-auto px-2 sm:px-6 lg:px-8 py-4 sm:py-6 lg:py-8">
+
+        <!-- Desktop Table -->
+        <div class="hidden lg:block bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-lg rounded-2xl overflow-hidden">
+            <div class="overflow-x-auto">
+                <table class="min-w-full">
+                    <thead class="bg-gradient-to-r from-orange-600 to-orange-700 dark:from-orange-700 dark:to-orange-800">
+                        <tr>
+                            <th class="px-4 py-3 text-left text-sm font-semibold text-white">Order ID</th>
+                            <th class="px-4 py-3 text-left text-sm font-semibold text-white">Date</th>
+                            <th class="px-4 py-3 text-left text-sm font-semibold text-white">Amount</th>
+                            <th class="px-4 py-3 text-center text-sm font-semibold text-white">Qty</th>
+                            <th class="px-4 py-3 text-center text-sm font-semibold text-white">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+                        {% for o in o %}
+                                                    <tr class="hover:bg-orange-50 dark:hover:bg-gray-700/50 transition-colors duration-200">
+                                <td class="px-4 py-3 font-semibold text-orange-800 dark:text-orange-300 text-sm">#{{ o.id }}</td>
+                                <td class="px-4 py-3 text-gray-700 dark:text-gray-300 text-sm">
+                                    {{ o.date }}
+                                    <div class="text-xs text-gray-500 dark:text-gray-400">{{ o.date }}</div>
+                                </td>
+                                <td class="px-4 py-3 font-bold text-orange-700 dark:text-orange-400 text-sm">₦{{ o.amount|floatformat:2|intcomma }}</td>
+                                <td class="px-4 py-3 text-center">
+                                    <span class="inline-flex items-center justify-center w-8 h-8 bg-orange-100 dark:bg-orange-800 text-orange-800 dark:text-orange-200 rounded-full text-xs font-medium">
+                                        {{ o.qty }}
+                                    </span>
+                                </td>
+                                <td class="px-4 py-3 text-center">
+                                    <a href="/view-order/{{ o.id }}" class="inline-flex items-center px-3 py-1.5 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white text-xs font-medium rounded-lg transition-all duration-200 shadow-sm hover:shadow-md">
+                                        <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                                        </svg>
+                                        View
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                                            </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Mobile Card View -->
+        <div class="lg:hidden space-y-3">
+            {% for o in o %}
+                            <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-md rounded-xl overflow-hidden hover:shadow-lg transition-shadow duration-200">
+                    <!-- Card Header -->
+                    <div class="px-2 py-2.5 bg-gradient-to-r from-orange-500 to-orange-600 dark:from-orange-600 dark:to-orange-700">
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <p class="text-sm font-bold text-white">Order #{{ o.id }}</p>
+                                <p class="text-xs text-orange-100">{{ o.date }}</p>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-xs bg-white/20 text-white px-2 py-1 rounded-full font-medium">
+                                    Completed
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Card Body -->
+                    <div class="px-3 py-3 space-y-2">
+                        <div class="flex justify-between items-center">
+                            <span class="text-xs text-gray-600 dark:text-gray-400">Amount:</span>
+                            <span class="text-sm font-bold text-orange-700 dark:text-orange-400">₦{{ o.amount|floatformat:2|intcomma }}</span>
+                        </div>
+                        
+                        <div class="flex justify-between items-center">
+                            <span class="text-xs text-gray-600 dark:text-gray-400">Quantity:</span>
+                            <span class="inline-flex items-center justify-center w-6 h-6 bg-orange-100 dark:bg-orange-800 text-orange-800 dark:text-orange-200 rounded-full text-xs font-medium">
+                                {{ o.qty }}
+                            </span>
+                        </div>
+                        
+                        <div class="flex justify-between items-center">
+                            <span class="text-xs text-gray-600 dark:text-gray-400">Order Date:</span>
+                            <span class="text-xs text-gray-700 dark:text-gray-300">{{ o.date }}</span>
+                        </div>
+                        
+                        <div class="pt-2 border-t border-gray-100 dark:border-gray-700">
+                            <a href="/view-order/{{ o.id }}" class="w-full inline-flex items-center justify-center px-3 py-2 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white text-xs font-medium rounded-lg transition-all duration-200 shadow-sm hover:shadow-md">
+                                <svg class="w-3 h-3 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                                </svg>
+                                View Details
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                    </div>
+
+        <!-- Tablet View (md screens) -->
+        <div class="hidden md:block lg:hidden">
+            <div class="grid gap-4 sm:grid-cols-2">
+                                    <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-md rounded-xl overflow-hidden hover:shadow-lg transition-all duration-200">
+                        <!-- Card Header -->
+                        <div class="px-4 py-3 bg-gradient-to-r from-orange-500 to-orange-600 dark:from-orange-600 dark:to-orange-700">
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <p class="text-sm font-bold text-white">Order #{{ o.id }}</p>
+                                    <p class="text-xs text-orange-100">{{ o.date }}</p>
+                                </div>
+                                <div class="text-xs bg-white/20 text-white px-2 py-1 rounded-full font-medium">
+                                    Completed
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Card Body -->
+                        <div class="px-4 py-3 space-y-3">
+                            <div class="grid grid-cols-2 gap-3 text-sm">
+                                <div class="text-center p-2 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                                    <p class="text-xs text-gray-600 dark:text-gray-400 mb-1">Amount</p>
+                                    <p class="font-bold text-orange-700 dark:text-orange-400">₦{{ o.amount|floatformat:2|intcomma }}</p>
+                                </div>
+                                <div class="text-center p-2 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                                    <p class="text-xs text-gray-600 dark:text-gray-400 mb-1">Quantity</p>
+                                    <p class="font-bold text-gray-700 dark:text-gray-300">{{ o.qty }}</p>
+                                </div>
+                            </div>
+                            
+                            <a href="/view-order/{{ o.id }}" class="w-full inline-flex items-center justify-center px-3 py-2 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white text-sm font-medium rounded-lg transition-all duration-200 shadow-sm hover:shadow-md">
+                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                                </svg>
+                                View Details
+                            </a>
+                        </div>
+                    </div>
+                            </div>
+        </div>
+
+        <!-- Pagination -->
+            </div>
+</div>
+
+<!-- JavaScript for Alerts -->
+<script>
+    
+    
+    </script>
+</div>
+{% endblock content %}

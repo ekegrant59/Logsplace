@@ -1,0 +1,75 @@
+{% extends 'partials/new_base.html' %}
+{% load static %}
+{% block content %}
+
+{% if bool == True %}
+<div style="font-size: 11px; border-radius: 10px; padding: 4px; background: #020000;color: #ffffff; margin-top: 30px; width: 99%;">
+
+                                <div class="row">
+                                    <div class="col-2"></div>
+                                    <div class="col-5">Product</div>
+                                    <div class="col-3">Price</div>
+                                    <div class="col-2">Stock</div>
+                                </div>
+                            </div>
+{% for p in cat %}
+            <div class="dashboard-widget">
+                <div class="row">
+                    <div class="col-2">
+                        <a href="#" data-help="Click to read detailed description">
+                            <img src="{{ p.image.url }}" height="50" width="50">
+                        </a>
+                    </div>
+
+
+                    <div class="col-5" style="font-size: 10px;">
+                        {% if request.user.is_authenticated %}
+                        <a class="text-small text-black" href="{% url 'product' p.id %}" style="text-size-adjust: 8px;">
+                        {{ p.name }}
+                        </a>
+                        {% else %}
+                        <a class="text-small text-black" href="/user/signin/" style="text-size-adjust: 8px;">
+                        {{ p.name }}
+                    </a>
+                        {% endif %}
+                    
+
+                    </div>
+
+                    <div class="col-3">
+                        <a class="text-black" style="font-size: 10px;">₦{{ p.price }}</a>
+                    </div>
+
+                    <div class="col-2">
+
+                                                    
+                                <div class="d-flex justify-content-center row">
+
+                                    <div class="col-12">
+                                        <span class="text-small col-sm-12 badge bg-dark mb-1">{{ p.qty }} pcs</span>
+
+                                    </div>
+
+                                    <div class="col-12 d-flex justify-content-center">
+                                        {% if request.user.is_authenticated %}
+                                        <a href="{% url 'product' p.id %}" style="font-size: 8px" class="btn btn-sm btn-dark"> <i class="fa fa-lock"> </i></a>
+                                        {% else %}
+                                        <a href="/user/signin" style="font-size: 8px" class="btn btn-sm btn-dark"> <i class="fa fa-lock"> </i></a>
+                                        {% endif %}
+                                    </div>
+
+
+                                </div>
+
+
+                                                    
+                    </div>
+                </div>
+
+            </div>
+            {% endfor %}
+{% else %}
+{% endif %}
+            
+            
+{% endblock content %}

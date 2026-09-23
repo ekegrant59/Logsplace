@@ -1,0 +1,145 @@
+{% load humanize %}
+<style>
+    .buy-button {
+        padding: 10px 20px;
+        background-color: #007BFF;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+    .buy-button:hover {
+        background-color: #0056b3;
+    }
+
+    .popup-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        justify-content: center;
+        align-items: center;
+        z-index: 1;
+    }
+
+    .popup-content {
+        background: #fff;
+        width: 300px;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .popup-header {
+        background: #007BFF;
+        padding: 15px;
+        color: #fff;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .popup-header h2 {
+        margin: 0;
+    }
+
+    .close-button {
+        cursor: pointer;
+    }
+
+    .popup-body {
+        padding: 20px;
+    }
+
+    .popup-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 15px;
+    }
+
+    #gateway-select {
+        width: 100%;
+        padding: 10px;
+        margin-top: 5px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+    }
+
+    .popup-footer {
+        padding: 15px;
+        background: #007BFF;
+        text-align: center;
+    }
+
+    .payment-button {
+        background: #fff;
+        color: #007BFF;
+        padding: 10px 20px;
+        border: none;
+        cursor: pointer;
+        font-size: 16px;
+        border-radius: 5px;
+    }
+
+    .payment-button:hover {
+        background: #f1f1f1;
+    }
+    </style>
+
+<div id="popup" class="popup-content">
+    <div class="popup-header">
+        <h2>Purchase</h2>
+        <span id="jsclosetag" class="close-button" onclick="closePopup()">&times;</span>
+    </div>
+    <div class="popup-body">
+        {% for p in items %}
+        <div class="all_body">
+            <div class="popup-row">
+                <span style="display: none;" id="log_name">{{ p.log.name }}</span>
+                <span>Account</span>
+                <span>₦{{ p.log.price|intcomma }}</span>
+            </div>
+            <div class="popup-row">
+                <span>Charge</span>
+                <span id="change_p">0 NGN</span>
+            </div>
+            <div class="popup-row">
+                <span>Quantity</span>
+                <input style="width: 50px;" id="qty" type="number" value="1" placeholder="Quantity">
+            <span style="display: none;" id="span_bal">{{ p.log.price }}</span>
+            </div>
+            <!--<div class="popup-row">-->
+            <!--    <span>Total amount (Payable)</span>-->
+            <!--    <span style="display: none;" id="span_bal">{{ p.log.price }}</span>-->
+            <!--    <span>₦{{ p.log.price|intcomma }}</span>-->
+            <!--</div>-->
+        </div>
+        {% endfor %}
+        <div class="popup-row" style="justify-content: center; align-content: center;">
+            <span style="text-align: center; font-weight: bold;">Balance: ₦{{ wallet.balance|intcomma }}</span>
+            <input id="in_balance" value="{{ wallet.balance }}" type="hidden">
+            <br>
+        </div>
+        <div style="color: red; text-align: center;" id="low_balance"></div>
+        <div style="color: green; text-align: center;" id="purchased"></div>
+    </div>
+    <div class="popup-footer">
+        <button id="to_pay" class="payment-button">Proceed to payment</button>
+    </div>
+</div>
+
+<script>
+    // Function to show the popup
+    function showPopup() {
+        document.getElementById('popup').style.display = 'flex';
+    }
+
+    // Function to close the popup
+    function closePopup() {
+        document.getElementById('popup').style.display = 'none';
+    }
+</script>

@@ -1,0 +1,48 @@
+{{ id }}
+{{ key }}
+{% if key %}
+<option value="0" selected disabled>Select Service</option>
+{% for c in check %}
+    {% if id == "instagram" %}
+        <option data-icon="fab fa-instagram" value="{{ c.id }}">{{ c.name }}</option>
+    {% elif id == "tiktok" %}
+        <option data-icon="fab fa-tiktok" value="{{ c.id }}">{{ c.name }}</option>
+    {% elif id == "twitter" %}
+        <option data-icon="fab fa-twitter" value="{{ c.id }}">{{ c.name }}</option>
+    {% elif id == "facebook" %}
+        <option data-icon="fab fa-facebook-square" value="{{ c.id }}">{{ c.name }}</option>
+    {% elif id == "telegram" %}
+        <option data-icon="fab fa-telegram-plane" value="{{ c.id }}">{{ c.name }}</option>
+    {% elif id == "youtube" %}
+        <option data-icon="fab fa-youtube" value="{{ c.id }}">{{ c.name }}</option>
+    {% elif id == "twitch" %}
+        <option data-icon="https://i.imgur.com/CtTumct.png" value="{{ c.id }}">{{ c.name }}</option>
+    {% elif id == "kick" %}
+        <option data-icon="https://i.imgur.com/XKSG9dY.png" value="{{ c.id }}">{{ c.name }}</option>
+    {% elif id == "reddit" %}
+        <option data-icon="https://i.imgur.com/WaKFWJr.png" value="{{ c.id }}">{{ c.name }}</option>
+    {% elif id == "whatsapp" %}
+        <option data-icon="fab fa-whatsapp-square" value="{{ c.id }}">{{ c.name }}</option>
+    {% elif id == "snapchat" %}
+        <option data-icon="https://i.imgur.com/ZfiDqHZ.png" value="{{ c.id }}">{{ c.name }}</option>
+    {% elif id == "audiomack" %}
+        <option data-icon="fa fa-music" value="{{ c.id }}">{{ c.name }}</option>
+    {% elif id == "deezer" %}
+        <option data-icon="fab fa-deezer" value="{{ c.id }}">{{ c.name }}</option>
+    {% elif id == "boomplay" %}
+        <option data-icon="https://i.imgur.com/hHWlwF9.png" value="{{ c.id }}">{{ c.name }}</option>
+    {% elif id == "soundcloud" %}
+        <option data-icon="fab fa-soundcloud" value="{{ c.id }}">{{ c.name }}</option>
+    {% elif id == "spotify" %}
+        <option data-icon="fab fa-spotify" value="{{ c.id }}">{{ c.name }}</option>
+    {% elif id == "website" %}
+        <option data-icon="fas fa-globe" value="{{ c.id }}">{{ c.name }}</option>
+    {% elif id == "linkedin" %}
+        <option data-icon="fab fa-linkedin" value="{{ c.id }}">{{ c.name }}</option>
+    {% else %}
+        <option data-icon="fas fa-list-alt" value="{{ c.id }}">{{ c.name }}</option>
+    {% endif %}
+{% endfor %}
+{% else %}
+<option value="0">This service is not available for now</option>
+{% endif %}

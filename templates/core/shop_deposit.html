@@ -1,0 +1,324 @@
+{% load humanize %}
+
+
+
+<body class="color-light ">
+    <div id="loading">
+        <div id="loading-center">
+        </div>
+    </div>
+    <div class="wrapper">
+        {% include 'partials/base.html' %}
+<script>
+function changeLanguage(id) {
+    $.ajax({
+        url: "https://logsplace.com/ajaxs/client/changeLanguage.php",
+        method: "POST",
+        dataType: "JSON",
+        data: {
+            id: id
+        },
+        success: function(respone) {
+            if (respone.status == 'success') {
+                cuteToast({
+                    type: "success",
+                    message: respone.msg,
+                    timer: 5000
+                });
+                location.reload();
+            } else {
+                cuteAlert({
+                    type: "error",
+                    title: "Error",
+                    message: respone.msg,
+                    buttonText: "Okay"
+                });
+            }
+        },
+        error: function() {
+            alert(html(response));
+            history.back();
+        }
+    });
+}
+</script>
+<script>
+function changeCurrency(id) {
+    $.ajax({
+        url: "https://logsplace.com/ajaxs/client/changeCurrency.php",
+        method: "POST",
+        dataType: "JSON",
+        data: {
+            id: id
+        },
+        success: function(respone) {
+            if (respone.status == 'success') {
+                cuteToast({
+                    type: "success",
+                    message: respone.msg,
+                    timer: 5000
+                });
+                location.reload();
+            } else {
+                cuteAlert({
+                    type: "error",
+                    title: "Error",
+                    message: respone.msg,
+                    buttonText: "Okay"
+                });
+            }
+        },
+        error: function() {
+            alert(html(response));
+            history.back();
+        }
+    });
+}
+</script>
+
+<div style="padding-top:90px">
+<!-- Modal -->
+<div class="content-page">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-6 text-left">
+                <div class="mb-3">
+                    <a href="https://logsplace.com/" type="button" class="btn btn-danger btn-sm"><i class="fas fa-arrow-left mr-1"></i>Back</a>
+                </div>
+            </div>
+            <div class="col-lg-6 text-right">
+                <div class="mb-3">
+                    
+                                    </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between">
+                        <div class="header-title">
+                            <b>INSTANT TRANSFER</b>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="text-center mb-5">
+                            <img width="50%" src="https://chokesms.com/img/bank-transfer.png">
+                        </div>
+                        <csnter>You can now make a bank transfer to your Logsplace account number and your wallet will be funded automatically.</csnter>
+                        <form id="paymentForm" method="POST" action="https://checkout.flutterwave.com/v3/hosted/pay">
+                            {% if bank %}
+                            {% for b in bank %}
+                            <div class="form-group">
+                                <label for="amount">Account Name: </label>
+                                <input type="text" value="{{ b.account_name }}" readonly class="form-control" required="">
+                            </div>
+                            <div class="form-group">
+                                <label for="amount">Account Number: </label>
+                                <input type="number" value="{{ b.account_number }}" readonly class="form-control" required="">
+                            </div>
+                            <div class="form-group">
+                                <label for="amount">Bank Name: </label>
+                                <input type="text" value="{{ b.bank_name }}" readonly class="form-control" required="">
+                            </div>
+                            {% endfor %}
+                            {% else %}
+                            <div class="form-group">
+                                <label for="amount">Enter Phone Number: </label>
+                                <input type="number" name="amount" placeholder="Enter Phone Number" id="thephone" class="form-control" required="">
+                            </div>
+                            <div class="form-group">
+                                <button type="button" id="createacc" class="btn btn-primary">
+                                    <i class="fas fa-paper-plane mr-1"></i>Submit                                </button>
+                            </div>
+                            {% endif %}
+                            <input type="hidden" name="currency" value="NGN">
+                            <input type="hidden" name="meta[source]" value="Logsplace">
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <script>
+    $(document).ready(function() {
+        $(document).on("click", "#createacc", function(){
+            let number = $("#thephone").val().trim(); // Get the latest value
+
+            // Validate phone number
+            if (!number || isNaN(number) || number.length < 11) {
+                alert('Please enter a valid phone number');
+                return;
+            }
+
+            // Corrected AJAX request
+            $.ajax({
+                url: "/paypoint/",
+                data: { "number": number },
+                success: function(response) {
+                    alert("Success!"); // Handle success
+                    window.location.reload();
+                },
+                error: function(xhr, status, error) {
+                    alert("Error: " + error); // Handle error
+                }
+            });
+        });
+    });
+</script>
+                    </div>
+    </div>
+</div>
+</div>
+
+</div>
+
+
+
+
+<!-- Wrapper End-->
+<footer class="iq-footer">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-6">
+                <ul class="list-inline mb-0">
+                    <li class="list-inline-item"><a href="https://logsplace.com/client/privacy-policy">Privacy Policy</a></li>
+                    <li class="list-inline-item"><a href="https://logsplace.com/rules">Terms of Use</a></li>
+                </ul>
+            </div>
+            <div class="col-lg-6 text-right">
+                <span class="mr-1">
+                    <!-- Copyright                    <script>
+                    document.write(new Date().getFullYear())
+                    </script>© <a href="#" class="">/shopviaclone22.com</a>
+                    All Rights Reserved |  -->
+                    Version <b style="color: red;">
+                        7.1.4                    </b> |
+                    Developed By <a target="_blank" href="https://linktr.ee/Teniteno1">Teniteno1</a>                </span>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<div class="switch">
+    <div class="circle"></div>
+</div>
+
+
+    <script src="cdn.jsdelivr.net/mojs/latest/mo.min.js"></script>
+    <script type="text/javascript">
+        const OPTS = {
+            fill: 'none',
+            radius: 25,
+            strokeWidth: {
+                50: 0
+            },
+            scale: {
+                0: 1
+            },
+            angle: {
+                'rand(-35, -70)': 0
+            },
+            duration: 500,
+            left: 0,
+            top: 0,
+            easing: 'cubic.out'
+        };
+
+        const circle1 = new mojs.Shape({
+            ...OPTS,
+            stroke: 'cyan',
+        });
+
+        const circle2 = new mojs.Shape({
+            ...OPTS,
+            radius: {
+                0: 15
+            },
+            strokeWidth: {
+                30: 0
+            },
+            stroke: 'magenta',
+            delay: 'rand(75, 150)'
+        });
+
+        document.addEventListener('click', function (e) {
+
+            circle1
+                .tune({
+                    x: e.pageX,
+                    y: e.pageY
+                })
+                .replay();
+
+            circle2
+                .tune({
+                    x: e.pageX,
+                    y: e.pageY
+                })
+                .replay();
+
+        });
+    </script>
+    
+    <script>
+        $(document).on("click", "#flu_paynow", function() {
+            console.log("Flutterwave Click");
+            console.log($('#dep_amount'));
+    
+            let amount = $("#dep_amount").val()
+    
+            console.log("This is the amount to pass:", amount);
+            
+    
+            $.ajax({
+                url: '/deposit-amount/',
+                data: {
+                    "amount": amount,
+                }
+            })
+            
+        })
+    </script>
+
+    <!-- <div id="showSpin" style="display: block; position: fixed; bottom: 40px; right: 25px; z-index: 1000; cursor: pointer; width: 8%;">
+        <div onclick="$('#showSpin').hide()" class="" style="
+    left: 100%;
+    position: absolute;
+">
+            <p style="font-size:20px;color:red;"><i class="fas fa-window-close"></i></p>
+        </div>
+        <a href="https://logsplace.com/client/spin">
+            <center><img class="animate__animated animate__heartBeat animate__infinite infinite" src="i.imgur.com/ZlYSYHD.gif" width="100%" style="">
+            </center>
+            <center class="solid" style="border-top-right-radius: 30px;
+    border-top-left-radius: 30px;
+    border-radius: 30px;
+    background: aquamarine;">
+            </center>
+        </a>
+    </div> -->
+<!-- Backend Bundle JavaScript -->
+<script src="/shopviaclone22.com/public/datum/assets/js/backend-bundle.min.js"></script>
+<!-- Chart Custom JavaScript -->
+<script src="/shopviaclone22.com/public/datum/assets/js/customizer.js"></script>
+<script src="/shopviaclone22.com/public/datum/assets/js/sidebar.js"></script>
+<!-- Flextree Javascript-->
+<script src="/shopviaclone22.com/public/datum/assets/js/flex-tree.min.js"></script>
+<script src="/shopviaclone22.com/public/datum/assets/js/tree.js"></script>
+<!-- Table Treeview JavaScript -->
+<script src="/shopviaclone22.com/public/datum/assets/js/table-treeview.js"></script>
+<!-- SweetAlert JavaScript -->
+<script src="/shopviaclone22.com/public/datum/assets/js/sweetalert.js"></script>
+<!-- Vectoe Map JavaScript -->
+<script src="/shopviaclone22.com/public/datum/assets/js/vector-map-custom.js"></script>
+<!-- Chart Custom JavaScript -->
+<script src="/shopviaclone22.com/public/datum/assets/js/chart-custom.js"></script>
+<script src="/shopviaclone22.com/public/datum/assets/js/charts/01.js"></script>
+<script src="/shopviaclone22.com/public/datum/assets/js/charts/02.js"></script>
+<!-- slider JavaScript -->
+<script src="/shopviaclone22.com/public/datum/assets/js/slider.js"></script>
+<!-- Emoji picker -->
+<script src="/shopviaclone22.com/public/datum/assets/vendor/emoji-picker-element/index.js" type="module"></script>
+<!-- app JavaScript -->
+<script src="/shopviaclone22.com/public/datum/assets/js/app.js"></script>
+<!-- Dev By CMSNT.CO | FB.COM/CMSNT.CO | ZALO.ME/0947838128 | MMO Solution -->
+<!-- Script Footer -->
+
+
+</body></html>
